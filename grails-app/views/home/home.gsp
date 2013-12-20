@@ -5,7 +5,7 @@
     <title>Bouldering Competition</title>
 </head>
 
-<body>
+<body id="home-page">
 
 <div class="row">
     <div class="small-12 columns">
@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row content">
     <div class="small-4 column">
         <g:link controller="boulder" action="createForm" class="button">create boulder</g:link>
     </div>
