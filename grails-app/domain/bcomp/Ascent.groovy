@@ -14,6 +14,6 @@ class Ascent {
 
     static constraints = {
         boulder nullable: false
-        tries validator: { val, obj -> obj.style == Style.flash ? val == 1 : val >= 2}
+        tries validator: { val, obj -> obj.style == Style.top ? val >= 2 : true}
     }
 }
