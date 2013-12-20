@@ -13,6 +13,7 @@
     <!-- If you are using CSS version, only link these 2 files, you may add app.css to use for your overrides if you like. -->
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'normalize.css')}">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'foundation.css')}">
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'foundation-datepicker.css')}">
     <script src="js/vendor/custom.modernizr.js"></script>
     <g:layoutHead/>
     <g:javascript library="application"/>

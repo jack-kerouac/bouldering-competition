@@ -18,7 +18,10 @@
         <g:link controller="boulder" action="createForm" class="button">create boulder</g:link>
     </div>
 
-    <div class="small-4 column"></div>
+    <div class="small-4 column">
+        <g:link controller="ascent" action="createForm" class="button">create ascent</g:link>
+
+    </div>
 
     <div class="small-4 column"></div>
 </div>

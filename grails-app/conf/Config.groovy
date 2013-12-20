@@ -63,7 +63,12 @@ grails {
         }
     }
 }
- 
+
+
+grails.databinding.dateFormats = ['yyyy-MM-dd', 'yyyy-MM-dd HH:mm:ss.S', "yyyy-MM-dd'T'hh:mm:ss'Z'"]
+
+
+
 grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'

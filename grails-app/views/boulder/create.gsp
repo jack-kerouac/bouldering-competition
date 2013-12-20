@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Bouldering Competition</title>
+    <title></title>
 </head>
 
 <body>
