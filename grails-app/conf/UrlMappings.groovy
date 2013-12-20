@@ -1,3 +1,5 @@
+import bcomp.HomeController
+
 class UrlMappings {
 
 	static mappings = {
@@ -6,6 +8,11 @@ class UrlMappings {
                 // apply constraints here
             }
         }
+
+        "/"(controller: 'home', action: 'home')
+
+        "/foundation"(view:'/foundation')
+
 
         "/status"(view:"/index")
         "500"(view:'/error')
