@@ -24,7 +24,7 @@
     <nav class="top-bar fixed contain-to-grid" data-topbar>
         <ul class="title-area">
             <li class="name">
-                <h1><a href="#">BComp</a></h1>
+                <h1><g:link controller="home">BComp</g:link></h1>
             </li>
             <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>
