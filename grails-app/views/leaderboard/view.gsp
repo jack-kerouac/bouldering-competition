@@ -2,31 +2,41 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Bouldering Competition</title>
+    <title>Leaderboard</title>
 </head>
 
 <body id="home-page">
 
 <div class="row">
     <div class="medium-12 columns">
-        <h1>Bouldering Competition</h1>
+        <h1>Leaderboard</h1>
     </div>
 </div>
 
 <div class="row content">
-    <div class="medium-4 column">
-        <g:link controller="boulder" action="createForm" class="button">create boulder</g:link>
-    </div>
-
-    <div class="medium-4 column">
-        <g:link controller="ascent" action="createForm" class="button">create ascent</g:link>
-    </div>
-
-    <div class="medium-4 column">
-        <g:link controller="leaderboard" action="view" class="button">view leaderboard</g:link>
+    <div class="medium-12 column">
+        <table>
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Boulderer</th>
+                    <th>Score</th>
+                    <th>Last Session</th>
+                </tr>
+            </thead>
+            <tbody>
+                <g:each in="${ranking}">
+                <tr>
+                    <td>${it.position}</td>
+                    <td>${it.boulderer.name}</td>
+                    <td>${it.score} (${it.countFlashes} flash, ${it.countTops} tops)</td>
+                    <td><g:formatDate type="date" date="${it.lastSession}"/></td>
+                </tr>
+                </g:each>
+            </tbody>
+        </table>
     </div>
 </div>
-
 
 </body>
 </html>

@@ -10,7 +10,7 @@ class Ascent {
     Style style
     int tries
 
-    static belongsTo = [boulder: Boulder]
+    static belongsTo = [boulder: Boulder, boulderer: Boulderer]
 
     static constraints = {
         boulder nullable: false

@@ -14,12 +14,16 @@
 </div>
 
 <div class="row content">
-    <div class="medium-6 column">
+    <div class="medium-4 column">
         <g:link controller="boulder" action="createForm" class="button">create boulder</g:link>
     </div>
 
-    <div class="medium-6 column">
+    <div class="medium-4 column">
         <g:link controller="ascent" action="createForm" class="button">create ascent</g:link>
+    </div>
+
+    <div class="medium-4 column">
+        <g:link controller="leaderboard" action="view" class="button">view leaderboard</g:link>
     </div>
 </div>
 

@@ -4,8 +4,9 @@ class AscentController {
 
     def createForm() {
         def boulders = Boulder.all  // TODO: load only boulders of HG
+        def boulderer = Boulderer.findByName('flo')
         def cmd = flash.cmd ?: new CreateAscentCommand()
-        render view: 'create', model: [boulders: boulders, cmd: cmd]
+        render view: 'create', model: [boulders: boulders, user: boulderer, cmd: cmd]
     }
 
     def create(CreateAscentCommand cmd) {

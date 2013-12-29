@@ -10,6 +10,7 @@ class CreateAscentCommand {
     int tries = 1
 
     Boulder boulder
+    Boulderer boulderer
 
     static constraints = {
         importFrom Ascent

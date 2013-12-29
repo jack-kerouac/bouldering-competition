@@ -14,6 +14,8 @@
 </div>
 
 <g:form action="create">
+    <input type="hidden" name="boulderer.id" value="${user.id}" />
+
     <div class="row">
         <div class="small-3 column">
             <label class="right inline">Boulder</label>

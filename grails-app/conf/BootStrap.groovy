@@ -1,10 +1,11 @@
 import bcomp.Boulder
+import bcomp.Boulderer
 import bcomp.Gym
 import bcomp.Section
 
 class BootStrap {
 
-    def init = { servletContext ->
+    private void createBoulders() {
         Gym hg = new Gym('Heavens Gate')
 
         def panicRoom = new Section(name: 'Panic Room')
@@ -26,7 +27,27 @@ class BootStrap {
 
         Boulder b3 = new Boulder(grade: 'black', section: dach)
         b3.save()
+
+        Boulderer flo = new Boulderer(name: 'flo')
+        flo.save()
+        Boulderer chris = new Boulderer(name: 'chris')
+        chris.save()
     }
+
+    def init = { servletContext ->
+        environments {
+            production {
+                createBoulders()
+            }
+            development {
+                createBoulders()
+            }
+            test {
+            }
+        }
+
+    }
+
     def destroy = {
     }
 }
