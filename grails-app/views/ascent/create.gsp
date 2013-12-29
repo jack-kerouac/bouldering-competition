@@ -5,7 +5,7 @@
     <title><g:message code="default.new.label" args="[message(code: 'bcomp.ascent.label')]"/></title>
 </head>
 
-<body>
+<body id="create-ascent-page">
 
 <div class="row">
     <div class="small-12 column">
@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="medium-2 column">
-                    <input type="number" name="tries" value="${cmd.tries}" min="2" />
+                    <input type="number" name="tries" value="${cmd.tries}" min="2" id="tries"/>
                 </div>
                 <div class="medium-6 column">
                     <label for="top" class="inline">tries</label>
