@@ -5,17 +5,16 @@ import bcomp.Section
 class BootStrap {
 
     def init = { servletContext ->
-        Gym hg = new Gym(name: 'Heavens Gate')
-        hg.sections = [] as Set
+        Gym hg = new Gym('Heavens Gate')
 
         def panicRoom = new Section(name: 'Panic Room')
-        hg.sections.add(panicRoom)
+        hg.addSection(panicRoom)
 
         def dach = new Section(name: 'Großes Dach')
-        hg.sections.add(dach)
+        hg.addSection(dach)
 
         def grotte = new Section(name: 'Grotte')
-        hg.sections.add(grotte)
+        hg.addSection(grotte)
 
         hg.save()
 
