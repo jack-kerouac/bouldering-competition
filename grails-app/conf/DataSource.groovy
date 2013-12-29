@@ -29,7 +29,7 @@ environments {
         dataSource {
             dialect = 'org.hibernate.dialect.MySQL5InnoDBDialect'
             pooled = false
-            dbCreate = 'create' // use 'update', 'validate', 'create' or 'create-drop'
+            dbCreate = 'create-drop' // use 'update', 'validate', 'create' or 'create-drop'
             // DB is bound as "bcomp" to cloudbees application "bcomp"
             jndiName = 'java:comp/env/jdbc/bcomp'
             username = 'bcomp'
