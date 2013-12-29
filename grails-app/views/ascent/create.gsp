@@ -61,16 +61,16 @@
             </div>
 
             <div class="row">
-                <div class="small-2 column">
+                <div class="medium-4 column">
                     <input type="radio" name="style" value="top"
                            id="top" ${cmd.style == Ascent.Style.top ? 'checked' : ''
                     }><label for="top" class="inline">top in</label>
                 </div>
 
-                <div class="small-2 column">
-                    <input type="number" name="tries" value="${cmd.tries}" min="2"/>
+                <div class="medium-2 column">
+                    <input type="number" name="tries" value="${cmd.tries}" min="2" />
                 </div>
-                <div class="small-8 column">
+                <div class="medium-6 column">
                     <label for="top" class="inline">tries</label>
                     <g:hasErrors field="tries">
                         <small>

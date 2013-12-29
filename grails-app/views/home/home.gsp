@@ -8,22 +8,19 @@
 <body id="home-page">
 
 <div class="row">
-    <div class="small-12 columns">
+    <div class="medium-12 columns">
         <h1>Bouldering Competition</h1>
     </div>
 </div>
 
 <div class="row content">
-    <div class="small-4 column">
+    <div class="medium-6 column">
         <g:link controller="boulder" action="createForm" class="button">create boulder</g:link>
     </div>
 
-    <div class="small-4 column">
+    <div class="medium-6 column">
         <g:link controller="ascent" action="createForm" class="button">create ascent</g:link>
-
     </div>
-
-    <div class="small-4 column"></div>
 </div>
 
 
