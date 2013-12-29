@@ -27,19 +27,13 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
-            properties {
-               maxActive = -1
-               minEvictableIdleTimeMillis=1800000
-               timeBetweenEvictionRunsMillis=1800000
-               numTestsPerEvictionRun=3
-               testOnBorrow=true
-               testWhileIdle=true
-               testOnReturn=false
-               validationQuery="SELECT 1"
-               jdbcInterceptors="ConnectionState"
-            }
+            dialect = 'org.hibernate.dialect.MySQL5InnoDBDialect'
+            pooled = false
+            dbCreate = 'create' // use 'update', 'validate', 'create' or 'create-drop'
+            // DB is bound as "bcomp" to cloudbees application "bcomp"
+            jndiName = 'java:comp/env/jdbc/bcomp'
+            username = 'bcomp'
+            password = '785rhgoiehjtg03t'
         }
     }
 }

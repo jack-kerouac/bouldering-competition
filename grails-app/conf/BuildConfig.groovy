@@ -48,7 +48,7 @@ grails.project.dependency.resolution = {
 
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
-        // runtime 'mysql:mysql-connector-java:5.1.24'
+        runtime 'mysql:mysql-connector-java:5.1.28'
     }
 
     plugins {
@@ -61,6 +61,8 @@ grails.project.dependency.resolution = {
 
         compile ":flash-helper:0.9.6"
 
+        compile ":cloud-bees:0.6.2"
+
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.6" // or ":hibernate4:4.1.11.6"
         runtime ":database-migration:1.3.8"
@@ -72,3 +74,8 @@ grails.project.dependency.resolution = {
         //runtime ":yui-minify-resources:0.1.5"
     }
 }
+
+// Create a CloudBees application with stack "tomcat 7", connect MySQL DB to it, done.
+cloudbees.account='foi'
+cloudbees.api.key='057CE1B08FEAED9C'
+cloudbees.api.secret='30ZXW/WTE3LNY9ZBJFG82RT/VWMFPM3QZW7MMRJOJRC='

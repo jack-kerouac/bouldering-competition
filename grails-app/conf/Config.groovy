@@ -100,11 +100,20 @@ environments {
 
 // log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    appenders {
+        console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n'),
+                threshold: org.apache.log4j.Level.INFO
+        // omit stacktrace.log appender (since this file cannot be created on CloudBees)
+        'null' name: "stacktrace"
+    }
+
+    root {
+        error 'stdout'
+        info 'stdout'
+        warn 'stdout'
+        debug 'stdout'
+        additivity = true
+    }
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -117,4 +126,8 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+
+    warn   'org.mortbay.log'
+
+    debug  'grails.app'
 }
