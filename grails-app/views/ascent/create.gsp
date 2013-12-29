@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title></title>
+    <title><g:message code="default.new.label" args="[message(code: 'bcomp.ascent.label')]"/></title>
 </head>
 
 <body>
 
 <div class="row">
     <div class="small-12 column">
-        <h1>Create Ascent</h1>
+        <h1><g:message code="default.new.label" args="[message(code: 'bcomp.ascent.label')]"/></h1>
     </div>
 </div>
 

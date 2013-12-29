@@ -15,7 +15,7 @@ class BoulderController {
             b.properties = cmd.properties
             b.save()
 
-            flashHelper.confirm 'default.created.message': [b.grade, 'boulder.label'], true
+            flashHelper.confirm 'default.created.message': [b.grade, 'bcomp.boulder.label'], true
             redirect controller: 'home', action: 'home'
         }
         else {

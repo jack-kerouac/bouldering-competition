@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Bouldering Competition</title>
+    <title>Home</title>
 </head>
 
 <body id="home-page">
@@ -15,18 +15,23 @@
 
 <div class="row content">
     <div class="medium-4 column">
-        <g:link controller="boulder" action="createForm" class="button">create boulder</g:link>
+        <g:link controller="boulder" action="createForm" class="button">
+            <g:message code="default.new.label" args="[message(code: 'bcomp.boulder.label')]"/>
+        </g:link>
     </div>
 
     <div class="medium-4 column">
-        <g:link controller="ascent" action="createForm" class="button">create ascent</g:link>
+        <g:link controller="ascent" action="createForm" class="button">
+            <g:message code="default.new.label" args="[message(code: 'bcomp.ascent.label')]"/>
+        </g:link>
     </div>
 
     <div class="medium-4 column">
-        <g:link controller="leaderboard" action="view" class="button">view leaderboard</g:link>
+        <g:link controller="leaderboard" action="view" class="button">
+            <g:message code="default.show.label" args="[message(code: 'bcomp.leaderboard.label')]"/>
+        </g:link>
     </div>
 </div>
-
 
 </body>
 </html>

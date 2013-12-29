@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Leaderboard</title>
+    <title>${message(code: 'bcomp.leaderboard.label')}</title>
 </head>
 
 <body id="home-page">
 
 <div class="row">
     <div class="medium-12 columns">
-        <h1>Leaderboard</h1>
+        <h1>${message(code: 'bcomp.leaderboard.label')}</h1>
     </div>
 </div>
 
