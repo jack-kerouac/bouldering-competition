@@ -1,5 +1,7 @@
 package bcomp
 
+import bcomp.aaa.User
+
 
 class Rank {
 
@@ -7,7 +9,7 @@ class Rank {
 
     int position
 
-    Boulderer boulderer
+    User boulderer
 
     Date lastSession
 

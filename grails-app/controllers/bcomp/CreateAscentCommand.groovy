@@ -1,5 +1,6 @@
 package bcomp
 
+import bcomp.aaa.User
 import grails.validation.Validateable
 
 @Validateable
@@ -10,7 +11,7 @@ class CreateAscentCommand {
     int tries = 2
 
     Boulder boulder
-    Boulderer boulderer
+    User boulderer
 
     static constraints = {
         importFrom Ascent

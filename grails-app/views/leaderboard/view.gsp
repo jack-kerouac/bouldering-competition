@@ -28,7 +28,7 @@
                 <g:each in="${ranking}">
                 <tr>
                     <td>${it.position}</td>
-                    <td>${it.boulderer.name}</td>
+                    <td>${it.boulderer.username}</td>
                     <td>${it.score} (${it.countFlashes} flash, ${it.countTops} tops)</td>
                     <td><g:formatDate type="date" date="${it.lastSession}"/></td>
                 </tr>

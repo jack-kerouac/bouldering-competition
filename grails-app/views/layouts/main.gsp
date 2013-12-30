@@ -35,9 +35,9 @@
             <!-- Right Nav Section -->
             <ul class="right">
                 <li class="has-dropdown">
-                    <a href="#">florian</a>
+                    <a href="#"><sec:loggedInUserInfo field="username"/></a>
                     <ul class="dropdown">
-                        <li><a href="#">switch to Christoph</a></li>
+                        <li><g:link controller='logout'>Logout</g:link></li>
                     </ul>
                 </li>
             </ul>

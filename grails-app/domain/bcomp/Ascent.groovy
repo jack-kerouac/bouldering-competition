@@ -1,5 +1,7 @@
 package bcomp
 
+import bcomp.aaa.User
+
 class Ascent {
 
     enum Style {
@@ -10,7 +12,7 @@ class Ascent {
     Style style
     int tries
 
-    static belongsTo = [boulder: Boulder, boulderer: Boulderer]
+    static belongsTo = [boulder: Boulder, boulderer: User]
 
     static constraints = {
         boulder nullable: false
