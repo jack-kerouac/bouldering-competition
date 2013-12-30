@@ -3,7 +3,11 @@ package bcomp
 class BoulderController {
 
     def createForm() {
-        def sections = Gym.findByName('Heavens Gate').sections
+        // TODO: without this invocation, hg below only has one section ?!?
+        def gyms = Gym.all
+
+        def hg = Gym.findByName('Heavens Gate')
+        def sections = hg.sections
         def grades = ['green', 'yellow', 'red', 'blue', 'black', 'pink']
         def cmd = flash.cmd ?: new CreateBoulderCommand()
         render view: 'create', model: [grades: grades, sections: sections, cmd: cmd]

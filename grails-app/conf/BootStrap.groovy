@@ -17,6 +17,9 @@ class BootStrap {
         def grotte = new Section(name: 'Grotte')
         hg.addSection(grotte)
 
+        hg.addSection(new Section(name: 'Walze'))
+        hg.addSection(new Section(name: 'Diamant'))
+
         hg.save()
 
         Boulder b1 = new Boulder(grade: 'yellow', section: panicRoom)
