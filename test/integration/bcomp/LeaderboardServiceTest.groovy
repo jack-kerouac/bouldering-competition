@@ -1,6 +1,9 @@
 package bcomp
 
 import bcomp.aaa.User
+import bcomp.gym.Boulder
+import bcomp.gym.Gym
+import bcomp.gym.Section
 
 /**
  * User: florian

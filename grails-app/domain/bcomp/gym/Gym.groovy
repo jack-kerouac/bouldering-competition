@@ -1,4 +1,4 @@
-package bcomp
+package bcomp.gym
 
 /**
  * User: florian

@@ -1,6 +1,7 @@
 package bcomp
 
 import bcomp.aaa.User
+import bcomp.gym.Boulder
 import grails.validation.Validateable
 
 @Validateable

@@ -1,5 +1,6 @@
 package bcomp
 
+import bcomp.gym.Gym
 import grails.transaction.Transactional
 
 @Transactional

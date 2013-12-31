@@ -1,7 +1,7 @@
-import bcomp.Boulder
-import bcomp.Gym
+import bcomp.gym.Boulder
+import bcomp.gym.Gym
 import bcomp.aaa.Role
-import bcomp.Section
+import bcomp.gym.Section
 import bcomp.aaa.User
 import bcomp.aaa.UserRole
 

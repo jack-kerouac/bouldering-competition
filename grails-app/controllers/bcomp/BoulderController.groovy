@@ -1,5 +1,7 @@
 package bcomp
 
+import bcomp.gym.Boulder
+import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_BOULDERER'])

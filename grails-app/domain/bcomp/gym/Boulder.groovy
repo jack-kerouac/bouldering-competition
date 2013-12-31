@@ -1,4 +1,4 @@
-package bcomp
+package bcomp.gym
 
 class Boulder {
 
