@@ -17,22 +17,23 @@
     <div class="medium-12 column">
         <table>
             <thead>
-                <tr>
-                    <th>Position</th>
-                    <th>Boulderer</th>
-                    <th>Score</th>
-                    <th>Last Session</th>
-                </tr>
+            <tr>
+                <th>Position</th>
+                <th>Boulderer</th>
+                <th>Score</th>
+                <th>Last Session</th>
+            </tr>
             </thead>
             <tbody>
-                <g:each in="${ranking}">
+            <g:each in="${ranking}">
                 <tr>
                     <td>${it.position}</td>
-                    <td>${it.boulderer.username}</td>
+                    <td><g:link controller="boulderer" action="listAscents"
+                                params="[username: it.boulderer.username]">${it.boulderer.username}</g:link></td>
                     <td>${it.score} (${it.countFlashes} flash, ${it.countTops} tops)</td>
                     <td><g:formatDate type="date" date="${it.lastSession}"/></td>
                 </tr>
-                </g:each>
+            </g:each>
             </tbody>
         </table>
     </div>

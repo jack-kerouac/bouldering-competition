@@ -37,6 +37,8 @@
                 <li class="has-dropdown">
                     <a href="#"><sec:loggedInUserInfo field="username"/></a>
                     <ul class="dropdown">
+                        <li><g:link controller='boulderer' action='listAscents' params="[username:
+                                sec.loggedInUserInfo(field: 'username')]">My ascents</g:link></li>
                         <li><g:link controller='logout'>Logout</g:link></li>
                     </ul>
                 </li>

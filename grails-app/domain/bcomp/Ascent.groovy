@@ -19,4 +19,9 @@ class Ascent {
         boulder nullable: false
         tries validator: { val, obj -> obj.style == Style.top ? val >= 2 : true}
     }
+
+    int getTries() {
+        return style == Style.flash ? 1 : tries
+    }
 }
+
