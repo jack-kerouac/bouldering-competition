@@ -9,6 +9,8 @@ class UrlMappings {
             }
         }
 
+        "/leaderboard"(controller: 'leaderboard', action: 'view')
+
         "/"(controller: 'home', action: 'home')
 
         "/foundation"(view:'/foundation')
