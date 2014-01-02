@@ -63,16 +63,6 @@
     </div>
 
     <div class="row">
-        <div class="small-3 column">
-            <label class="right inline">Photos</label>
-        </div>
-
-        <div class="small-9 column">
-            <p>TODO: Photo upload or textual start description</p>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="small-9 small-offset-3">
             <g:submitButton name="submit" class="button" value="${message(code: 'default.button.create.label')}"/>
         </div>
