@@ -10,6 +10,8 @@ class CreateBoulderCommand {
     String grade
     Section section
 
+    String locationDescription
+
     static constraints = {
         importFrom Boulder
     }

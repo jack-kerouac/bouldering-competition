@@ -3,10 +3,13 @@ package bcomp.gym
 class Boulder {
 
     static constraints = {
-        grade blank: false
+        grade nullable: false
+        locationDescription nullable: true
     }
 
     static belongsTo = [section: Section]
+
+    String locationDescription = ""
 
     String grade
 

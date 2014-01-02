@@ -23,7 +23,9 @@
 
         <div class="small-9 column ${hasErrors(field: 'boulder', 'error')}">
             <g:select name="boulder.id" from="${boulders}" optionKey="id"
-                      optionValue="${{ "${it.section.name} - ${it.grade}" }}"
+                      optionValue="${{ boulder ->
+                          "${boulder.section.name} - ${boulder.grade}" + (boulder.locationDescription.isEmpty() ? '' :
+                                  " - ${boulder.locationDescription}")}}"
                       value="${cmd.boulder?.id}"></g:select>
             <g:hasErrors field="section">
                 <small>
