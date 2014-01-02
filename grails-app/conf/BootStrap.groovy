@@ -34,16 +34,19 @@ class BootStrap {
         b3.save(flush: true)
     }
 
+    private void createUser(String username, def role) {
+        def user = new User(username: username, password: 'p').save(true)
+        UserRole.create user, role, true
+    }
+
     private void createSecurityData() {
         def bouldererRole = new Role(authority: 'ROLE_BOULDERER').save(flush: true)
 
-        def flo = new User(username: 'flo', password: 'p')
-        flo.save(flush: true)
-        def chris = new User(username: 'chris', password: 'p')
-        chris.save(flush: true)
-
-        UserRole.create flo, bouldererRole, true
-        UserRole.create chris, bouldererRole, true
+        createUser 'flo', bouldererRole
+        createUser 'chris', bouldererRole
+        createUser 'thomas', bouldererRole
+        createUser 'tony', bouldererRole
+        createUser 'fia', bouldererRole
     }
 
     def init = { servletContext ->
