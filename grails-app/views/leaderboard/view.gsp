@@ -25,7 +25,7 @@
             </tr>
             </thead>
             <tbody>
-            <g:each in="${ranking}">
+            <g:each in="${ranking.sort({it.position})}">
                 <tr>
                     <td>${it.position}</td>
                     <td><g:link controller="boulderer" action="listAscents"
