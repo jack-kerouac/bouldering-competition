@@ -30,7 +30,7 @@
                     <td>${it.position}</td>
                     <td><g:link controller="boulderer" action="listAscents"
                                 params="[username: it.boulderer.username]">${it.boulderer.username}</g:link></td>
-                    <td>${it.score} (${it.countFlashes} flash, ${it.countTops} tops)</td>
+                    <td>${it.score}: ${it.countTops} tops (${it.countFlashes} flash)</td>
                     <td><g:formatDate type="date" date="${it.lastSession}"/></td>
                 </tr>
             </g:each>

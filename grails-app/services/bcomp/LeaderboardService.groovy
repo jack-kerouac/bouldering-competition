@@ -26,12 +26,10 @@ class LeaderboardService {
 
             r.lastSession = a.date.after(r.lastSession) ? a.date : r.lastSession
 
+            r.countTops++
             switch (a.style) {
                 case Ascent.Style.flash:
                     r.countFlashes++
-                    break;
-                case Ascent.Style.top:
-                    r.countTops++
                     break;
             }
         }
@@ -40,7 +38,7 @@ class LeaderboardService {
         ranking = ranking.values()
 
         ranking.each {
-            it.score = POINTS_FLASH * it.countFlashes + POINTS_TOP * it.countTops
+            it.score = POINTS_FLASH * it.countFlashes + POINTS_TOP * (it.countTops - it.countFlashes)
         }
 
         if(ranking.size() == 0)

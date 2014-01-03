@@ -52,7 +52,7 @@ class LeaderboardServiceTest extends GroovyTestCase {
         assert rankFlo.position == 1
         assert rankFlo.lastSession == a1.date
         assert rankFlo.countFlashes == 1
-        assert rankFlo.countTops == 0
+        assert rankFlo.countTops == 1
         assert rankFlo.score == LeaderboardService.POINTS_FLASH
 
         def rankChris = ranking.find { it.boulderer.username == 'chris' }
