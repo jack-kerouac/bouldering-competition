@@ -14,7 +14,7 @@
 </div>
 
 <g:form action="create">
-    <input type="hidden" name="boulderer.id" value="${user.id}" />
+    <input type="hidden" name="boulderer.id" value="${user.id}"/>
 
     <div class="row">
         <div class="small-3 column">
@@ -25,7 +25,8 @@
             <g:select name="boulder.id" from="${boulders}" optionKey="id"
                       optionValue="${{ boulder ->
                           "${boulder.section.name} - ${boulder.grade}" + (boulder.locationDescription.isEmpty() ? '' :
-                                  " - ${boulder.locationDescription}")}}"
+                                  " - ${boulder.locationDescription}")
+                      }}"
                       value="${cmd.boulder?.id}"></g:select>
             <g:hasErrors field="section">
                 <small>
@@ -65,17 +66,12 @@
             </div>
 
             <div class="row">
-                <div class="medium-4 column">
+                <div class="medium-12 column">
                     <input type="radio" name="style" value="top"
                            id="top" ${cmd.style == Ascent.Style.top ? 'checked' : ''
                     }><label for="top" class="inline">top in</label>
-                </div>
-
-                <div class="medium-2 column">
                     <input type="number" name="tries" value="${cmd.tries}" min="2" id="tries"/>
-                </div>
-                <div class="medium-6 column">
-                    <label for="top" class="inline">tries</label>
+                    <label for="tries" class="inline">tries</label>
                     <g:hasErrors field="tries">
                         <small>
                             <g:eachError><span>${it.defaultMessage}</span></g:eachError>
