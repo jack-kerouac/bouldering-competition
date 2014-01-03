@@ -22,7 +22,7 @@
         </div>
 
         <div class="small-9 column ${hasErrors(field: 'boulder', 'error')}">
-            <g:select name="boulder.id" from="${boulders}" optionKey="id"
+            <g:select name="boulder.id" from="${boulders.sort()}" optionKey="id"
                       optionValue="${{ boulder ->
                           "${boulder.section.name} - ${boulder.grade}" + (boulder.locationDescription.isEmpty() ? '' :
                                   " - ${boulder.locationDescription}")
