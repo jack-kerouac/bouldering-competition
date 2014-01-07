@@ -28,4 +28,13 @@ $(function() {
 			$("#tries").attr(attr, true);
 		}
 	});
+
+
+	$('#floorplan').panzoom({
+		minScale: 1.0,
+		maxScale: 2.0,
+		contain: 'invert'
+	});
+
 });
+

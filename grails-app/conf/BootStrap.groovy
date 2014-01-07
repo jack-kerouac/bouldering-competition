@@ -1,26 +1,36 @@
-import bcomp.gym.Boulder
-import bcomp.gym.Gym
 import bcomp.aaa.Role
-import bcomp.gym.Section
 import bcomp.aaa.User
 import bcomp.aaa.UserRole
+import bcomp.gym.Boulder
+import bcomp.gym.FloorPlan
+import bcomp.gym.Gym
+import bcomp.gym.Section
+
+import javax.imageio.ImageIO
 
 class BootStrap {
+
+    def grailsApplication
 
     private void createBoulders() {
         Gym hg = new Gym('Heavens Gate')
 
+        def filePath = 'resources/halle_big.jpg'
+        def imageFile = grailsApplication.getParentContext().getResource("classpath:$filePath").getFile()
+        FloorPlan fp = new FloorPlan(ImageIO.read(imageFile))
+        hg.addToFloorPlans(fp)
+
         def panicRoom = new Section(name: 'Panic Room')
-        hg.addSection(panicRoom)
+        hg.addToSections(panicRoom)
 
         def dach = new Section(name: 'Großes Dach')
-        hg.addSection(dach)
+        hg.addToSections(dach)
 
         def grotte = new Section(name: 'Grotte')
-        hg.addSection(grotte)
+        hg.addToSections(grotte)
 
-        hg.addSection(new Section(name: 'Walze'))
-        hg.addSection(new Section(name: 'Diamant'))
+        hg.addToSections(new Section(name: 'Walze'))
+        hg.addToSections(new Section(name: 'Diamant'))
 
         hg.save(flush: true)
 

@@ -1,16 +1,19 @@
 package bcomp
 
 import bcomp.gym.Boulder
+import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_BOULDERER'])
 class AscentController {
 
     def createForm() {
+        def all = Gym.all
+        def gym = Gym.findByName('Heavens Gate')
         def boulders = Boulder.all  // TODO: load only boulders of HG
         def boulderer = getPrincipal()
         def cmd = flash.cmd ?: new CreateAscentCommand()
-        render view: 'create', model: [boulders: boulders, user: boulderer, cmd: cmd]
+        render view: 'create', model: [gym: gym, boulders: boulders, user: boulderer, cmd: cmd]
     }
 
     def create(CreateAscentCommand cmd) {

@@ -20,7 +20,7 @@ class LeaderboardServiceTest extends GroovyTestCase {
     void setUp() {
         hg = new Gym('Heavens Gate')
         def panicRoom = new Section(name: 'Panic Room')
-        hg.addSection(panicRoom)
+        hg.addToSections(panicRoom)
         hg.save()
 
         b1 = new Boulder(grade: 'yellow', section: panicRoom)

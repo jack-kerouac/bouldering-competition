@@ -17,6 +17,14 @@
     <input type="hidden" name="boulderer.id" value="${user.id}"/>
 
     <div class="row">
+        <div class="small-12 column">
+            <div id="floorplan" style="position: relative;">
+                <img src="${createLink(controller: 'floorPlan', action: 'image', params: [gymId: gym.id, floorPlanId: gym.floorPlans.first().id])}"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="small-3 column">
             <label class="right inline">Boulder</label>
         </div>

@@ -7,7 +7,7 @@ class Gym {
 
     String name
 
-    static hasMany = [sections: Section]
+    static hasMany = [sections: Section, floorPlans: FloorPlan]
 
     static mapping = {
         sections lazy: false, fetch: 'join'
@@ -20,11 +20,7 @@ class Gym {
     Gym(String name) {
         this.name = name
         this.sections = [] as Set
-    }
-
-    public void addSection(Section section) {
-        section.gym = this;
-        sections.add(section);
+        this.floorPlans = [] as Set
     }
 
 }
