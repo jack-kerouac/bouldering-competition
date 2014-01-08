@@ -7,11 +7,7 @@ class Gym {
 
     String name
 
-    static hasMany = [sections: Section, floorPlans: FloorPlan]
-
-    static mapping = {
-        sections lazy: false, fetch: 'join'
-    }
+    static hasMany = [boulders: Boulder, floorPlans: FloorPlan]
 
     static constraints = {
         name blank: false
@@ -19,7 +15,7 @@ class Gym {
 
     Gym(String name) {
         this.name = name
-        this.sections = [] as Set
+        this.boulders = [] as Set
         this.floorPlans = [] as Set
     }
 

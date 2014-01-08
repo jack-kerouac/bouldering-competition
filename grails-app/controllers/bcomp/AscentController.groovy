@@ -8,7 +8,6 @@ import grails.plugin.springsecurity.annotation.Secured
 class AscentController {
 
     def createForm() {
-        def all = Gym.all
         def gym = Gym.findByName('Heavens Gate')
         def boulders = Boulder.all  // TODO: load only boulders of HG
         def boulderer = getPrincipal()

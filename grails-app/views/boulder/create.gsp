@@ -14,29 +14,16 @@
 </div>
 
 <g:form action="create">
-    <div class="row">
-        <div class="small-3 column">
-            <label class="right inline">Section</label>
-        </div>
 
-        <div class="small-9 column ${hasErrors(field: 'section', 'error')}">
-            <g:select name="section.id" from="${sections}" optionKey="id" optionValue="name"
-                      value="${cmd.section?.id}"></g:select>
-            <g:hasErrors field="section">
-                <small>
-                    <g:eachError><span>${it.defaultMessage}</span></g:eachError>
-                </small>
-            </g:hasErrors>
-        </div>
-    </div>
+    <input type="hidden" name="gym.id" value="${gym.id}"/>
 
     <div class="row">
         <div class="small-3 column">
             <label class="right inline">Location Description</label>
         </div>
 
-        <div class="small-9 column ${hasErrors(field: 'section', 'error')}">
-            <g:textField name="locationDescription" value="${cmd.section?.id}"/>
+        <div class="small-9 column ${hasErrors(field: 'locationDescription', 'error')}">
+            <g:textField name="locationDescription" value="${cmd.locationDescription?.id}"/>
             <g:hasErrors field="locationDescription">
                 <small>
                     <g:eachError><span>${it.defaultMessage}</span></g:eachError>

@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     <th>Date</th>
-                    <th>Section</th>
+                    <th>Location</th>
                     <th>Grade</th>
                     <th>Style</th>
                     <th>Tries</th>
@@ -29,7 +29,7 @@
                 <g:each in="${ascents}">
                 <tr>
                     <td><g:formatDate type="date" date="${it.date}"/></td>
-                    <td>${it.boulder.section.name}</td>
+                    <td>${it.boulder.locationDescription}</td>
                     <td>${it.boulder.grade}</td>
                     <td>${it.style}</td>
                     <td>${it.tries}</td>

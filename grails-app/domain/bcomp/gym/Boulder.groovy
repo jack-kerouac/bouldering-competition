@@ -7,9 +7,9 @@ class Boulder {
         locationDescription nullable: true
     }
 
-    static belongsTo = [section: Section]
+    static belongsTo = [gym: Gym]
 
-    String locationDescription = ""
+    String locationDescription
 
     String grade
 

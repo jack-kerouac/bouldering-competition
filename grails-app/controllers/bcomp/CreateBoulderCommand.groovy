@@ -1,14 +1,14 @@
 package bcomp
 
 import bcomp.gym.Boulder
-import bcomp.gym.Section
+import bcomp.gym.Gym
 import grails.validation.Validateable
 
 @Validateable
 class CreateBoulderCommand {
 
     String grade
-    Section section
+    Gym gym
 
     String locationDescription
 

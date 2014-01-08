@@ -4,7 +4,6 @@ import bcomp.aaa.UserRole
 import bcomp.gym.Boulder
 import bcomp.gym.FloorPlan
 import bcomp.gym.Gym
-import bcomp.gym.Section
 
 import javax.imageio.ImageIO
 
@@ -20,28 +19,16 @@ class BootStrap {
         FloorPlan fp = new FloorPlan(ImageIO.read(imageFile))
         hg.addToFloorPlans(fp)
 
-        def panicRoom = new Section(name: 'Panic Room')
-        hg.addToSections(panicRoom)
+        Boulder b1 = new Boulder(grade: 'yellow')
+        hg.addToBoulders(b1)
 
-        def dach = new Section(name: 'Großes Dach')
-        hg.addToSections(dach)
+        Boulder b2 = new Boulder(grade: 'blue')
+        hg.addToBoulders(b2)
 
-        def grotte = new Section(name: 'Grotte')
-        hg.addToSections(grotte)
-
-        hg.addToSections(new Section(name: 'Walze'))
-        hg.addToSections(new Section(name: 'Diamant'))
+        Boulder b3 = new Boulder(grade: 'black')
+        hg.addToBoulders(b3)
 
         hg.save(flush: true)
-
-        Boulder b1 = new Boulder(grade: 'yellow', section: panicRoom)
-        b1.save(flush: true)
-
-        Boulder b2 = new Boulder(grade: 'blue', section: grotte)
-        b2.save(flush: true)
-
-        Boulder b3 = new Boulder(grade: 'black', section: dach)
-        b3.save(flush: true)
     }
 
     private void createUser(String username, def role) {

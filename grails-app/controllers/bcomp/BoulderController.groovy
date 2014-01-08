@@ -11,11 +11,10 @@ class BoulderController {
         // TODO: without this invocation, hg below only has one section ?!?
         def gyms = Gym.all
 
-        def hg = Gym.findByName('Heavens Gate')
-        def sections = hg.sections
+        def gym = Gym.findByName('Heavens Gate')
         def grades = ['green', 'yellow', 'red', 'blue', 'black', 'pink']
         def cmd = flash.cmd ?: new CreateBoulderCommand()
-        render view: 'create', model: [grades: grades, sections: sections, cmd: cmd]
+        render view: 'create', model: [gym: gym, grades: grades, cmd: cmd]
     }
 
     def create(CreateBoulderCommand cmd) {

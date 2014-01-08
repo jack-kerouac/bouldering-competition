@@ -3,7 +3,6 @@ package bcomp
 import bcomp.aaa.User
 import bcomp.gym.Boulder
 import bcomp.gym.Gym
-import bcomp.gym.Section
 
 /**
  * User: florian
@@ -19,16 +18,14 @@ class LeaderboardServiceTest extends GroovyTestCase {
 
     void setUp() {
         hg = new Gym('Heavens Gate')
-        def panicRoom = new Section(name: 'Panic Room')
-        hg.addToSections(panicRoom)
         hg.save()
 
-        b1 = new Boulder(grade: 'yellow', section: panicRoom)
-        b1.save()
-        b2 = new Boulder(grade: 'red', section: panicRoom)
-        b2.save()
-        b3 = new Boulder(grade: 'black', section: panicRoom)
-        b3.save()
+        b1 = new Boulder(grade: 'yellow')
+        hg.addToBoulders(b1)
+        b2 = new Boulder(grade: 'red')
+        hg.addToBoulders(b2)
+        b3 = new Boulder(grade: 'black')
+        hg.addToBoulders(b3)
 
         flo = new User(username: 'flo', password: 'p')
         flo.save()
