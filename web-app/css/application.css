@@ -4,7 +4,7 @@ body {
     font-family: "Open Sans", sans-serif !important;
 }
 
-i[class^='fi-'],i[class*=' fi-'] {
+i[class^='fi-'], i[class*=' fi-'] {
     font-size: 16px;
 }
 
@@ -28,4 +28,51 @@ input[readonly] {
 #create-ascent-page label[for='tries'] {
     display: inline-block;
     margin-left: 0.5em;
+}
+
+.boulder-location-map {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+
+
+.boulder-location-map input[type=radio] {
+    width: 30px;
+    height: 50px;
+    position: absolute;
+    transform-origin: 43.4099154% 99.0834539%;
+    -webkit-transform-origin: 43.4099154% 99.0834539%;
+    /*background-image: url("http://www.clker.com/cliparts/j/4/u/5/C/k/marker.svg");*/
+    /*background-size: 50px 50px;*/
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+.boulder-location-map input[type=radio]:before {
+    font-family: "foundation-icons";
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
+    content: "\f172";
+    font-size: 50px;
+}
+
+
+.boulder-location-map input[type=radio]:not(:checked) {
+    opacity: 0.8;
+}
+
+
+.boulder-location-map input[type=radio]:hover {
+    opacity: 1.0;
+}
+
+.boulder-location-map input[type=radio]:checked {
+    text-shadow: 0 0 1em red;
 }

@@ -18,29 +18,22 @@
 
     <div class="row">
         <div class="small-12 column">
-            <div id="floorplan" style="position: relative;">
-                <img src="${createLink(controller: 'floorPlan', action: 'image', params: [gymId: gym.id, floorPlanId: gym.floorPlans.first().id])}"/>
+            <g:set var="floorPlan" value="${gym.floorPlans.first()}"></g:set>
+
+            <div class="boulder-location-map"
+                 data-width="${floorPlan.widthInPx}" data-height="${floorPlan.heightInPx}">
+                <img class="floor-plan" src="${createLink(controller: 'floorPlan', action: 'image', params: [gymId:
+                        gym.id, floorPlanId: floorPlan.id])}"/>
+                <g:each in="${boulders}" var="boulder">
+                    <g:if test="${boulder.location instanceof bcomp.gym.OnFloorPlan}">
+                        <input type="radio" name="boulder.id" value="${boulder.id}" data-x="${boulder.location.x}"
+                               data-y="${boulder.location.y}" data-grade="${boulder.grade}" />
+                    </g:if>
+                    <g:else>
+                        <input type="radio" name="boulder.id" value="${boulder.id}" />
+                    </g:else>
+                </g:each>
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="small-3 column">
-            <label class="right inline">Boulder</label>
-        </div>
-
-        <div class="small-9 column ${hasErrors(field: 'boulder', 'error')}">
-            <g:select name="boulder.id" from="${boulders.sort()}" optionKey="id"
-                      optionValue="${{ boulder ->
-                          "${boulder.grade}" + (boulder.locationDescription ?
-                                  " - ${boulder.locationDescription}" : '')
-                      }}"
-                      value="${cmd.boulder?.id}"></g:select>
-            <g:hasErrors field="section">
-                <small>
-                    <g:eachError><span>${it.defaultMessage}</span></g:eachError>
-                </small>
-            </g:hasErrors>
         </div>
     </div>
 

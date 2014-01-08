@@ -19,14 +19,29 @@ class BootStrap {
         FloorPlan fp = new FloorPlan(ImageIO.read(imageFile))
         hg.addToFloorPlans(fp)
 
-        Boulder b1 = new Boulder(grade: 'yellow')
+        Boulder b1 = new Boulder(grade: 'red')
+        b1.onFloorPlan(fp, 534, 298)
         hg.addToBoulders(b1)
 
-        Boulder b2 = new Boulder(grade: 'blue')
+        Boulder b2 = new Boulder(grade: 'red')
+        b2.onFloorPlan(fp, 743, 343)
         hg.addToBoulders(b2)
 
-        Boulder b3 = new Boulder(grade: 'black')
+        Boulder b3 = new Boulder(grade: 'white')
+        b3.onFloorPlan(fp, 566, 292)
         hg.addToBoulders(b3)
+
+        Boulder b4 = new Boulder(grade: 'white')
+        b4.onFloorPlan(fp, 612, 481)
+        hg.addToBoulders(b4)
+
+        Boulder b5 = new Boulder(grade: 'black')
+        b5.onFloorPlan(fp, 751, 659)
+        hg.addToBoulders(b5)
+
+        Boulder b6 = new Boulder(grade: 'blue')
+        b6.onFloorPlan(fp, 783, 366)
+        hg.addToBoulders(b6)
 
         hg.save(flush: true)
     }
