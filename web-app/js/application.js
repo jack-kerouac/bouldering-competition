@@ -34,7 +34,7 @@ $(function () {
 });
 
 function initBoulderLocationMap($boulderLocationMap, makeZoomable) {
-	var $boulderMarker = $boulderLocationMap.find('input[type=radio]');
+	var $boulderMarker = $boulderLocationMap.find('li');
 
 	if (makeZoomable) {
 		var $zoomElem = $boulderLocationMap;

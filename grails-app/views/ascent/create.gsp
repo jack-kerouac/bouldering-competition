@@ -24,15 +24,20 @@
                  data-width="${floorPlan.widthInPx}" data-height="${floorPlan.heightInPx}">
                 <img class="floor-plan" src="${createLink(controller: 'floorPlan', action: 'image', params: [gymId:
                         gym.id, floorPlanId: floorPlan.id])}"/>
-                <g:each in="${boulders}" var="boulder">
-                    <g:if test="${boulder.location instanceof bcomp.gym.OnFloorPlan}">
-                        <input type="radio" name="boulder.id" value="${boulder.id}" data-x="${boulder.location.x}"
-                               data-y="${boulder.location.y}" data-grade="${boulder.grade}" />
-                    </g:if>
-                    <g:else>
-                        <input type="radio" name="boulder.id" value="${boulder.id}" />
-                    </g:else>
-                </g:each>
+                <ul>
+                    <g:each in="${boulders}" var="boulder">
+                        <g:if test="${boulder.location instanceof bcomp.gym.OnFloorPlan}">
+                            <li data-x="${boulder.location.x}"
+                                data-y="${boulder.location.y}"
+                                data-grade="${boulder.grade}"/>
+                                <input type="radio" name="boulder.id" value="${boulder.id}">
+                            </li>
+                        </g:if>
+                        <g:else>
+                            <p class="error">Location of Boulder is not on a floorplan.</p>
+                        </g:else>
+                    </g:each>
+                </ul>
             </div>
         </div>
     </div>
