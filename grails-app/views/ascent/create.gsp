@@ -41,6 +41,8 @@
                     </g:each>
                 </ul>
             </div>
+
+            <tmpl:/shared/fieldError field="boulder"/>
         </div>
     </div>
 
@@ -51,11 +53,7 @@
 
         <div class="small-9 column ${hasErrors(field: 'date', 'error')}">
             <input name="date" type="date" value="${formatDate(date: cmd.date, format: 'yyyy-MM-dd')}">
-            <g:hasErrors field="date">
-                <small>
-                    <g:eachError><span>${it.defaultMessage}</span></g:eachError>
-                </small>
-            </g:hasErrors>
+            <tmpl:/shared/fieldError field="date"/>
         </div>
     </div>
 
@@ -80,11 +78,7 @@
                     }><label for="top" class="inline">top in</label>
                     <input type="number" name="tries" value="${cmd.tries}" min="2" id="tries"/>
                     <label for="tries" class="inline">tries</label>
-                    <g:hasErrors field="tries">
-                        <small>
-                            <g:eachError><span>${it.defaultMessage}</span></g:eachError>
-                        </small>
-                    </g:hasErrors>
+                    <tmpl:/shared/fieldError field="tries"/>
                 </div>
             </div>
         </div>

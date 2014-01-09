@@ -24,11 +24,7 @@
 
         <div class="small-9 column ${hasErrors(field: 'locationDescription', 'error')}">
             <g:textField name="locationDescription" value="${cmd.locationDescription?.id}"/>
-            <g:hasErrors field="locationDescription">
-                <small>
-                    <g:eachError><span>${it.defaultMessage}</span></g:eachError>
-                </small>
-            </g:hasErrors>
+            <tmpl:/shared/fieldError field="locationDescription"/>
         </div>
     </div>
 
@@ -41,11 +37,7 @@
         <div class="small-9 column ${hasErrors(field: 'grade', 'error')}">
             <g:select name="grade" from="${grades}"
                       value="${cmd.grade}"></g:select>
-            <g:hasErrors field="grade">
-                <small>
-                    <g:eachError><span>${it.defaultMessage}</span></g:eachError>
-                </small>
-            </g:hasErrors>
+            <tmpl:/shared/fieldError field="grade"/>
         </div>
     </div>
 
