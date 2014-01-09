@@ -32,6 +32,8 @@ environments {
             dbCreate = 'create-drop' // use 'update', 'validate', 'create' or 'create-drop'
             // DB is bound as "bcomp" to cloudbees application "bcomp"
             jndiName = 'java:comp/env/jdbc/bcomp'
+            // use this URL instead of jndiName for schema-export
+            //url = "jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com/bcomp"
             username = 'bcomp'
             password = '785rhgoiehjtg03t'
         }
