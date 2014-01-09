@@ -30,7 +30,7 @@
                 <tr>
                     <td><g:formatDate type="date" date="${it.date}"/></td>
                     <td>${it.boulder.locationDescription}</td>
-                    <td>${it.boulder.grade}</td>
+                    <td>${it.boulder.color}</td>
                     <td>${it.style}</td>
                     <td>${it.tries}</td>
                 </tr>

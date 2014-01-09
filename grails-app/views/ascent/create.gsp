@@ -28,12 +28,15 @@
                         <g:if test="${boulder.location instanceof bcomp.gym.OnFloorPlan}">
                             <li data-x="${boulder.location.x}"
                                 data-y="${boulder.location.y}"
-                                data-grade="${boulder.grade}"/>
-                                <input type="radio" name="boulder.id" value="${boulder.id}">
+                                data-color-primary="${rgb(color: boulder.color.primaryColor)}"
+                                <g:if test="${boulder.color.hasSecondaryColor()}">
+                                    data-color-secondary="${rgb(color: boulder.color.secondaryColor)}"
+                                </g:if>/>
+                            <input type="radio" name="boulder.id" value="${boulder.id}">
                             </li>
                         </g:if>
                         <g:else>
-                            <p class="error">Location of Boulder is not on a floorplan.</p>
+                            <p class="error">Location of boulder is not on a floor plan.</p>
                         </g:else>
                     </g:each>
                 </ul>

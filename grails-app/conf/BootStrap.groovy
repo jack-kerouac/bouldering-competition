@@ -2,6 +2,7 @@ import bcomp.aaa.Role
 import bcomp.aaa.User
 import bcomp.aaa.UserRole
 import bcomp.gym.Boulder
+import bcomp.gym.BoulderColor
 import bcomp.gym.FloorPlan
 import bcomp.gym.Gym
 
@@ -19,27 +20,27 @@ class BootStrap {
         FloorPlan fp = new FloorPlan(ImageIO.read(imageFile))
         hg.addToFloorPlans(fp)
 
-        Boulder b1 = new Boulder(grade: 'red')
+        Boulder b1 = new Boulder(color: BoulderColor.RED)
         b1.onFloorPlan(fp, 534/2000, 298/1393)
         hg.addToBoulders(b1)
 
-        Boulder b2 = new Boulder(grade: 'red')
+        Boulder b2 = new Boulder(color: BoulderColor.RED)
         b2.onFloorPlan(fp, 743/2000, 343/1393)
         hg.addToBoulders(b2)
 
-        Boulder b3 = new Boulder(grade: 'white')
+        Boulder b3 = new Boulder(color: BoulderColor.WHITE)
         b3.onFloorPlan(fp, 566/2000, 292/1393)
         hg.addToBoulders(b3)
 
-        Boulder b4 = new Boulder(grade: 'white')
+        Boulder b4 = new Boulder(color: BoulderColor.WHITE)
         b4.onFloorPlan(fp, 612/2000, 481/1393)
         hg.addToBoulders(b4)
 
-        Boulder b5 = new Boulder(grade: 'black')
+        Boulder b5 = new Boulder(color: BoulderColor.BLACK)
         b5.onFloorPlan(fp, 751/2000, 659/1393)
         hg.addToBoulders(b5)
 
-        Boulder b6 = new Boulder(grade: 'blue')
+        Boulder b6 = new Boulder(color: BoulderColor.YELLOW_BLACK)
         b6.onFloorPlan(fp, 783/2000, 366/1393)
         hg.addToBoulders(b6)
 

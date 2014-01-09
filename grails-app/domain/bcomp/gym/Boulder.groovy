@@ -3,7 +3,7 @@ package bcomp.gym
 class Boulder {
 
     static constraints = {
-        grade nullable: false
+        color nullable: false
         locationDescription nullable: true
     }
 
@@ -13,7 +13,11 @@ class Boulder {
 
     String locationDescription
 
-    String grade
+    /**
+     * Either the color of the holds and feet of the boulder or any other marks to distinguish this boulder from
+     * others.
+     */
+    BoulderColor color
 
     public void onFloorPlan(FloorPlan floorPlan, double x, double y) {
         location = new OnFloorPlan(floorPlan: floorPlan, x: x, y: y)

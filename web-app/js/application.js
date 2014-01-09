@@ -110,9 +110,19 @@ function initBoulderLocationMap($boulderLocationMap, makeZoomable) {
 
 	function colorMarkers() {
 		$boulderMarker.each(function (e, t) {
-			$(t).css({
-				color: $(t).data('grade')
-			});
+			var primary = $(t).data('color-primary');
+			var secondary = $(t).data('color-secondary');
+			if(secondary) {
+				// TODO: somehow use secondary color also
+				$(t).css({
+					color: $(t).data('color-primary')
+				});
+			}
+			else {
+				$(t).css({
+					color: $(t).data('color-primary')
+				});
+			}
 		});
 	}
 	colorMarkers();
