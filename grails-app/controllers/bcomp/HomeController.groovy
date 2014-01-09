@@ -6,6 +6,6 @@ import grails.plugin.springsecurity.annotation.Secured
 class HomeController {
 
     def home() {
-        [users: ['florian', 'christoph'], gyms: ['Heavens Gate', 'Boulderwelt']]
+        [users: ['florian', 'christoph'], gyms: ['Boulderwelt']]
     }
 }

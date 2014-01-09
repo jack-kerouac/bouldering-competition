@@ -17,9 +17,11 @@
     <g:renderException exception="${exception}"/>
 </g:if>
 <g:else>
-    <ul class="errors">
-        <li>An error has occurred</li>
-    </ul>
+    <div class="row">
+        <div class="column small-12">
+            <p>An error has occurred.</p>
+        </div>
+    </div>
 </g:else>
 
 </body>

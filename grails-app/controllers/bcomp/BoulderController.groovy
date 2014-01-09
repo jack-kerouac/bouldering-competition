@@ -9,10 +9,7 @@ import grails.plugin.springsecurity.annotation.Secured
 class BoulderController {
 
     def createForm() {
-        // TODO: without this invocation, hg below only has one section ?!?
-        def gyms = Gym.all
-
-        def gym = Gym.findByName('Heavens Gate')
+        def gym = Gym.findByName('Boulderwelt')
         def cmd = flash.cmd ?: new CreateBoulderCommand()
         render view: 'create', model: [gym: gym, colors: BoulderColor.values(), cmd: cmd]
     }

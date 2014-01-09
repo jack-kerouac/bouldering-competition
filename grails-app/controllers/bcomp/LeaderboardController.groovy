@@ -9,9 +9,7 @@ class LeaderboardController {
     def leaderboardService
 
     def view() {
-        def all = Gym.all
-
-        def hg = Gym.findByName('Heavens Gate')
-        [ranking: leaderboardService.calculateRanking(hg)]
+        def gym = Gym.findByName('Boulderwelt')
+        [ranking: leaderboardService.calculateRanking(gym)]
     }
 }

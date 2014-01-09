@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 class BouldererController {
 
     def listAscents(String username) {
-        def gym = Gym.findByName('Heavens Gate')
+        def gym = Gym.findByName('Boulderwelt')
         def boulderer_ = User.findByUsername(username)
         if(boulderer_ == null)
             throw new UsernameNotFoundException("boulderer ${username} not found")

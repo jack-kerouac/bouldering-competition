@@ -46,7 +46,7 @@
 
             <!-- Left Nav Section -->
             <ul class="left">
-                <li><a href="#">Heavens Gate</a></li>
+                <li><a href="#">Boulderwelt</a></li>
             </ul>
         </section>
     </nav>

@@ -13,42 +13,49 @@ class BootStrap {
     def grailsApplication
 
     private void createBoulders() {
-        Gym hg = new Gym('Heavens Gate')
+        Gym gym = Gym.findByName('Boulderwelt')
+        FloorPlan fp = gym.floorPlans.first()
+
+        Boulder b1 = new Boulder(color: BoulderColor.RED)
+        b1.onFloorPlan(fp, 534/2000, 298/1393)
+        gym.addToBoulders(b1)
+
+        Boulder b2 = new Boulder(color: BoulderColor.RED)
+        b2.onFloorPlan(fp, 743/2000, 343/1393)
+        gym.addToBoulders(b2)
+
+        Boulder b3 = new Boulder(color: BoulderColor.WHITE)
+        b3.onFloorPlan(fp, 566/2000, 292/1393)
+        gym.addToBoulders(b3)
+
+        Boulder b4 = new Boulder(color: BoulderColor.WHITE)
+        b4.onFloorPlan(fp, 612/2000, 481/1393)
+        gym.addToBoulders(b4)
+
+        Boulder b5 = new Boulder(color: BoulderColor.BLACK)
+        b5.onFloorPlan(fp, 751/2000, 659/1393)
+        gym.addToBoulders(b5)
+
+        Boulder b6 = new Boulder(color: BoulderColor.YELLOW_BLACK)
+        b6.onFloorPlan(fp, 783/2000, 366/1393)
+        gym.addToBoulders(b6)
+
+        gym.save(flush: true)
+    }
+
+    private void createGym() {
+        Gym gym = new Gym('Boulderwelt')
 
         def filePath = 'resources/halle_big.jpg'
         def imageFile = grailsApplication.getParentContext().getResource("classpath:$filePath").getFile()
         FloorPlan fp = new FloorPlan(ImageIO.read(imageFile))
-        hg.addToFloorPlans(fp)
+        gym.addToFloorPlans(fp)
 
-        Boulder b1 = new Boulder(color: BoulderColor.RED)
-        b1.onFloorPlan(fp, 534/2000, 298/1393)
-        hg.addToBoulders(b1)
-
-        Boulder b2 = new Boulder(color: BoulderColor.RED)
-        b2.onFloorPlan(fp, 743/2000, 343/1393)
-        hg.addToBoulders(b2)
-
-        Boulder b3 = new Boulder(color: BoulderColor.WHITE)
-        b3.onFloorPlan(fp, 566/2000, 292/1393)
-        hg.addToBoulders(b3)
-
-        Boulder b4 = new Boulder(color: BoulderColor.WHITE)
-        b4.onFloorPlan(fp, 612/2000, 481/1393)
-        hg.addToBoulders(b4)
-
-        Boulder b5 = new Boulder(color: BoulderColor.BLACK)
-        b5.onFloorPlan(fp, 751/2000, 659/1393)
-        hg.addToBoulders(b5)
-
-        Boulder b6 = new Boulder(color: BoulderColor.YELLOW_BLACK)
-        b6.onFloorPlan(fp, 783/2000, 366/1393)
-        hg.addToBoulders(b6)
-
-        hg.save(flush: true)
+        gym.save(flash: true)
     }
 
     private void createUser(String username, def role) {
-        def user = new User(username: username, password: 'p').save(true)
+        def user = new User(username: username, password: 'p').save(flush: true)
         UserRole.create user, role, true
     }
 
@@ -69,10 +76,11 @@ class BootStrap {
         environments {
             production {
                 createSecurityData()
-                createBoulders()
+                createGym()
             }
             development {
                 createSecurityData()
+                createGym()
                 createBoulders()
             }
             test {
