@@ -8,7 +8,7 @@ class FloorPlan {
 
     static transients = ['image']
 
-    static mapping = { imageAsPng sqlType: 'blob'}
+    static mapping = { imageAsPng sqlType: 'mediumblob'}
 
     static belongsTo = [gym: Gym]
 
