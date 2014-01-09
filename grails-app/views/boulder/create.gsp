@@ -19,18 +19,6 @@
 
     <div class="row">
         <div class="small-3 column">
-            <label class="right inline">Location Description</label>
-        </div>
-
-        <div class="small-9 column ${hasErrors(field: 'locationDescription', 'error')}">
-            <g:textField name="locationDescription" value="${cmd.locationDescription?.id}"/>
-            <tmpl:/shared/fieldError field="locationDescription"/>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="small-3 column">
             <label class="right inline">Grade</label>
         </div>
 

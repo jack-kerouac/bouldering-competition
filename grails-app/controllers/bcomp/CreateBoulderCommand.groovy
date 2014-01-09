@@ -7,10 +7,7 @@ import grails.validation.Validateable
 @Validateable
 class CreateBoulderCommand {
 
-    String grade
     Gym gym
-
-    String locationDescription
 
     static constraints = {
         importFrom Boulder

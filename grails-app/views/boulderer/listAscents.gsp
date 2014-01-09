@@ -19,7 +19,6 @@
             <thead>
                 <tr>
                     <th>Date</th>
-                    <th>Location</th>
                     <th>Grade</th>
                     <th>Style</th>
                     <th>Tries</th>
@@ -29,7 +28,6 @@
                 <g:each in="${ascents}">
                 <tr>
                     <td><g:formatDate type="date" date="${it.date}"/></td>
-                    <td>${it.boulder.locationDescription}</td>
                     <td>${it.boulder.color}</td>
                     <td>${it.style}</td>
                     <td>${it.tries}</td>
