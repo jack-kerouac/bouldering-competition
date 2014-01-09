@@ -6,16 +6,12 @@ class OnFloorPlan extends Location {
         floorPlan nullable: false, validator: { floorPlan, location ->
             return location.boulder.gym.floorPlans.contains(floorPlan)
         }
-        x validator: { x, location ->
-            return x in (0..<location.floorPlan.widthInPx)
-        }
-        y validator: { y, location ->
-            return y in (0..<location.floorPlan.heightInPx)
-        }
+        x min: 0.0d, max: 1.0d
+        y min: 0.0d, max: 1.0d
     }
 
     FloorPlan floorPlan
 
-    int x, y
+    double x, y
 
 }

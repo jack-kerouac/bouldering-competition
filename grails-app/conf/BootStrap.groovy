@@ -20,27 +20,27 @@ class BootStrap {
         hg.addToFloorPlans(fp)
 
         Boulder b1 = new Boulder(grade: 'red')
-        b1.onFloorPlan(fp, 534, 298)
+        b1.onFloorPlan(fp, 534/2000, 298/1393)
         hg.addToBoulders(b1)
 
         Boulder b2 = new Boulder(grade: 'red')
-        b2.onFloorPlan(fp, 743, 343)
+        b2.onFloorPlan(fp, 743/2000, 343/1393)
         hg.addToBoulders(b2)
 
         Boulder b3 = new Boulder(grade: 'white')
-        b3.onFloorPlan(fp, 566, 292)
+        b3.onFloorPlan(fp, 566/2000, 292/1393)
         hg.addToBoulders(b3)
 
         Boulder b4 = new Boulder(grade: 'white')
-        b4.onFloorPlan(fp, 612, 481)
+        b4.onFloorPlan(fp, 612/2000, 481/1393)
         hg.addToBoulders(b4)
 
         Boulder b5 = new Boulder(grade: 'black')
-        b5.onFloorPlan(fp, 751, 659)
+        b5.onFloorPlan(fp, 751/2000, 659/1393)
         hg.addToBoulders(b5)
 
         Boulder b6 = new Boulder(grade: 'blue')
-        b6.onFloorPlan(fp, 783, 366)
+        b6.onFloorPlan(fp, 783/2000, 366/1393)
         hg.addToBoulders(b6)
 
         hg.save(flush: true)

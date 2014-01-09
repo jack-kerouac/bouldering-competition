@@ -96,18 +96,12 @@ function initBoulderLocationMap($boulderLocationMap, makeZoomable) {
 
 	function positionBoulderMarkers() {
 		$boulderMarker.each(function (e, t) {
-			var blmDisplayW = $boulderLocationMap.width();
-			var blmW = $boulderLocationMap.data('width');
-			var blmDisplayH = $boulderLocationMap.height();
-			var blmH = $boulderLocationMap.data('height');
 			var x = $(t).data('x');
 			var y = $(t).data('y');
 
-			var markerOffsetX = -7;
-			var markerOffsetY = -42;
 			$(t).css({
-				left: x / blmW * blmDisplayW + markerOffsetX,
-				top: y / blmH * blmDisplayH + markerOffsetY
+				left: x*100 + "%",
+				top: y*100 + "%"
 			});
 		});
 	}

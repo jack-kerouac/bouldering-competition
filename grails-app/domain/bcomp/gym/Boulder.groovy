@@ -15,7 +15,7 @@ class Boulder {
 
     String grade
 
-    public void onFloorPlan(FloorPlan floorPlan, int x, int y) {
+    public void onFloorPlan(FloorPlan floorPlan, double x, double y) {
         location = new OnFloorPlan(floorPlan: floorPlan, x: x, y: y)
         location.boulder = this
     }

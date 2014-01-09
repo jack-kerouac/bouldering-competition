@@ -20,8 +20,7 @@
         <div class="small-12 column">
             <g:set var="floorPlan" value="${gym.floorPlans.first()}"></g:set>
 
-            <div class="boulder-location-map"
-                 data-width="${floorPlan.widthInPx}" data-height="${floorPlan.heightInPx}">
+            <div class="boulder-location-map">
                 <img class="floor-plan" src="${createLink(controller: 'floorPlan', action: 'image', params: [gymId:
                         gym.id, floorPlanId: floorPlan.id])}"/>
                 <ul>
