@@ -75,8 +75,6 @@ class BootStrap {
     def init = { servletContext ->
         environments {
             production {
-                createSecurityData()
-                createGym()
             }
             development {
                 createSecurityData()

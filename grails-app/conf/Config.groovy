@@ -97,7 +97,7 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        grails.serverURL = "http://bcomp.foi.cloudbees.net"
+        grails.serverURL = "http://bcomp.florianrampp.de"
     }
 }
 
