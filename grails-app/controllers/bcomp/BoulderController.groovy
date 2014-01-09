@@ -1,6 +1,7 @@
 package bcomp
 
 import bcomp.gym.Boulder
+import bcomp.gym.BoulderColor
 import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
 
@@ -12,18 +13,18 @@ class BoulderController {
         def gyms = Gym.all
 
         def gym = Gym.findByName('Heavens Gate')
-        def grades = ['green', 'yellow', 'red', 'blue', 'black', 'pink']
         def cmd = flash.cmd ?: new CreateBoulderCommand()
-        render view: 'create', model: [gym: gym, grades: grades, cmd: cmd]
+        render view: 'create', model: [gym: gym, colors: BoulderColor.values(), cmd: cmd]
     }
 
     def create(CreateBoulderCommand cmd) {
         if(cmd.validate()) {
             Boulder b = new Boulder()
             b.properties = cmd.properties
+            b.onFloorPlan(cmd.floorPlan, cmd.x, cmd.y)
             b.save()
 
-            flashHelper.confirm 'default.created.message': [b.grade, 'bcomp.boulder.label'], true
+            flashHelper.confirm 'default.created.message': [b.color, 'bcomp.boulder.label']
             redirect controller: 'home', action: 'home'
         }
         else {

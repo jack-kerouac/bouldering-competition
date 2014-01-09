@@ -9,7 +9,7 @@ i[class^='fi-'], i[class*=' fi-'] {
 }
 
 input[readonly] {
-    color: #e9e9e9;
+    color: #999999;
 }
 
 #home-page .content a.button {
@@ -28,6 +28,18 @@ input[readonly] {
 #create-ascent-page label[for='tries'] {
     display: inline-block;
     margin-left: 0.5em;
+}
+
+
+#create-boulder-page input[name="x"], #create-boulder-page input[name="y"] {
+    width: 12em;
+    display: inline-block;
+    margin-right: 2em;
+}
+
+#create-boulder-page label[for="x"], #create-boulder-page label[for="y"] {
+    width: 1em;
+    display: inline-block;
 }
 
 .boulder-location-map {

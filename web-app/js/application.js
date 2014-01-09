@@ -29,8 +29,19 @@ $(function () {
 		}
 	});
 
-	initBoulderLocationMap($('.boulder-location-map'), false);
 
+	/* this is for the create boulder page */
+	$('#create-boulder-page img.floor-plan').click(function(e) {
+		var offset = $(this).offset();
+		var width = $(this).width();
+		var height = $(this).height();
+
+		$("#create-boulder-page input[name='x']").val((e.pageX - offset.left) / width);
+		$("#create-boulder-page input[name='y']").val((e.pageY - offset.top) / height);
+	});
+
+	/* this is for the create ascent page */
+	initBoulderLocationMap($('.boulder-location-map'), false);
 });
 
 function initBoulderLocationMap($boulderLocationMap, makeZoomable) {
