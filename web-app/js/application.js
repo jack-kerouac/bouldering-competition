@@ -31,7 +31,7 @@ $(function () {
 
 
 	/* this is for the create boulder page */
-	$('#create-boulder-page img.floor-plan').click(function(e) {
+	$('#create-boulder-page img.floor-plan').click(function (e) {
 		var offset = $(this).offset();
 		var width = $(this).width();
 		var height = $(this).height();
@@ -111,8 +111,8 @@ function initBoulderLocationMap($boulderLocationMap, makeZoomable) {
 			var y = $(t).data('y');
 
 			$(t).css({
-				left: x*100 + "%",
-				top: y*100 + "%"
+				left: x * 100 + "%",
+				top: y * 100 + "%"
 			});
 		});
 	}
@@ -123,7 +123,7 @@ function initBoulderLocationMap($boulderLocationMap, makeZoomable) {
 		$boulderMarker.each(function (e, t) {
 			var primary = $(t).data('color-primary');
 			var secondary = $(t).data('color-secondary');
-			if(secondary) {
+			if (secondary) {
 				// TODO: somehow use secondary color also
 				$(t).css({
 					color: $(t).data('color-primary')
@@ -136,10 +136,6 @@ function initBoulderLocationMap($boulderLocationMap, makeZoomable) {
 			}
 		});
 	}
+
 	colorMarkers();
-
-
-	$boulderMarker.click(function(e) {
-		console.log('testtt');
-	});
 }
