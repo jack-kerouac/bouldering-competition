@@ -56,10 +56,13 @@ class BootStrap {
         def bouldererRole = new Role(authority: 'ROLE_BOULDERER').save(flush: true)
 
         createUser 'flo', bouldererRole
-        createUser 'chris', bouldererRole
-        createUser 'thomas', bouldererRole
-        createUser 'tony', bouldererRole
+        createUser 'christoph', bouldererRole
         createUser 'fia', bouldererRole
+        createUser 'thomas', bouldererRole
+        createUser 'franz', bouldererRole
+        createUser 'anja', bouldererRole
+        createUser 'chris', bouldererRole
+        createUser 'tony', bouldererRole
     }
 
     def init = { servletContext ->
