@@ -32,7 +32,8 @@
                                 <g:if test="${boulder.color.hasSecondaryColor()}">
                                     data-color-secondary="${rgb(color: boulder.color.secondaryColor)}"
                                 </g:if>/>
-                            <input type="radio" name="boulder.id" value="${boulder.id}">
+                                <input type="radio" name="boulder.id" id="boulder-${boulder.id}" value="${boulder.id}">
+                                <label for="boulder-${boulder.id}">&#xf172;</label>
                             </li>
                         </g:if>
                         <g:else>

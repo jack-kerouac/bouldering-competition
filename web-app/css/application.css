@@ -59,43 +59,56 @@ input[readonly] {
 .boulder-location-map input[type=radio] {
     color: inherit;
     cursor: pointer;
-
-    position: relative;
-    left: -5px;
-    top: -35px;
-
     margin: 0;
+
+    position: absolute;
+    left: -5px;
+    top: -32px;
 }
 
-.boulder-location-map input[type=radio]:before {
+.boulder-location-map li label {
     font-family: "foundation-icons";
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
     text-transform: none;
     line-height: 1;
+    -webkit-font-smoothing: antialiased;
     display: inline-block;
-    content: "\f172";
+    text-decoration: inherit;
     font-size: 50px;
 
-    /* centers hole of marker symbol on radio button */
-    position: relative;
-    left: -8px;
-    top: -14px;
+    /* centers hole of marker symbol on radio button*/
+    position: absolute;
+    left: -13px;
+    top: -45px;
 
-    z-index: 5;
+    width: 30px;
+    height: 45px;
+
+    margin: 0;
+
+    display: inline-block;
 }
 
 
-.boulder-location-map input[type=radio]:not(:checked) {
+.boulder-location-map li {
     opacity: 0.8;
 }
 
-
-.boulder-location-map input[type=radio]:hover {
+.boulder-location-map li.chosen {
     opacity: 1.0;
+    z-index: 1;
+    
+    -webkit-transform: scale(1.5, 1.5) ;-moz-transform: scale(1.5, 1.5) ;-ms-transform: scale(1.5, 1.5) ;-o-transform: scale(1.5, 1.5) ;transform: scale(1.5, 1.5) ;
 }
 
-.boulder-location-map input[type=radio]:checked {
-    text-shadow: 0 0 10px red;
+.boulder-location-map li.chosen input {
+    /* move input button to front, otherwise it is covered by label text shadow which does not look so nice */
+    z-index: 1;
+}
+
+
+.boulder-location-map li:hover {
+    opacity: 1.0;
 }

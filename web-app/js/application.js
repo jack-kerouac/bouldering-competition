@@ -93,16 +93,17 @@ function initBoulderLocationMap($boulderLocationMap, makeZoomable) {
 			resizeBoulderMarkers(scale);
 		});
 
-	}
 
-	function resizeBoulderMarkers(scale) {
-		var transformString = 'scale(' + 1 / scale + ', ' + 1 / scale + ')';
-		$boulderMarker.each(function (e, t) {
-			$(t).css({
-				transform: transformString,
-				'-webkit-transform': transformString
+		function resizeBoulderMarkers(scale) {
+			var transformString = 'scale(' + 1 / scale + ', ' + 1 / scale + ')';
+			$boulderMarker.each(function (e, t) {
+				$(t).css({
+					transform: transformString,
+					'-webkit-transform': transformString
+				});
 			});
-		});
+		}
+
 	}
 
 	function positionBoulderMarkers() {
@@ -124,13 +125,15 @@ function initBoulderLocationMap($boulderLocationMap, makeZoomable) {
 			var primary = $(t).data('color-primary');
 			var secondary = $(t).data('color-secondary');
 			if (secondary) {
-				// TODO: somehow use secondary color also
-				$(t).css({
-					color: $(t).data('color-primary')
+				/* use text gradient for two colored boulders */
+				$(t).find('label').css({
+					background: '-webkit-linear-gradient(' + primary + ', ' + secondary + ')',
+					'-webkit-background-clip': 'text',
+					'-webkit-text-fill-color': 'transparent'
 				});
 			}
 			else {
-				$(t).css({
+				$(t).find('label').css({
 					color: $(t).data('color-primary')
 				});
 			}
@@ -138,4 +141,10 @@ function initBoulderLocationMap($boulderLocationMap, makeZoomable) {
 	}
 
 	colorMarkers();
+
+	var $radioButtons = $boulderMarker.find("input[type='radio']");
+	$radioButtons.change(function (e) {
+		$radioButtons.parent('li').removeClass('chosen');
+		$(this).parent('li').addClass('chosen');
+	});
 }
