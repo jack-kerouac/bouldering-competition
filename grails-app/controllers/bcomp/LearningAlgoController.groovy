@@ -7,6 +7,8 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured()
 class LearningAlgoController {
 
+    def gradeLearningService
+
     def showMeta() {
         def gym = Gym.findByName('Boulderwelt')
         def users = [:]
@@ -16,6 +18,11 @@ class LearningAlgoController {
         }
 
         [users: users, boulders: gym.boulders]
+    }
+
+    def resetCurrentUserGrades() {
+        gradeLearningService.resetCurrentUserGrades()
+        redirect action: 'showMeta'
     }
 
 }

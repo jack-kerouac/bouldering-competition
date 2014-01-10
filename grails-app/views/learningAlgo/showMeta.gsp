@@ -19,9 +19,11 @@
         <table>
             <thead>
             <tr>
-                <th>username</th>
-                <th>initial grade</th>
+                <th>name</th>
+                <th>init. grade</th>
                 <th>ascents</th>
+                <th>current grade</th>
+                <th>var.</th>
             </tr>
             </thead>
             <tbody>
@@ -32,10 +34,18 @@
                     <td>${user.username}</td>
                     <td>${user.initialGrade}</td>
                     <td>${(ascents.collect({ "$it.boulder.id ($it.style)" }) as List).join(', ')}</td>
+                    <td>${user.currentGrade}</td>
+                    <td><g:formatNumber number="${user.currentGradeVariance}" minFractionDigits="4"
+                                        maxFractionDigits="4"/>
+                    </td>
                 </tr>
             </g:each>
             </tbody>
         </table>
+        <g:form action="resetCurrentUserGrades">
+            <g:submitButton name="submit" class="button" value="reset users"/>
+        </g:form>
+
     </div>
 
     <div class="large-6 column">

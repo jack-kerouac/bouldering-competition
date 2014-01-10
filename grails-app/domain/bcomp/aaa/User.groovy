@@ -13,9 +13,13 @@ class User {
 	boolean accountLocked
 	boolean passwordExpired
 
-    static embedded = ['initialGrade']
+    static embedded = ['initialGrade', 'currentGrade']
 
     Grade initialGrade
+
+    Grade currentGrade
+    double currentGradeVariance
+
 
 	static transients = ['springSecurityService']
 

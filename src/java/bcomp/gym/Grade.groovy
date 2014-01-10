@@ -41,6 +41,10 @@ class Grade implements Comparable<Grade> {
         return fromFontScale(FONT_GRADES[FONT_GRADES.size() - 1])
     }
 
+    public static double oneFontGradeDifference() {
+        return Grade.fromFontScale('7a+').value - Grade.fromFontScale('7a').value;
+    }
+
 
     @Override
     public String toString() {

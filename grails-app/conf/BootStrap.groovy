@@ -1,11 +1,7 @@
 import bcomp.aaa.Role
 import bcomp.aaa.User
 import bcomp.aaa.UserRole
-import bcomp.gym.Boulder
-import bcomp.gym.BoulderColor
-import bcomp.gym.FloorPlan
-import bcomp.gym.Grade
-import bcomp.gym.Gym
+import bcomp.gym.*
 
 import javax.imageio.ImageIO
 
@@ -18,32 +14,32 @@ class BootStrap {
         FloorPlan fp = gym.floorPlans.first()
 
         Boulder b1 = new Boulder(color: BoulderColor.RED)
-        b1.onFloorPlan(fp, 534/2000, 298/1393)
+        b1.onFloorPlan(fp, 534 / 2000, 298 / 1393)
         b1.knownGradeRange(Grade.fromFontScale('3'), Grade.fromFontScale('8A'))
         gym.addToBoulders(b1)
 
         Boulder b2 = new Boulder(color: BoulderColor.RED)
-        b2.onFloorPlan(fp, 743/2000, 343/1393)
+        b2.onFloorPlan(fp, 743 / 2000, 343 / 1393)
         b2.knownGradeRange(Grade.fromFontScale('3'), Grade.fromFontScale('8A'))
         gym.addToBoulders(b2)
 
         Boulder b3 = new Boulder(color: BoulderColor.WHITE)
-        b3.onFloorPlan(fp, 566/2000, 292/1393)
+        b3.onFloorPlan(fp, 566 / 2000, 292 / 1393)
         b3.knownGradeRange(Grade.fromFontScale('5+'), Grade.fromFontScale('6a+'))
         gym.addToBoulders(b3)
 
         Boulder b4 = new Boulder(color: BoulderColor.WHITE)
-        b4.onFloorPlan(fp, 612/2000, 481/1393)
+        b4.onFloorPlan(fp, 612 / 2000, 481 / 1393)
         b4.knownGradeRange(Grade.fromFontScale('5+'), Grade.fromFontScale('6a+'))
         gym.addToBoulders(b4)
 
         Boulder b5 = new Boulder(color: BoulderColor.BLACK)
-        b5.onFloorPlan(fp, 751/2000, 659/1393)
+        b5.onFloorPlan(fp, 751 / 2000, 659 / 1393)
         b5.knownGradeRange(Grade.fromFontScale('6b'), Grade.fromFontScale('7a'))
         gym.addToBoulders(b5)
 
         Boulder b6 = new Boulder(color: BoulderColor.YELLOW_BLACK)
-        b6.onFloorPlan(fp, 783/2000, 366/1393)
+        b6.onFloorPlan(fp, 783 / 2000, 366 / 1393)
         b6.knownGradeRange(Grade.fromFontScale('3'), Grade.fromFontScale('4-'))
         gym.addToBoulders(b6)
 
@@ -80,7 +76,10 @@ class BootStrap {
     def bouldererRole
 
     private void createBoulderer(String username, Grade initialGrade) {
-        def user = new User(username: username, password: 'p', initialGrade: initialGrade).save(flush: true)
+        def user = new User(username: username, password: 'p', initialGrade: initialGrade)
+        // TODO: what to do with initial grade here, it cannot be null (since mapped as embedded)
+        user.currentGrade = initialGrade
+        user.save(flush: true)
         UserRole.create user, bouldererRole, true
     }
 
