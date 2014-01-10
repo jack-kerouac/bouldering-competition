@@ -10,6 +10,8 @@
 <div class="row">
     <div class="small-12 column">
         <h1><g:message code="default.new.label" args="[message(code: 'bcomp.boulder.label')]"/></h1>
+        <p>Chose the color of the boulder and then click on the floor plan to select the start of the boulder
+        (the position in the fields below will change).</p>
     </div>
 </div>
 

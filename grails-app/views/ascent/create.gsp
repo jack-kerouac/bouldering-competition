@@ -10,6 +10,7 @@
 <div class="row">
     <div class="small-12 column">
         <h1><g:message code="default.new.label" args="[message(code: 'bcomp.ascent.label')]"/></h1>
+        <p>Markers show the color of the boulder. Zoom in by double click (desktop) or pinching (mobile).</p>
     </div>
 </div>
 
