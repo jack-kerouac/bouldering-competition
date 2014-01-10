@@ -41,4 +41,9 @@ class Grade implements Comparable<Grade> {
         return fromFontScale(FONT_GRADES[FONT_GRADES.size() - 1])
     }
 
+
+    @Override
+    public String toString() {
+        return "${String.format('%.3f', value)} (${toFontScale()})"
+    }
 }

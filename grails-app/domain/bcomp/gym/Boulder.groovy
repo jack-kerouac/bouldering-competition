@@ -16,12 +16,12 @@ class Boulder {
      */
     BoulderColor color
 
-    static embedded = ['rangeLow', 'rangeHigh']
+    static embedded = ['gradeRangeLow', 'gradeRangeHigh']
 
-    Grade rangeLow, rangeHigh;
+    Grade gradeRangeLow, gradeRangeHigh;
 
     public com.google.common.collect.Range<Grade> getGradeRange() {
-        return com.google.common.collect.Range.closed(rangeLow, rangeHigh)
+        return com.google.common.collect.Range.closed(gradeRangeLow, gradeRangeHigh)
     }
 
 
@@ -31,18 +31,18 @@ class Boulder {
     }
 
     public void knownGrade(Grade grade) {
-        rangeLow = grade;
-        rangeHigh = grade;
+        gradeRangeLow = grade;
+        gradeRangeHigh = grade;
     }
 
     public void knownGradeRange(Grade rangeLow, Grade rangeHigh) {
-        this.rangeLow = rangeLow;
-        this.rangeHigh = rangeHigh;
+        this.gradeRangeLow = rangeLow;
+        this.gradeRangeHigh = rangeHigh;
     }
 
     public void unknownGrade() {
-        rangeLow = Grade.lowest()
-        rangeHigh = Grade.highest()
+        gradeRangeLow = Grade.lowest()
+        gradeRangeHigh = Grade.highest()
     }
 
 }
