@@ -97,8 +97,6 @@ input[readonly] {
 .boulder-location-map li.chosen {
     opacity: 1.0;
     z-index: 1;
-    
-    -webkit-transform: scale(1.5, 1.5) ;-moz-transform: scale(1.5, 1.5) ;-ms-transform: scale(1.5, 1.5) ;-o-transform: scale(1.5, 1.5) ;transform: scale(1.5, 1.5) ;
 }
 
 .boulder-location-map li.chosen input {

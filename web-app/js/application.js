@@ -39,71 +39,75 @@ $(function () {
 		$("#create-boulder-page input[name='x']").val((e.pageX - offset.left) / width);
 		$("#create-boulder-page input[name='y']").val((e.pageY - offset.top) / height);
 	});
+	initBoulderLocationMap($('#create-boulder-page .boulder-location-map'), 'crosshair', false);
+
 
 	/* this is for the create ascent page */
-	initBoulderLocationMap($('.boulder-location-map'), false);
+	initBoulderLocationMap($('#create-ascent-page .boulder-location-map'), 'move', true);
 });
 
-function initBoulderLocationMap($boulderLocationMap, makeZoomable) {
+function initBoulderLocationMap($boulderLocationMap, cursor, makeZoomable) {
 	var $boulderMarker = $boulderLocationMap.find('li');
 
 	if (makeZoomable) {
 		var $zoomElem = $boulderLocationMap;
 
-		function getScale() {
-			return $zoomElem.data('scale');
-		}
-
-		function setScale(scale) {
-			$zoomElem.data('scale', scale);
+		function currentScale() {
+			var matrix = $zoomElem.panzoom('getMatrix');
+			return matrix[0];
 		}
 
 		$zoomElem.panzoom({
 			minScale: 1.0,
-			maxScale: 2.0,
+			maxScale: 4.0,
 			contain: 'invert',
-			increment: 1.0
+			increment: 1.0,
+			cursor: cursor
 		});
 
-		setScale(1.0);
-
 		$zoomElem.on('dblclick', function (e) {
+			var animate = true;
+
 			var opts = $(this).panzoom('option');
-			if (getScale() == opts.maxScale) {
-				$(this).panzoom('resetZoom');
+			if (currentScale() == opts.maxScale) {
+				$(this).panzoom('resetZoom', animate);
 			}
 			else {
 				$(this).panzoom('zoom', false, {
-					focal: e
+					focal: e,
+					animate: animate
 				});
 			}
 		});
 
+		/* without this, a tap on a label (the marker) does not select the input field. See FAQ at https://github.com/timmywil/jquery.panzoom */
+		$zoomElem.find('label').on('touchstart', function (e) {
+			e.stopImmediatePropagation();
+		});
+
 		$zoomElem.on('panzoomzoom', function (e, panzoom, scale, opts) {
-			setScale(scale)
-		});
-
-		$zoomElem.on('panzoomstart', function (e, panzoom) {
-			$boulderMarker.hide();
-		});
-		$zoomElem.on('panzoomend', function (e, panzoom) {
-			$boulderMarker.show();
-		});
-		$zoomElem.on('panzoomzoom', function (e, panzoom, scale) {
-			resizeBoulderMarkers(scale);
+			resizeBoulderMarkers(scale, opts);
 		});
 
 
-		function resizeBoulderMarkers(scale) {
+		function resizeBoulderMarkers(scale, opts) {
 			var transformString = 'scale(' + 1 / scale + ', ' + 1 / scale + ')';
-			$boulderMarker.each(function (e, t) {
-				$(t).css({
-					transform: transformString,
-					'-webkit-transform': transformString
-				});
-			});
+			var css = {};
+			css['transform'] = transformString;
+			css['webkit-transform'] = transformString;
+			var transition;
+			if (opts.animate)
+				transition = '-webkit-transform ' + opts.duration + 'ms ' + opts.easing;
+			else
+				transition = 'none';
+			css['transition'] = transition;
+			css['-webkit-transition'] = transition;
+			$boulderMarker.css(css);
 		}
 
+	}
+	else {
+		$boulderLocationMap.css({cursor: cursor});
 	}
 
 	function positionBoulderMarkers() {
