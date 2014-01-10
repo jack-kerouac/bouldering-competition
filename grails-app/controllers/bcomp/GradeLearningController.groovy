@@ -30,4 +30,8 @@ class GradeLearningController {
         redirect action: 'showMeta'
     }
 
+    def updateCurrentUserGrades() {
+        gradeLearningService.updateCurrentUserGrades()
+        redirect action: 'showMeta'
+    }
 }

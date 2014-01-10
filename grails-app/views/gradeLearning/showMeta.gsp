@@ -48,6 +48,9 @@
         <g:form action="resetCurrentUserGrades">
             <g:submitButton name="submit" class="button" value="reset users"/>
         </g:form>
+        <g:form action="updateCurrentUserGrades">
+            <g:submitButton name="submit" class="button" value="update users"/>
+        </g:form>
 
     </div>
 

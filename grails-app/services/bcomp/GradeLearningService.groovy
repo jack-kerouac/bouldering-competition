@@ -43,4 +43,17 @@ class GradeLearningService {
         }
     }
 
+    def updateCurrentUserGrades() {
+        User.findAll().each { user ->
+            Ascent.findByBoulderer(user).each { ascent ->
+                Boulder boulder = ascent.boulder
+                if (boulder.hasKnownGrade()) {
+                    if (boulder.currentGrade > user.currentGrade) {
+                        user.currentGrade = new Grade(user.currentGrade.value + Grade.oneFontGradeDifference() / 10);
+                    }
+                }
+            }
+        }
+    }
+
 }
