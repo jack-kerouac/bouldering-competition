@@ -77,22 +77,24 @@ class BootStrap {
         gym.save(flash: true)
     }
 
-    private void createUser(String username, def role) {
-        def user = new User(username: username, password: 'p').save(flush: true)
-        UserRole.create user, role, true
+    def bouldererRole
+
+    private void createBoulderer(String username, Grade initialGrade) {
+        def user = new User(username: username, password: 'p', initialGrade: initialGrade).save(flush: true)
+        UserRole.create user, bouldererRole, true
     }
 
     private void createSecurityData() {
-        def bouldererRole = new Role(authority: 'ROLE_BOULDERER').save(flush: true)
+        bouldererRole = new Role(authority: 'ROLE_BOULDERER').save(flush: true)
 
-        createUser 'flo', bouldererRole
-        createUser 'christoph', bouldererRole
-        createUser 'fia', bouldererRole
-        createUser 'thomas', bouldererRole
-        createUser 'franz', bouldererRole
-        createUser 'anja', bouldererRole
-        createUser 'chris', bouldererRole
-        createUser 'tony', bouldererRole
+        createBoulderer 'flo', Grade.fromFontScale('7b')
+        createBoulderer 'christoph', Grade.fromFontScale('6c')
+        createBoulderer 'fia', Grade.fromFontScale('6b')
+        createBoulderer 'thomas', Grade.fromFontScale('6a')
+        createBoulderer 'franz', Grade.fromFontScale('6c')
+        createBoulderer 'anja', Grade.fromFontScale('6a')
+        createBoulderer 'chris', Grade.fromFontScale('6a+')
+        createBoulderer 'tony', Grade.fromFontScale('6c')
     }
 
     def init = { servletContext ->

@@ -1,5 +1,7 @@
 package bcomp.aaa
 
+import bcomp.gym.Grade
+
 class User {
 
 	transient springSecurityService
@@ -10,6 +12,10 @@ class User {
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
+
+    static embedded = ['initialGrade']
+
+    Grade initialGrade
 
 	static transients = ['springSecurityService']
 

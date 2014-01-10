@@ -20,7 +20,7 @@
             <thead>
             <tr>
                 <th>username</th>
-                <th>grade</th>
+                <th>initial grade</th>
                 <th>ascents</th>
             </tr>
             </thead>
@@ -30,7 +30,7 @@
                 <g:set var="ascents" value="${it.value}"/>
                 <tr>
                     <td>${user.username}</td>
-                    <td>TODO</td>
+                    <td>${user.initialGrade}</td>
                     <td>${(ascents.collect({ "$it.boulder.id ($it.style)" }) as List).join(', ')}</td>
                 </tr>
             </g:each>
