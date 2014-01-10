@@ -2,7 +2,10 @@ package bcomp.gym
 
 class Grade implements Comparable<Grade> {
 
-    final double value;
+    double value;
+
+    /** required by Hibernate */
+    Grade() {}
 
     public Grade(double value) {
         assert 0.0 <= value && value < 1.0
@@ -28,6 +31,14 @@ class Grade implements Comparable<Grade> {
         double segment = 1.0 / FONT_GRADES.size()
 
         return new Grade(i * segment + (segment / 2))
+    }
+
+    public static Grade lowest() {
+        return fromFontScale(FONT_GRADES[0])
+    }
+
+    public static Grade highest() {
+        return fromFontScale(FONT_GRADES[FONT_GRADES.size() - 1])
     }
 
 }
