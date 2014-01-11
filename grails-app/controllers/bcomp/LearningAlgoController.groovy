@@ -25,4 +25,9 @@ class LearningAlgoController {
         redirect action: 'showMeta'
     }
 
+    def resetCurrentBoulderGrades() {
+        gradeLearningService.resetCurrentBoulderGrades()
+        redirect action: 'showMeta'
+    }
+
 }

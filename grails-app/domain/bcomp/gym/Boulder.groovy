@@ -16,12 +16,16 @@ class Boulder {
      */
     BoulderColor color
 
-    static embedded = ['gradeRangeLow', 'gradeRangeHigh']
+    static embedded = ['initialGradeRangeLow', 'initialGradeRangeHigh', 'currentGrade']
 
-    Grade gradeRangeLow, gradeRangeHigh;
+    Grade initialGradeRangeLow, initialGradeRangeHigh;
+
+    Grade currentGrade
+    double currentGradeVariance
+
 
     public com.google.common.collect.Range<Grade> getGradeRange() {
-        return com.google.common.collect.Range.closed(gradeRangeLow, gradeRangeHigh)
+        return com.google.common.collect.Range.closed(initialGradeRangeLow, initialGradeRangeHigh)
     }
 
 
@@ -30,19 +34,28 @@ class Boulder {
         location.boulder = this
     }
 
+
     public void knownGrade(Grade grade) {
-        gradeRangeLow = grade;
-        gradeRangeHigh = grade;
+        initialGradeRangeLow = grade;
+        initialGradeRangeHigh = grade;
     }
 
     public void knownGradeRange(Grade rangeLow, Grade rangeHigh) {
-        this.gradeRangeLow = rangeLow;
-        this.gradeRangeHigh = rangeHigh;
+        this.initialGradeRangeLow = rangeLow;
+        this.initialGradeRangeHigh = rangeHigh;
     }
 
     public void unknownGrade() {
-        gradeRangeLow = Grade.lowest()
-        gradeRangeHigh = Grade.highest()
+        initialGradeRangeLow = Grade.lowest()
+        initialGradeRangeHigh = Grade.highest()
     }
 
+    public boolean hasKnownGrade() {
+        return initialGradeRangeLow == initialGradeRangeHigh
+    }
+
+    public boolean hasKnownRange() {
+        def ret = !(initialGradeRangeLow == Grade.lowest() && initialGradeRangeHigh == Grade.highest())
+        return ret && initialGradeRangeLow != initialGradeRangeHigh
+    }
 }
