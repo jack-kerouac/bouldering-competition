@@ -40,7 +40,10 @@
 
 <footer>
     <div class="row">
-        <div class="column medium-12">
+        <div class="column medium-6">
+            <p><small><g:link controller="gradeLearning" action="showMeta">Grade Learning Algorithm</g:link></small></p>
+        </div>
+        <div class="column medium-6">
             <p><small>${grails.util.Environment.getCurrentEnvironment()}</small></p>
         </div>
     </div>

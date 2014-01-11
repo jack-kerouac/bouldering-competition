@@ -5,7 +5,7 @@ import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured()
-class LearningAlgoController {
+class GradeLearningController {
 
     def gradeLearningService
 
