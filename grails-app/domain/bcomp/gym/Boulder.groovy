@@ -40,6 +40,10 @@ class Boulder {
         initialGradeRangeHigh = grade;
     }
 
+    public boolean hasKnownGrade() {
+        return initialGradeRangeLow == initialGradeRangeHigh;
+    }
+
     public void knownGradeRange(Grade rangeLow, Grade rangeHigh) {
         this.initialGradeRangeLow = rangeLow;
         this.initialGradeRangeHigh = rangeHigh;
@@ -48,10 +52,6 @@ class Boulder {
     public void unknownGrade() {
         initialGradeRangeLow = Grade.lowest()
         initialGradeRangeHigh = Grade.highest()
-    }
-
-    public boolean hasKnownGrade() {
-        return initialGradeRangeLow == initialGradeRangeHigh
     }
 
     public boolean hasKnownRange() {

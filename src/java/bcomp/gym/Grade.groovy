@@ -33,6 +33,11 @@ class Grade implements Comparable<Grade> {
         return new Grade(i * segment + (segment / 2))
     }
 
+    public static Grade between(Grade g1, Grade g2) {
+        assert g1 <= g2
+        return g1 + (g2 - g1) / 2
+    }
+
     public static Grade lowest() {
         return fromFontScale(FONT_GRADES[0])
     }
@@ -45,6 +50,14 @@ class Grade implements Comparable<Grade> {
         return Grade.fromFontScale('7a+').value - Grade.fromFontScale('7a').value;
     }
 
+
+    public Grade plus(double value) {
+        return new Grade(this.value + value)
+    }
+
+    public double minus(Grade g) {
+        return this.value - g.value
+    }
 
     @Override
     public String toString() {

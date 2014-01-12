@@ -9,8 +9,7 @@ import grails.transaction.Transactional
 class GradeLearningService {
 
     def resetCurrentUserGrades() {
-        // TODO: calculate 1.645 from 90%
-        // probability that deviance of initial grade is at most two font grade from personal level should be 90%
+        // probability should be 90% that personal level is at most two font grades away from personal level
         // => sigma = 1.645 (see http://de.wikipedia.org/wiki/Normalverteilung)
         double variance = (2 * Grade.oneFontGradeDifference() / 1.645)**2
 
@@ -23,31 +22,27 @@ class GradeLearningService {
     def resetCurrentBoulderGrades() {
         Boulder.findAll().each { boulder ->
             if (boulder.hasKnownGrade()) {
-                // probability that deviance of initial grade is at most one font grade real difficulty should be
-                // 90%
-                // => sigma = 1.645 (see http://de.wikipedia.org/wiki/Normalverteilung)
-                double variance = (1 * Grade.oneFontGradeDifference() / 1.645)**2
-
                 boulder.currentGrade = boulder.initialGradeRangeLow;
-                boulder.currentGradeVariance = variance;
-            } else if (boulder.hasKnownRange()) {
-                // probability that deviance of initial grade is at most one font grade real difficulty should be
-                // 90%
+                // probability should 90% that real grade is at most one font grade away from initial grade
                 // => sigma = 1.645 (see http://de.wikipedia.org/wiki/Normalverteilung)
-                double gradeDifference = boulder.initialGradeRangeHigh.value - boulder.initialGradeRangeLow.value
-                double variance = (gradeDifference / 1.645)**2
-
-                boulder.currentGrade = new Grade((boulder.initialGradeRangeHigh.value - boulder.initialGradeRangeLow
-                        .value) / 2 + boulder.initialGradeRangeLow.value);
-                boulder.currentGradeVariance = variance;
+                boulder.currentGradeVariance = (1 * Grade.oneFontGradeDifference() / 1.645)**2;
+            } else if (boulder.hasKnownRange()) {
+                boulder.currentGrade = Grade.between(boulder.initialGradeRangeLow, boulder.initialGradeRangeHigh);
+                // probability should be 90% that real grade is at most one font grade outside of initial range
+                // => sigma = 1.645 (see http://de.wikipedia.org/wiki/Normalverteilung)
+                double diff = (boulder.initialGradeRangeHigh - boulder.initialGradeRangeLow) / 2 + Grade.oneFontGradeDifference()
+                boulder.currentGradeVariance = (diff / 1.645)**2;
             } else {
+                boulder.currentGrade = Grade.between(boulder.initialGradeRangeLow, boulder.initialGradeRangeHigh);
+                // TODO: is this a good initial sigma?
+                // almost all values should be within the range of grades
                 // => sigma = 3 (see http://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule)
-                double gradeDifference = boulder.initialGradeRangeHigh.value - boulder.initialGradeRangeLow.value
-                double variance = (gradeDifference / 3)**2
+                double diff = (boulder.initialGradeRangeHigh - boulder.initialGradeRangeLow) / 2
+                boulder.currentGradeVariance = (diff / 3)**2;
+            }
+        }
+    }
 
-                boulder.currentGrade = new Grade((boulder.initialGradeRangeHigh.value - boulder.initialGradeRangeLow
-                        .value) / 2 + boulder.initialGradeRangeLow.value);
-                boulder.currentGradeVariance = variance;
             }
         }
     }
