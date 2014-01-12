@@ -45,15 +45,26 @@ class GradeLearningService {
 
     def updateCurrentUserGrades() {
         User.findAll().each { user ->
-            Ascent.findByBoulderer(user).each { ascent ->
-                Boulder boulder = ascent.boulder
-                if (boulder.hasKnownGrade()) {
-                    if (boulder.currentGrade > user.currentGrade) {
-                        user.currentGrade = new Grade(user.currentGrade.value + Grade.oneFontGradeDifference() / 10);
-                    }
-                }
-            }
+            updateCurrentGrade(user)
         }
+    }
+
+    private void updateCurrentGrade(User user) {
+        // if there is only one ascent, it counts as 1 : numberOfBouldersThatInitialValueCountsFor in the grade
+        // calculation
+        def numberOfBouldersThatInitialValueCountsFor = 10
+
+        def ascents = Ascent.where {
+            boulderer == user
+            date > (new Date() - 365)
+        }
+        double gradeValue = 0
+        ascents.each { ascent ->
+            Boulder boulder = ascent.boulder
+            gradeValue += boulder.currentGrade.value
+        }
+        user.currentGrade = new Grade((gradeValue + numberOfBouldersThatInitialValueCountsFor * user.initialGrade
+                .value) / (ascents.count() + numberOfBouldersThatInitialValueCountsFor))
     }
 
 }
