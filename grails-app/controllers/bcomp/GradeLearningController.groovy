@@ -34,4 +34,9 @@ class GradeLearningController {
         gradeLearningService.updateCurrentUserGrades()
         redirect action: 'showMeta'
     }
+
+    def updateCurrentBoulderGrades() {
+        gradeLearningService.updateCurrentBoulderGrades()
+        redirect action: 'showMeta'
+    }
 }

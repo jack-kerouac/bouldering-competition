@@ -50,21 +50,55 @@ class GradeLearningService {
     }
 
     private void updateCurrentGrade(User user) {
-        // if there is only one ascent, it counts as 1 : numberOfBouldersThatInitialValueCountsFor in the grade
+        // if there is only one ascent, it counts as 1 : numberOfAscentsThatCurrentGradeCountsFor in the grade
         // calculation
-        def numberOfBouldersThatInitialValueCountsFor = 10
+        def numberOfAscentsThatCurrentGradeCountsFor = 10
 
         def ascents = Ascent.where {
             boulderer == user
-            date > (new Date() - 365)
         }
         double gradeValue = 0
+        double weights = 0
         ascents.each { ascent ->
             Boulder boulder = ascent.boulder
-            gradeValue += boulder.currentGrade.value
+            def weight = 1 / boulder.currentGradeVariance
+            gradeValue += boulder.currentGrade.value * weight
+            weights += weight
         }
-        user.currentGrade = new Grade((gradeValue + numberOfBouldersThatInitialValueCountsFor * user.initialGrade
-                .value) / (ascents.count() + numberOfBouldersThatInitialValueCountsFor))
+        def weight = 1 / user.currentGradeVariance
+        gradeValue += numberOfAscentsThatCurrentGradeCountsFor * user.currentGrade.value * weight
+        weights += numberOfAscentsThatCurrentGradeCountsFor * weight
+
+        user.currentGrade = new Grade(gradeValue / weights)
+    }
+
+    def updateCurrentBoulderGrades() {
+        Boulder.findAll().each { boulder ->
+            updateCurrentGrade(boulder)
+        }
+    }
+
+    private void updateCurrentGrade(Boulder boulder_) {
+        // if there is only one ascent, it counts as 1 : numberOfAscentsThatCurrentGradeCountsFor in the grade
+        // calculation
+        def numberOfAscentsThatCurrentGradeCountsFor = 10
+
+        def ascents = Ascent.where {
+            boulder == boulder_
+        }
+        double gradeValue = 0
+        double weights = 0
+        ascents.each { ascent ->
+            User boulderer = ascent.boulderer
+            def weight = 1 / boulderer.currentGradeVariance
+            gradeValue += boulderer.currentGrade.value * weight
+            weights += weight
+        }
+        def weight = 1 / boulder_.currentGradeVariance
+        gradeValue += numberOfAscentsThatCurrentGradeCountsFor * boulder_.currentGrade.value * weight
+        weights += numberOfAscentsThatCurrentGradeCountsFor * weight
+
+        boulder_.currentGrade = new Grade(gradeValue / weights)
     }
 
 }

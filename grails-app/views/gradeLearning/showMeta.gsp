@@ -83,19 +83,24 @@
             </tbody>
         </table>
 
-        <div id="chartModal" class="reveal-modal" data-reveal>
-            <a class="close-reveal-modal">&#215;</a>
-            <g:set var="ticks"
-                   value="${bcomp.gym.Grade.FONT_GRADES.collect {[Grade.fromFontScale(it).value, "\"$it\""]} }"/>
-
-            <div class="chart" style="width:940px; height:400px; margin-bottom: 20px;" data-ticks="${ticks}"></div>
-            <p>With a 90% chance, the grade is between the two vertical lines.</p>
-        </div>
         <g:form action="resetCurrentBoulderGrades">
             <g:submitButton name="submit" class="button" value="reset boulders"/>
         </g:form>
+
+        <g:form action="updateCurrentBoulderGrades">
+            <g:submitButton name="submit" class="button" value="update boulders"/>
+        </g:form>
     </div>
 
+</div>
+
+<div id="chartModal" class="reveal-modal" data-reveal>
+    <a class="close-reveal-modal">&#215;</a>
+    <g:set var="ticks"
+           value="${bcomp.gym.Grade.FONT_GRADES.collect {[Grade.fromFontScale(it).value, "\"$it\""]} }"/>
+
+    <div class="chart" style="width:940px; height:400px; margin-bottom: 20px;" data-ticks="${ticks}"></div>
+    <p>With a 90% chance, the grade is between the two vertical lines.</p>
 </div>
 
 </body>
