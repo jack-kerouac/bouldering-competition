@@ -21,7 +21,6 @@
                     <th>Date</th>
                     <th>Grade</th>
                     <th>Style</th>
-                    <th>Tries</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +29,6 @@
                     <td><g:formatDate type="date" date="${it.date}"/></td>
                     <td>${it.boulder.color}</td>
                     <td>${it.style}</td>
-                    <td>${it.tries}</td>
                 </tr>
                 </g:each>
             </tbody>

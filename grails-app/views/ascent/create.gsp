@@ -10,6 +10,7 @@
 <div class="row">
     <div class="small-12 column">
         <h1><g:message code="default.new.label" args="[message(code: 'bcomp.ascent.label')]"/></h1>
+
         <p>Markers show the color of the boulder. Zoom in by double click (desktop) or pinching (mobile).</p>
     </div>
 </div>
@@ -33,8 +34,8 @@
                                 <g:if test="${boulder.color.hasSecondaryColor()}">
                                     data-color-secondary="${rgb(color: boulder.color.secondaryColor)}"
                                 </g:if>/>
-                                <input type="radio" name="boulder.id" id="boulder-${boulder.id}" value="${boulder.id}">
-                                <label for="boulder-${boulder.id}">&#xf172;</label>
+                            <input type="radio" name="boulder.id" id="boulder-${boulder.id}" value="${boulder.id}">
+                            <label for="boulder-${boulder.id}">&#xf172;</label>
                             </li>
                         </g:if>
                         <g:else>
@@ -65,24 +66,12 @@
         </div>
 
         <div class="small-9 column ${hasErrors(field: 'tries', 'error')}">
-            <div class="row">
-                <div class="small-9 column">
-                    <input type="radio" name="style" value="flash" id="flash"
-                        ${cmd.style == Ascent.Style.flash ? 'checked' : ''}><label
-                        for="flash">flash</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="medium-12 column">
-                    <input type="radio" name="style" value="top"
-                           id="top" ${cmd.style == Ascent.Style.top ? 'checked' : ''
-                    }><label for="top" class="inline">top in</label>
-                    <input type="number" name="tries" value="${cmd.tries}" min="2" id="tries"/>
-                    <label for="tries" class="inline">tries</label>
-                    <tmpl:/shared/fieldError field="tries"/>
-                </div>
-            </div>
+            <input type="radio" name="style" value="flash" id="flash" ${cmd.style == Ascent.Style.flash ?
+                    'checked' : ''}>
+            <label for="flash" class="inline">flash</label>
+            <input type="radio" name="style" value="top" id="top" ${cmd.style == Ascent.Style.top ? 'checked'
+                    : ''}>
+            <label for="top" class="inline">top</label>
         </div>
     </div>
 
