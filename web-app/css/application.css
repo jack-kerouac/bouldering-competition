@@ -53,24 +53,27 @@ input[readonly] {
 
 .boulder-marker {
     width: 28px;
-    height: 56px;
-    margin-top: -56px;
+    height: 48px;
+    margin-top: -46px;
     margin-left: -14px;
-}
 
-.boulder-marker i {
     font-size: 50px;
+
+    font-family: "foundation-icons";
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    text-decoration: inherit;
 }
 
 .boulder-marker {
     opacity: 0.8;
 }
 
-.boulder-marker.chosen {
-    opacity: 1.0;
-    z-index: 1;
-}
-
-.boulder-marker:hover {
+.boulder-marker:hover, .boulder-marker.chosen {
     opacity: 1.0;
 }

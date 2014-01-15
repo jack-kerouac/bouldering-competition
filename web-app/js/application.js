@@ -118,12 +118,32 @@ function initFloorPlan($floorPlanImg) {
 	return map;
 }
 
+function colorMarker($marker, primary, secondary) {
+	if (secondary) {
+		/* use text gradient for two colored boulders */
+		$marker.css({
+			color: 'black',
+			background: '-webkit-linear-gradient(' + primary + ', ' + secondary + ')',
+			'-webkit-background-clip': 'text',
+			'-webkit-text-fill-color': 'transparent'
+		});
+	}
+	else {
+		$marker.css({
+			color: primary,
+			background: '',
+			'-webkit-background-clip': '',
+			'-webkit-text-fill-color': ''
+		});
+	}
+}
+
 function markBoulders($boulders, map) {
 
 	function addBoulderMarker(x, y, primary, secondary, $boulder) {
 		var myIcon = L.divIcon({
 			className: 'boulder-marker',
-			html: '<i class="fi-marker"></i>',
+			html: '&#xf172;',
 			iconSize: undefined // set in CSS
 		});
 
