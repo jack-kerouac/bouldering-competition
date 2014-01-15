@@ -10,6 +10,7 @@
 <div class="row">
     <div class="small-12 column">
         <h1><g:message code="default.new.label" args="[message(code: 'bcomp.boulder.label')]"/></h1>
+
         <p>Chose the color of the boulder and then click on the floor plan to select the start of the boulder
         (the position in the fields below will change).</p>
     </div>
@@ -26,7 +27,16 @@
         </div>
 
         <div class="small-9 column ${hasErrors(field: 'color', 'error')}">
-            <g:select name="color" from="${colors}"></g:select>
+            <select name="color">
+                <g:each in="${colors}" var="color">
+                    <option value="${color}" data-color-primary="${rgb(color: color.primaryColor)}"
+                        <g:if test="${color.hasSecondaryColor()}">
+                            data-color-secondary="${rgb(color: color.secondaryColor)}"
+                        </g:if>/>
+                    ${color}
+                    </option>
+                </g:each>
+            </select>
             <tmpl:/shared/fieldError field="color"/>
         </div>
     </div>

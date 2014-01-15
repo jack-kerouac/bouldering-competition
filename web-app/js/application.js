@@ -39,8 +39,29 @@ $(function () {
 				$boulder.find('input[type="radio"]').click();
 			});
 		}
-	}
 
+
+		if ($('#create-boulder-page').exists()) {
+			var myIcon = L.divIcon({
+				className: 'boulder-marker',
+				html: '&#xf172;',
+				iconSize: undefined
+			});
+
+			var marker = L.marker(map.toLatLng(500, 500), {
+				icon: myIcon,
+				draggable: true
+			}).addTo(map);
+
+			$('select[name="color"]').change(function() {
+				var val = $(this).val();
+				var $opt = $(this).find('option[value="' + val + '"]');
+				var primary = $opt.data('color-primary');
+				var secondary = $opt.data('color-secondary');
+				colorMarker($(marker._icon), primary, secondary);
+			});
+		}
+	}
 
 
 	function displayChart(mu, sigma) {
@@ -154,24 +175,13 @@ function markBoulders($boulders, map) {
 
 		var $icon = $(marker._icon);
 
+		colorMarker($icon, primary, secondary);
+
+
 		if (!$boulder.attr('id')) {
 			throw new Error('boulder ' + $boulder + ' has no ID!');
 		}
 		$icon.attr('rel', '#' + $boulder.attr('id'));
-
-		if (secondary) {
-			/* use text gradient for two colored boulders */
-			$icon.css({
-				background: '-webkit-linear-gradient(' + primary + ', ' + secondary + ')',
-				'-webkit-background-clip': 'text',
-				'-webkit-text-fill-color': 'transparent'
-			});
-		}
-		else {
-			$icon.css({
-				color: primary
-			});
-		}
 	}
 
 	$boulders.each(function () {
