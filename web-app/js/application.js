@@ -46,7 +46,7 @@ $(function () {
 
 
 		if ($('#create-boulder-page').exists()) {
-			var marker = fp.addMarker(500, 500, {draggable: true});
+			var marker = fp.addMarker(100, 200, {draggable: true});
 
 			function updateColor($select) {
 				var val = $select.val();
@@ -176,6 +176,12 @@ function initFloorPlan($floorPlanImg) {
 	}
 
 	function addMarker(x, y, options) {
+		var PointMarker = L.Marker.extend({
+			getPoint: function() {
+				return map.project(marker.getLatLng(), map.getMaxZoom());
+			}
+		});
+
 		var myIcon = L.divIcon({
 			className: 'boulder-marker',
 			html: '&#xf172;',
@@ -190,11 +196,7 @@ function initFloorPlan($floorPlanImg) {
 			options = {};
 		var _options = $.extend({}, defaults, options);
 
-		var marker = L.marker(map.toLatLng(x, y), _options).addTo(map);
-
-		marker.getPoint = function() {
-			return map.project(marker.getLatLng(), map.getMaxZoom());
-		};
+		var marker = new PointMarker(map.toLatLng(x, y), _options).addTo(map);
 
 		return marker;
 	}
