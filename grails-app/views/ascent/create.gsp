@@ -20,34 +20,12 @@
 
     <div class="row">
         <div class="small-12 column">
-            <g:set var="floorPlan" value="${gym.floorPlans.first()}"></g:set>
-
             <div class="boulder-location-map">
 
-                <div class="floor-plan" data-src="${createLink(controller: 'floorPlan', action: 'image', params:
-                        [gymId: gym.id, floorPlanId: floorPlan.id])}" data-width="${floorPlan.widthInPx}"
-                     data-height="${floorPlan.heightInPx}"></div>
+                <tmpl:/shared/floorPlan floorPlan="${gym.floorPlans.first()}"/>
 
-                <ul>
-                    <g:each in="${boulders}" var="boulder">
-                        <g:if test="${boulder.location instanceof bcomp.gym.OnFloorPlan}">
-                            <li data-x="${boulder.location.x}"
-                                data-y="${boulder.location.y}"
-                                data-color-primary="${rgb(color: boulder.color.primaryColor)}"
-                                <g:if test="${boulder.color.hasSecondaryColor()}">
-                                    data-color-secondary="${rgb(color: boulder.color.secondaryColor)}"
-                                </g:if>/>
-                            <input type="radio" name="boulder.id" id="boulder-${boulder.id}" value="${boulder.id}">
-                            <label for="boulder-${boulder.id}">&#xf172;</label>
-                            </li>
-                        </g:if>
-                        <g:else>
-                            <p class="error">Location of boulder is not on a floor plan.</p>
-                        </g:else>
-                    </g:each>
-                </ul>
+                <tmpl:/shared/boulders boulders="${boulders}" boulderTemplate="/shared/boulder-radio-select"/>
             </div>
-
             <tmpl:/shared/fieldError field="boulder"/>
         </div>
     </div>

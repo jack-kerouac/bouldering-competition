@@ -12,43 +12,35 @@ if (typeof jQuery !== 'undefined') {
 $(document).foundation();
 
 $(function () {
-	var attr = "readonly"
+	jQuery.fn.exist = function(){
+		return jQuery(this).length != 0;
+	};
+	jQuery.fn.exists = function(){
+		return jQuery(this).length != 0;
+	};
 
-	if ($("#top").is(":checked"))
-		$("#tries").removeAttr(attr);
-	else
-		$("#tries").attr(attr, true);
 
-	$("#flash, #top").change(function () {
-		if ($("#top").is(":checked")) {
-			$("#tries").removeAttr(attr);
-			$("#tries").focus();
+
+	var $floorPlan = $('img.floor-plan');
+	if($floorPlan.exists()) {
+		var map = initFloorPlan($floorPlan);
+
+		var $boulders = $('.boulder-location-map ul.boulders');
+		if($boulders.exist()) {
+			$boulders.hide();
+
+			var $markers = markBoulders($boulders.find('li'), map);
+			$markers.click(function () {
+				var $marker = $(this);
+				$markers.removeClass('chosen');
+				$marker.addClass('chosen');
+
+				var $boulder = $($marker.attr('rel'));
+				$boulder.find('input[type="radio"]').click();
+			});
 		}
-		else {
-			$("#tries").attr(attr, true);
-		}
-	});
+	}
 
-
-
-
-	document.fp = floorPlan($('.boulder-location-map .floor-plan'));
-	document.fp.addAllBoulders($('.boulder-location-map li'));
-
-	/* this is for the create boulder page *//*
-	$('#create-boulder-page img.floor-plan').click(function (e) {
-		var offset = $(this).offset();
-		var width = $(this).width();
-		var height = $(this).height();
-
-		$("#create-boulder-page input[name='x']").val((e.pageX - offset.left) / width);
-		$("#create-boulder-page input[name='y']").val((e.pageY - offset.top) / height);
-	});
-	initBoulderLocationMap($('#create-boulder-page .boulder-location-map'), 'crosshair', false);
-
-
-	*//* this is for the create ascent page *//*
-	initBoulderLocationMap($('#create-ascent-page .boulder-location-map'), 'move', true);*/
 
 
 	function displayChart(mu, sigma) {
@@ -85,84 +77,83 @@ $(function () {
 		var mu = parseFloat($(this).find('td:nth-child(3) span:nth-child(1)').text());
 		var sigma = Math.sqrt(parseFloat($(this).find('td:nth-child(4)').text()));
 		displayChart(mu, sigma);
-	})
+	});
 
 	$('#show-meta-page table.users tbody tr').css({cursor: 'pointer'});
 	$('#show-meta-page table.users tbody tr').click(function (e) {
 		var mu = parseFloat($(this).find('td:nth-child(4) span:nth-child(1)').text());
 		var sigma = Math.sqrt(parseFloat($(this).find('td:nth-child(5)').text()));
 		displayChart(mu, sigma);
-	})
+	});
 });
 
+function initFloorPlan($floorPlanImg) {
+	var width = parseInt($floorPlanImg.attr('width'));
+	var height = parseInt($floorPlanImg.attr('height'));
+	var src = $floorPlanImg.attr('src');
 
-function floorPlan($floorPlan) {
-	var width = $floorPlan.data('width');
-	var height = $floorPlan.data('height');
+	$floorPlanImg.hide();
+	var $mapDiv = $('<div class="map"></div>').insertAfter($floorPlanImg);
 
-	var map = L.map($floorPlan[0], {
+	var map = L.map($mapDiv[0], {
 		maxZoom: 10,
 		crs: L.CRS.Simple
 	});
 
-	function toLatLng(x, y) {
+	map.toLatLng = function(x, y) {
 		return map.unproject([x, y], map.getMaxZoom())
-	}
+	};
 
-	var southWest = toLatLng(0, height);
-	var northEast = toLatLng(width, 0);
+	var southWest = map.toLatLng(0, height);
+	var northEast = map.toLatLng(width, 0);
 	var imageBounds = new L.LatLngBounds(southWest, northEast);
 	map.setMaxBounds(imageBounds);
 	map.fitBounds(imageBounds);
 
-	var imageUrl = $floorPlan.data('src')
-
-	L.imageOverlay(imageUrl, imageBounds, {
+	L.imageOverlay(src, imageBounds, {
 		attribution: 'Boulderwelt',
 		minZoom: map.getZoom()
 	}).addTo(map);
 
-	function addBoulder(x, y, primary, secondary, $marker) {
+	return map;
+}
+
+function markBoulders($boulders, map) {
+
+	function addBoulderMarker(x, y, primary, secondary, $boulder) {
 		var myIcon = L.divIcon({
 			className: 'boulder-marker',
-			html: $marker.html()
+			html: '<i class="fi-marker"></i>'
 		});
 
-		$marker.remove();
+		var marker = L.marker(map.toLatLng(x, y), {icon: myIcon}).addTo(map);
 
-		var marker = L.marker(toLatLng(width * x, height * y), {icon: myIcon}).addTo(map);
+		var $icon = $(marker._icon);
 
-		$(marker._icon);
+		if (!$boulder.attr('id')) {
+			throw new Error('boulder ' + $boulder + ' has no ID!');
+		}
+		$icon.attr('rel', '#' + $boulder.attr('id'));
 
 		if (secondary) {
 			/* use text gradient for two colored boulders */
-			$(marker._icon).find('label').css({
+			$icon.css({
 				background: '-webkit-linear-gradient(' + primary + ', ' + secondary + ')',
 				'-webkit-background-clip': 'text',
 				'-webkit-text-fill-color': 'transparent'
 			});
 		}
 		else {
-			$(marker._icon).find('label').css({
+			$icon.css({
 				color: primary
 			});
 		}
-
-		var $radioButton = $(marker._icon).find("input[type='radio']");
-		$radioButton.change(function (e) {
-			$radioButton.parent('.boulder-marker').siblings('.boulder-marker').removeClass('chosen');
-			$(this).parent('.boulder-marker').addClass('chosen');
-		});
 	}
 
-	return {
-		map: map,
-		addBoulder: addBoulder,
-		addAllBoulders: function($boulders) {
-			$boulders.each(function (e, t) {
-				var b = $(this);
-				addBoulder(b.data('x'), b.data('y'), b.data('color-primary'), b.data('color-secondary'), b);
-			});
-		}
-	}
+	$boulders.each(function () {
+		var b = $(this);
+		addBoulderMarker(b.data('x'), b.data('y'), b.data('color-primary'), b.data('color-secondary'), b);
+	});
+
+	return $(map._container).find('.boulder-marker');
 }

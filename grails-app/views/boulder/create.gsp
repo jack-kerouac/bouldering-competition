@@ -37,8 +37,7 @@
             <div class="boulder-location-map">
                 <g:set var="floorPlan" value="${gym.floorPlans.first()}"></g:set>
 
-                <img class="floor-plan" src="${createLink(controller: 'floorPlan', action: 'image', params: [gymId:
-                        gym.id, floorPlanId: floorPlan.id])}"/>
+                <tmpl:/shared/floorPlan floorPlan="${floorPlan}"/>
                 <input type="hidden" name="floorPlan.id" value="${floorPlan.id}"/>
             </div>
         </div>

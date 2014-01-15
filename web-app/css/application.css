@@ -46,42 +46,34 @@ input[readonly] {
     margin-bottom: 30px;
 }
 
-.boulder-location-map .floor-plan {
+
+.boulder-location-map .map {
     height: 40em;
 }
 
-.boulder-location-map .boulder-marker {
-    display: block;
-    width: 0;
-    height: 0;
-    position: absolute;
-    transform-origin: 43.4099154% 99.0834539%;
-    -webkit-transform-origin: 43.4099154% 99.0834539%;
-}
+/*.boulder-location-map .boulder-marker {*/
+    /*display: block;*/
+    /*width: 0;*/
+    /*height: 0;*/
+    /*position: absolute;*/
+    /*transform-origin: 43.4099154% 99.0834539%;*/
+    /*-webkit-transform-origin: 43.4099154% 99.0834539%;*/
+/*}*/
 
-.boulder-location-map input[type=radio] {
-    color: inherit;
-    cursor: pointer;
-    margin: 0;
+/*.boulder-location-map input[type=radio] {*/
+    /*color: inherit;*/
+    /*cursor: pointer;*/
+    /*margin: 0;*/
 
-    position: absolute;
-    left: -5px;
-    top: -32px;
-}
+    /*position: absolute;*/
+    /*left: -5px;*/
+    /*top: -32px;*/
+/*}*/
 
-.boulder-location-map .boulder-marker label {
-    font-family: "foundation-icons";
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    display: inline-block;
-    text-decoration: inherit;
+.boulder-location-map .boulder-marker i {
     font-size: 50px;
 
-    /* centers hole of marker symbol on radio button*/
+     /*centers hole of marker symbol on radio button*/
     position: absolute;
     left: -13px;
     top: -45px;
