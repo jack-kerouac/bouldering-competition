@@ -23,6 +23,10 @@ class Boulder {
     Grade currentGrade
     double currentGradeVariance
 
+    public Boulder() {
+        this.currentGrade = Grade.lowest()
+        double currentGradeVariance = 0
+    }
 
     public com.google.common.collect.Range<Grade> getGradeRange() {
         return com.google.common.collect.Range.closed(initialGradeRangeLow, initialGradeRangeHigh)

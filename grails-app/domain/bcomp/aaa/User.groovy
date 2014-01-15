@@ -32,7 +32,12 @@ class User {
 		password column: '`password`'
 	}
 
-	Set<Role> getAuthorities() {
+    public User() {
+        this.currentGrade = Grade.lowest()
+        this.currentGradeVariance = 0
+    }
+
+    Set<Role> getAuthorities() {
 		UserRole.findAllByUser(this).collect { it.role } as Set
 	}
 
