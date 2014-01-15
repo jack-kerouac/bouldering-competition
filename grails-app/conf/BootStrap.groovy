@@ -15,14 +15,14 @@ class BootStrap {
 
         Boulder b1 = new Boulder(color: BoulderColor.RED)
         b1.onFloorPlan(fp, 534 / 2000, 298 / 1393)
-        b1.knownGradeRange(Grade.fromFontScale('3'), Grade.fromFontScale('8A'))
+        b1.knownGradeRange(Grade.fromFontScale('1A'), Grade.fromFontScale('8A'))
         // TODO: what to do with initial grade here, it cannot be null (since mapped as embedded)
         b1.currentGrade = b1.initialGradeRangeLow
         gym.addToBoulders(b1)
 
         Boulder b2 = new Boulder(color: BoulderColor.RED)
         b2.onFloorPlan(fp, 743 / 2000, 343 / 1393)
-        b2.knownGradeRange(Grade.fromFontScale('3'), Grade.fromFontScale('8A'))
+        b2.knownGradeRange(Grade.fromFontScale('1A'), Grade.fromFontScale('8A'))
         // TODO: what to do with initial grade here, it cannot be null (since mapped as embedded)
         b2.currentGrade = b2.initialGradeRangeLow
         gym.addToBoulders(b2)
@@ -36,7 +36,7 @@ class BootStrap {
 
         Boulder b4 = new Boulder(color: BoulderColor.WHITE)
         b4.onFloorPlan(fp, 612 / 2000, 481 / 1393)
-        b4.knownGradeRange(Grade.fromFontScale('5+'), Grade.fromFontScale('6a+'))
+        b4.knownGradeRange(Grade.fromFontScale('5C'), Grade.fromFontScale('6a+'))
         // TODO: what to do with initial grade here, it cannot be null (since mapped as embedded)
         b4.currentGrade = b4.initialGradeRangeLow
         gym.addToBoulders(b4)
@@ -50,7 +50,7 @@ class BootStrap {
 
         Boulder b6 = new Boulder(color: BoulderColor.YELLOW_BLACK)
         b6.onFloorPlan(fp, 783 / 2000, 366 / 1393)
-        b6.knownGradeRange(Grade.fromFontScale('3'), Grade.fromFontScale('4-'))
+        b6.knownGradeRange(Grade.fromFontScale('3B'), Grade.fromFontScale('4A'))
         // TODO: what to do with initial grade here, it cannot be null (since mapped as embedded)
         b6.currentGrade = b6.initialGradeRangeLow
         gym.addToBoulders(b6)
