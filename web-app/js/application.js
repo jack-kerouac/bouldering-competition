@@ -61,6 +61,19 @@ $(function () {
 			});
 
 			updateColor($select);
+
+			function updatePositionFields(point) {
+				$('#x').val(point.x / fp.width);
+				$('#y').val(point.y / fp.height);
+			}
+
+			marker.on('drag', function(e) {
+				var marker = e.target;
+				var point = marker.getPoint();
+				updatePositionFields(point);
+			});
+
+			updatePositionFields(marker.getPoint());
 		}
 	}
 
