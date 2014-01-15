@@ -23,13 +23,17 @@ $(function () {
 	L.Icon.Default.imagePath = '/images/leaflet';
 	var $floorPlan = $('img.floor-plan');
 	if ($floorPlan.exists()) {
-		var map = initFloorPlan($floorPlan);
+		var fp = initFloorPlan($floorPlan);
 
 		var $boulders = $('.boulder-location-map ul.boulders');
 		if ($boulders.exist()) {
 			$boulders.hide();
 
-			var $markers = markBoulders($boulders.find('li'), map);
+			var markers = fp.markBoulders($boulders.find('li'));
+			// form a jquery object out of an array of HtmlElements
+			var $markers = $($.map(markers, function (marker) {
+				return fp.getIcon(marker)[0];
+			}));
 			$markers.click(function () {
 				var $marker = $(this);
 				$markers.removeClass('chosen');
@@ -42,24 +46,21 @@ $(function () {
 
 
 		if ($('#create-boulder-page').exists()) {
-			var myIcon = L.divIcon({
-				className: 'boulder-marker',
-				html: '&#xf172;',
-				iconSize: undefined
-			});
+			var marker = fp.addMarker(500, 500, {draggable: true});
 
-			var marker = L.marker(map.toLatLng(500, 500), {
-				icon: myIcon,
-				draggable: true
-			}).addTo(map);
-
-			$('select[name="color"]').change(function() {
-				var val = $(this).val();
-				var $opt = $(this).find('option[value="' + val + '"]');
+			function updateColor($select) {
+				var val = $select.val();
+				var $opt = $select.find('option[value="' + val + '"]');
 				var primary = $opt.data('color-primary');
 				var secondary = $opt.data('color-secondary');
-				colorMarker($(marker._icon), primary, secondary);
+				fp.colorMarker(marker, primary, secondary);
+			};
+			var $select = $('select[name="color"]');
+			$select.change(function() {
+				updateColor($(this));
 			});
+
+			updateColor($select);
 		}
 	}
 
@@ -136,58 +137,86 @@ function initFloorPlan($floorPlanImg) {
 		minZoom: map.getZoom()
 	}).addTo(map);
 
-	return map;
-}
-
-function colorMarker($marker, primary, secondary) {
-	if (secondary) {
-		/* use text gradient for two colored boulders */
-		$marker.css({
-			color: 'black',
-			background: '-webkit-linear-gradient(' + primary + ', ' + secondary + ')',
-			'-webkit-background-clip': 'text',
-			'-webkit-text-fill-color': 'transparent'
-		});
+	function getIcon(marker) {
+		return $(marker._icon);
 	}
-	else {
-		$marker.css({
-			color: primary,
-			background: '',
-			'-webkit-background-clip': '',
-			'-webkit-text-fill-color': ''
-		});
+
+	function colorMarker(marker, primary, secondary) {
+		var $icon = getIcon(marker);
+		if (secondary) {
+			/* use text gradient for two colored boulders */
+			$icon.css({
+				color: 'black',
+				background: '-webkit-linear-gradient(' + primary + ', ' + secondary + ')',
+				'-webkit-background-clip': 'text',
+				'-webkit-text-fill-color': 'transparent'
+			});
+		}
+		else {
+			$icon.css({
+				color: primary,
+				background: '',
+				'-webkit-background-clip': '',
+				'-webkit-text-fill-color': ''
+			});
+		}
 	}
-}
 
-function markBoulders($boulders, map) {
-
-	function addBoulderMarker(x, y, primary, secondary, $boulder) {
+	function addMarker(x, y, options) {
 		var myIcon = L.divIcon({
 			className: 'boulder-marker',
 			html: '&#xf172;',
 			iconSize: undefined // set in CSS
 		});
 
-		var marker = L.marker(map.toLatLng(x, y), {
+		var defaults = {
 			icon: myIcon,
 			riseOnHover: true
-		}).addTo(map);
+		};
+		if(typeof options === "undefined")
+			options = {};
+		var _options = $.extend({}, defaults, options);
 
-		var $icon = $(marker._icon);
+		var marker = L.marker(map.toLatLng(x, y), _options).addTo(map);
 
-		colorMarker($icon, primary, secondary);
+		marker.getPoint = function() {
+			return map.project(marker.getLatLng(), map.getMaxZoom());
+		};
 
+		return marker;
+	}
 
+	function connectMarker(marker, $boulder) {
 		if (!$boulder.attr('id')) {
 			throw new Error('boulder ' + $boulder + ' has no ID!');
 		}
+		var $icon = getIcon(marker);
 		$icon.attr('rel', '#' + $boulder.attr('id'));
 	}
 
-	$boulders.each(function () {
-		var b = $(this);
-		addBoulderMarker(b.data('x'), b.data('y'), b.data('color-primary'), b.data('color-secondary'), b);
-	});
+	function markBoulders($boulders) {
+		var markers = new Array();
 
-	return $(map._container).find('.boulder-marker');
+		$boulders.each(function () {
+			var b = $(this);
+			var marker = addMarker(b.data('x'), b.data('y'));
+			colorMarker(marker, b.data('color-primary'), b.data('color-secondary'));
+			connectMarker(marker, b);
+			markers.push(marker);
+		});
+		return markers;
+	}
+
+	return {
+		width: width,
+		height: height,
+		map: map,
+		colorMarker: colorMarker,
+		addMarker: addMarker,
+		connectMarker: connectMarker,
+		markBoulders: markBoulders,
+		getIcon: getIcon
+	};
 }
+
+
