@@ -11,7 +11,7 @@ class UrlMappings {
 
         "/leaderboard"(controller: 'leaderboard', action: 'view')
 
-        "/gyms/$gymId/floorplans/$floorPlanId"(controller: 'floorPlan', action: 'image')
+        "/gyms/$gymId/floorPlans/$floorPlanId"(controller: 'floorPlan', action: 'image')
 
         "/boulderer/$username/ascents"(controller: 'boulderer', action: 'listAscents')
 

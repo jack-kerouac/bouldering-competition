@@ -30,7 +30,12 @@ $(function () {
 	});
 
 
-	/* this is for the create boulder page */
+
+
+	document.fp = floorPlan($('.boulder-location-map .floor-plan'));
+	document.fp.addAllBoulders($('.boulder-location-map li'));
+
+	/* this is for the create boulder page *//*
 	$('#create-boulder-page img.floor-plan').click(function (e) {
 		var offset = $(this).offset();
 		var width = $(this).width();
@@ -42,8 +47,8 @@ $(function () {
 	initBoulderLocationMap($('#create-boulder-page .boulder-location-map'), 'crosshair', false);
 
 
-	/* this is for the create ascent page */
-	initBoulderLocationMap($('#create-ascent-page .boulder-location-map'), 'move', true);
+	*//* this is for the create ascent page *//*
+	initBoulderLocationMap($('#create-ascent-page .boulder-location-map'), 'move', true);*/
 
 
 	function displayChart(mu, sigma) {
@@ -90,109 +95,74 @@ $(function () {
 	})
 });
 
-function initBoulderLocationMap($boulderLocationMap, cursor, makeZoomable) {
-	var $boulderMarker = $boulderLocationMap.find('li');
 
-	if (makeZoomable) {
-		var $zoomElem = $boulderLocationMap;
+function floorPlan($floorPlan) {
+	var width = $floorPlan.data('width');
+	var height = $floorPlan.data('height');
 
-		function currentScale() {
-			var matrix = $zoomElem.panzoom('getMatrix');
-			return matrix[0];
-		}
-
-		$zoomElem.panzoom({
-			minScale: 1.0,
-			maxScale: 4.0,
-			contain: 'invert',
-			increment: 1.0,
-			cursor: cursor
-		});
-
-		$zoomElem.on('dblclick', function (e) {
-			var animate = true;
-
-			var opts = $(this).panzoom('option');
-			if (currentScale() == opts.maxScale) {
-				$(this).panzoom('resetZoom', animate);
-			}
-			else {
-				$(this).panzoom('zoom', false, {
-					focal: e,
-					animate: animate
-				});
-			}
-		});
-
-		/* without this, a tap on a label (the marker) does not select the input field. See FAQ at https://github.com/timmywil/jquery.panzoom */
-		$zoomElem.find('label').on('touchstart', function (e) {
-			e.stopImmediatePropagation();
-		});
-
-		$zoomElem.on('panzoomzoom', function (e, panzoom, scale, opts) {
-			resizeBoulderMarkers(scale, opts);
-		});
-
-
-		function resizeBoulderMarkers(scale, opts) {
-			var transformString = 'scale(' + 1 / scale + ', ' + 1 / scale + ')';
-			var css = {};
-			css['transform'] = transformString;
-			css['webkit-transform'] = transformString;
-			var transition;
-			if (opts.animate)
-				transition = '-webkit-transform ' + opts.duration + 'ms ' + opts.easing;
-			else
-				transition = 'none';
-			css['transition'] = transition;
-			css['-webkit-transition'] = transition;
-			$boulderMarker.css(css);
-		}
-
-	}
-	else {
-		$boulderLocationMap.css({cursor: cursor});
-	}
-
-	function positionBoulderMarkers() {
-		$boulderMarker.each(function (e, t) {
-			var x = $(t).data('x');
-			var y = $(t).data('y');
-
-			$(t).css({
-				left: x * 100 + "%",
-				top: y * 100 + "%"
-			});
-		});
-	}
-
-	positionBoulderMarkers();
-
-	function colorMarkers() {
-		$boulderMarker.each(function (e, t) {
-			var primary = $(t).data('color-primary');
-			var secondary = $(t).data('color-secondary');
-			if (secondary) {
-				/* use text gradient for two colored boulders */
-				$(t).find('label').css({
-					background: '-webkit-linear-gradient(' + primary + ', ' + secondary + ')',
-					'-webkit-background-clip': 'text',
-					'-webkit-text-fill-color': 'transparent'
-				});
-			}
-			else {
-				$(t).find('label').css({
-					color: $(t).data('color-primary')
-				});
-			}
-		});
-	}
-
-	colorMarkers();
-
-	var $radioButtons = $boulderMarker.find("input[type='radio']");
-	$radioButtons.change(function (e) {
-		$radioButtons.parent('li').removeClass('chosen');
-		$(this).parent('li').addClass('chosen');
+	var map = L.map($floorPlan[0], {
+		maxZoom: 10,
+		crs: L.CRS.Simple
 	});
+
+	function toLatLng(x, y) {
+		return map.unproject([x, y], map.getMaxZoom())
+	}
+
+	var southWest = toLatLng(0, height);
+	var northEast = toLatLng(width, 0);
+	var imageBounds = new L.LatLngBounds(southWest, northEast);
+	map.setMaxBounds(imageBounds);
+	map.fitBounds(imageBounds);
+
+	var imageUrl = $floorPlan.data('src')
+
+	L.imageOverlay(imageUrl, imageBounds, {
+		attribution: 'Boulderwelt',
+		minZoom: map.getZoom()
+	}).addTo(map);
+
+	function addBoulder(x, y, primary, secondary, $marker) {
+		var myIcon = L.divIcon({
+			className: 'boulder-marker',
+			html: $marker.html()
+		});
+
+		$marker.remove();
+
+		var marker = L.marker(toLatLng(width * x, height * y), {icon: myIcon}).addTo(map);
+
+		$(marker._icon);
+
+		if (secondary) {
+			/* use text gradient for two colored boulders */
+			$(marker._icon).find('label').css({
+				background: '-webkit-linear-gradient(' + primary + ', ' + secondary + ')',
+				'-webkit-background-clip': 'text',
+				'-webkit-text-fill-color': 'transparent'
+			});
+		}
+		else {
+			$(marker._icon).find('label').css({
+				color: primary
+			});
+		}
+
+		var $radioButton = $(marker._icon).find("input[type='radio']");
+		$radioButton.change(function (e) {
+			$radioButton.parent('.boulder-marker').siblings('.boulder-marker').removeClass('chosen');
+			$(this).parent('.boulder-marker').addClass('chosen');
+		});
+	}
+
+	return {
+		map: map,
+		addBoulder: addBoulder,
+		addAllBoulders: function($boulders) {
+			$boulders.each(function (e, t) {
+				var b = $(this);
+				addBoulder(b.data('x'), b.data('y'), b.data('color-primary'), b.data('color-secondary'), b);
+			});
+		}
+	}
 }

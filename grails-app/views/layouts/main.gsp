@@ -3,7 +3,7 @@
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title><g:layoutTitle default="Grails"/> - Bouldering Competition</title>
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'normalize.css')}">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'foundation.css')}">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'foundation-icons.css')}">
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'leaflet.css')}">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}">
     <script src="${resource(dir: 'js', file: 'vendor/custom.modernizr.js')}"></script>
     <g:layoutHead/>

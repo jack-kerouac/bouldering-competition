@@ -46,7 +46,11 @@ input[readonly] {
     margin-bottom: 30px;
 }
 
-.boulder-location-map li {
+.boulder-location-map .floor-plan {
+    height: 40em;
+}
+
+.boulder-location-map .boulder-marker {
     display: block;
     width: 0;
     height: 0;
@@ -65,7 +69,7 @@ input[readonly] {
     top: -32px;
 }
 
-.boulder-location-map li label {
+.boulder-location-map .boulder-marker label {
     font-family: "foundation-icons";
     font-style: normal;
     font-weight: normal;
@@ -90,20 +94,20 @@ input[readonly] {
     display: inline-block;
 }
 
-.boulder-location-map li {
+.boulder-location-map .boulder-marker {
     opacity: 0.8;
 }
 
-.boulder-location-map li.chosen {
+.boulder-location-map .boulder-marker.chosen {
     opacity: 1.0;
     z-index: 1;
 }
 
-.boulder-location-map li.chosen input {
+.boulder-location-map .boulder-marker.chosen input {
     /* move input button to front, otherwise it is covered by label text shadow which does not look so nice */
     z-index: 1;
 }
 
-.boulder-location-map li:hover {
+.boulder-location-map .boulder-marker:hover {
     opacity: 1.0;
 }

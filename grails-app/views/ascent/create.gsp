@@ -23,8 +23,11 @@
             <g:set var="floorPlan" value="${gym.floorPlans.first()}"></g:set>
 
             <div class="boulder-location-map">
-                <img class="floor-plan" src="${createLink(controller: 'floorPlan', action: 'image', params: [gymId:
-                        gym.id, floorPlanId: floorPlan.id])}"/>
+
+                <div class="floor-plan" data-src="${createLink(controller: 'floorPlan', action: 'image', params:
+                        [gymId: gym.id, floorPlanId: floorPlan.id])}" data-width="${floorPlan.widthInPx}"
+                     data-height="${floorPlan.heightInPx}"></div>
+
                 <ul>
                     <g:each in="${boulders}" var="boulder">
                         <g:if test="${boulder.location instanceof bcomp.gym.OnFloorPlan}">
