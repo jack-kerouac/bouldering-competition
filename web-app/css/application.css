@@ -51,55 +51,26 @@ input[readonly] {
     height: 40em;
 }
 
-/*.boulder-location-map .boulder-marker {*/
-    /*display: block;*/
-    /*width: 0;*/
-    /*height: 0;*/
-    /*position: absolute;*/
-    /*transform-origin: 43.4099154% 99.0834539%;*/
-    /*-webkit-transform-origin: 43.4099154% 99.0834539%;*/
-/*}*/
-
-/*.boulder-location-map input[type=radio] {*/
-    /*color: inherit;*/
-    /*cursor: pointer;*/
-    /*margin: 0;*/
-
-    /*position: absolute;*/
-    /*left: -5px;*/
-    /*top: -32px;*/
-/*}*/
-
-.boulder-location-map .boulder-marker i {
-    font-size: 50px;
-
-     /*centers hole of marker symbol on radio button*/
-    position: absolute;
-    left: -13px;
-    top: -45px;
-
-    width: 30px;
-    height: 45px;
-
-    margin: 0;
-
-    display: inline-block;
+.boulder-marker {
+    width: 28px;
+    height: 56px;
+    margin-top: -56px;
+    margin-left: -14px;
 }
 
-.boulder-location-map .boulder-marker {
+.boulder-marker i {
+    font-size: 50px;
+}
+
+.boulder-marker {
     opacity: 0.8;
 }
 
-.boulder-location-map .boulder-marker.chosen {
+.boulder-marker.chosen {
     opacity: 1.0;
     z-index: 1;
 }
 
-.boulder-location-map .boulder-marker.chosen input {
-    /* move input button to front, otherwise it is covered by label text shadow which does not look so nice */
-    z-index: 1;
-}
-
-.boulder-location-map .boulder-marker:hover {
+.boulder-marker:hover {
     opacity: 1.0;
 }

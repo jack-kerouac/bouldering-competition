@@ -12,21 +12,21 @@ if (typeof jQuery !== 'undefined') {
 $(document).foundation();
 
 $(function () {
-	jQuery.fn.exist = function(){
+	jQuery.fn.exist = function () {
 		return jQuery(this).length != 0;
 	};
-	jQuery.fn.exists = function(){
+	jQuery.fn.exists = function () {
 		return jQuery(this).length != 0;
 	};
 
 
-
+	L.Icon.Default.imagePath = '/images/leaflet';
 	var $floorPlan = $('img.floor-plan');
-	if($floorPlan.exists()) {
+	if ($floorPlan.exists()) {
 		var map = initFloorPlan($floorPlan);
 
 		var $boulders = $('.boulder-location-map ul.boulders');
-		if($boulders.exist()) {
+		if ($boulders.exist()) {
 			$boulders.hide();
 
 			var $markers = markBoulders($boulders.find('li'), map);
@@ -100,7 +100,7 @@ function initFloorPlan($floorPlanImg) {
 		crs: L.CRS.Simple
 	});
 
-	map.toLatLng = function(x, y) {
+	map.toLatLng = function (x, y) {
 		return map.unproject([x, y], map.getMaxZoom())
 	};
 
@@ -123,10 +123,14 @@ function markBoulders($boulders, map) {
 	function addBoulderMarker(x, y, primary, secondary, $boulder) {
 		var myIcon = L.divIcon({
 			className: 'boulder-marker',
-			html: '<i class="fi-marker"></i>'
+			html: '<i class="fi-marker"></i>',
+			iconSize: undefined // set in CSS
 		});
 
-		var marker = L.marker(map.toLatLng(x, y), {icon: myIcon}).addTo(map);
+		var marker = L.marker(map.toLatLng(x, y), {
+			icon: myIcon,
+			riseOnHover: true
+		}).addTo(map);
 
 		var $icon = $(marker._icon);
 
