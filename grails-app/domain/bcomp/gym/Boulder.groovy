@@ -23,9 +23,12 @@ class Boulder {
     Grade currentGrade
     double currentGradeVariance
 
+    Date end
+
     public Boulder() {
         this.currentGrade = Grade.lowest()
         double currentGradeVariance = 0
+        end = new Date(2050, 1, 1)
     }
 
     public com.google.common.collect.Range<Grade> getGradeRange() {
