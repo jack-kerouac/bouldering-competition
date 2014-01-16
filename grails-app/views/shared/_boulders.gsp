@@ -7,7 +7,9 @@
             data-color-primary="${rgb(color: boulder.color.primaryColor)}"
             <g:if test="${boulder.color.hasSecondaryColor()}">
                 data-color-secondary="${rgb(color: boulder.color.secondaryColor)}"
-            </g:if>/>
+            </g:if>
+            data-current-font-grade="${boulder.currentGrade.toFontScale()}"
+        />
         <g:render template="${boulderTemplate}" model="['boulder': boulder]" />
         </li>
     </g:if>

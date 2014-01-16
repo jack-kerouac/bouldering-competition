@@ -56,7 +56,7 @@ $(function () {
 				fp.colorMarker(marker, primary, secondary);
 			};
 			var $select = $('select[name="color"]');
-			$select.change(function() {
+			$select.change(function () {
 				updateColor($(this));
 			});
 
@@ -67,7 +67,7 @@ $(function () {
 				$('#y').val(point.y / fp.height);
 			}
 
-			marker.on('drag', function(e) {
+			marker.on('drag', function (e) {
 				var marker = e.target;
 				var point = marker.getPoint();
 				updatePositionFields(point);
@@ -177,7 +177,7 @@ function initFloorPlan($floorPlanImg) {
 
 	function addMarker(x, y, options) {
 		var PointMarker = L.Marker.extend({
-			getPoint: function() {
+			getPoint: function () {
 				return map.project(marker.getLatLng(), map.getMaxZoom());
 			}
 		});
@@ -192,7 +192,7 @@ function initFloorPlan($floorPlanImg) {
 			icon: myIcon,
 			riseOnHover: true
 		};
-		if(typeof options === "undefined")
+		if (typeof options === "undefined")
 			options = {};
 		var _options = $.extend({}, defaults, options);
 
@@ -207,6 +207,12 @@ function initFloorPlan($floorPlanImg) {
 		}
 		var $icon = getIcon(marker);
 		$icon.attr('rel', '#' + $boulder.attr('id'));
+
+		marker.bindPopup(
+			'current grade: ' + $boulder.data('current-font-grade'),
+			{
+				offset: [0, -30]
+			});
 	}
 
 	function markBoulders($boulders) {
