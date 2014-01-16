@@ -199,12 +199,16 @@ function initFloorPlan($floorPlanImg) {
 			var $icon = _getIcon(this);
 			if (typeof color === 'string') {
 				$icon.css({
-					color: color
+					color: color,
+					background: '',
+					'-webkit-background-clip': '',
+					'-webkit-text-fill-color': ''
 				});
 			}
 			else {
 				// use text gradient for two colored boulders
 				$icon.css({
+					color: 'black',
 					background: '-webkit-linear-gradient(' + color[0] + ', ' + color[1] + ')',
 					'-webkit-background-clip': 'text',
 					'-webkit-text-fill-color': 'transparent'
