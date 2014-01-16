@@ -37,7 +37,7 @@
                             selected
                         </g:if>
                     />
-                    ${color}
+                    <g:message code="bcomp.boulder.color.${color}"/>
                     </option>
                 </g:each>
             </select>

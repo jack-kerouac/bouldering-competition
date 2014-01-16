@@ -27,8 +27,8 @@
                 <g:each in="${ascents}">
                 <tr>
                     <td><g:formatDate type="date" date="${it.date}"/></td>
-                    <td>${it.boulder.color}</td>
-                    <td>${it.style}</td>
+                    <td><g:message code="bcomp.boulder.color.${it.boulder.color}"/></td>
+                    <td><g:message code="bcomp.ascent.style.${it.style}.label"/></td>
                 </tr>
                 </g:each>
             </tbody>

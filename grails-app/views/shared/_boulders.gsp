@@ -9,7 +9,7 @@
                 data-color-secondary="${rgb(color: boulder.color.secondaryColor)}"
             </g:if>
             data-current-font-grade="${boulder.currentGrade.toFontScale()}"
-            data-color="${boulder.color}"
+            data-color="<g:message code="bcomp.boulder.color.${boulder.color}"/>"
         />
         <g:render template="${boulderTemplate}" model="['boulder': boulder]" />
         </li>
