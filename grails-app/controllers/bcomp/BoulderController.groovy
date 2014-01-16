@@ -9,6 +9,8 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured(['ROLE_BOULDERER'])
 class BoulderController {
 
+    def boulderService
+
     def createForm() {
         def gym = Gym.findByName('Boulderwelt')
         def cmd = flash.cmd ?: new CreateBoulderCommand()
@@ -33,7 +35,8 @@ class BoulderController {
                     b.unknownGrade();
                     break;
             }
-            b.save()
+
+            boulderService.setBoulder(cmd.gym, b)
 
             flashHelper.confirm 'default.created.message': [b.color, 'bcomp.boulder.label']
             redirect controller: 'home', action: 'home'
