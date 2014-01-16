@@ -21,7 +21,7 @@ class AscentController {
             a.properties = cmd.properties
             a.save()
 
-            flashHelper.confirm 'default.created.message': ['bcomp.ascent.label'], true
+            flashHelper.confirm 'default.logged.message': ['bcomp.ascent.label'], true
             redirect controller: 'home', action: 'home'
         }
         else {

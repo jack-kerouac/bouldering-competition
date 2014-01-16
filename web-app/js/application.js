@@ -66,8 +66,8 @@ $(function () {
 
 
 			function updatePositionFields(point) {
-				$('#x').val(point.x / fp.width);
-				$('#y').val(point.y / fp.height);
+				$('#x').val((point.x / fp.width).toLocaleString(locale));
+				$('#y').val((point.y / fp.height).toLocaleString(locale));
 			}
 
 			marker.on('drag', function (e) {

@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title><g:message code="default.new.label" args="[message(code: 'bcomp.boulder.label')]"/></title>
+    <title><g:message code="default.set.label" args="[message(code: 'bcomp.boulder.label')]"/></title>
 </head>
 
 <body id="create-boulder-page">
 
 <div class="row">
     <div class="small-12 column">
-        <h1><g:message code="default.new.label" args="[message(code: 'bcomp.boulder.label')]"/></h1>
+        <h1><g:message code="default.set.label" args="[message(code: 'bcomp.boulder.label')]"/></h1>
 
         <p>Chose the color of the boulder and then click on the floor plan to select the start of the boulder
         (the position in the fields below will change).</p>
@@ -23,7 +23,7 @@
 
     <div class="row">
         <div class="small-3 column">
-            <label class="right inline">Color</label>
+            <label class="right inline"><g:message code="bcomp.boulder.color.label"/></label>
         </div>
 
         <div class="small-9 column ${hasErrors(field: 'color', 'error')}">
@@ -42,6 +42,48 @@
                 </g:each>
             </select>
             <tmpl:/shared/fieldError field="color"/>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="small-3 column">
+            <label class="right inline"><g:message code="bcomp.boulder.grade.label"/></label>
+        </div>
+
+        <div class="small-9 column">
+            <p><small>use grades: ${bcomp.gym.Grade.FONT_GRADES}</small></p>
+            <div class="row">
+                <div class="column small-12">
+                    <input type="radio" name="gradeCertainty" value="ASSIGNED"
+                           id="assigned-grade" ${cmd.gradeCertainty == Boulder.GradeCertainty.ASSIGNED ? 'checked' : ''}>
+                    <label for="assigned-grade" class="inline"><g:message code="bcomp.boulder.gradeCertainty.assigned.label"/></label>
+                    <input type="text" name="grade" placeholder="6b+" value="${cmd.grade}"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column small-12">
+                    <input type="radio" name="gradeCertainty" value="RANGE" id="grade-range" ${cmd.gradeCertainty ==
+                            Boulder.GradeCertainty.RANGE ? 'checked' : ''}>
+                    <label for="grade-range" class="inline">
+                        <g:message code="bcomp.boulder.gradeCertainty.range.label"/>
+                    </label>
+                    <input type="text" name="gradeRangeLow" placeholder="6a+" value="${cmd.gradeRangeLow}"/>
+                    -
+                    <input type="text" name="gradeRangeHigh" placeholder="6c+" value="${cmd.gradeRangeHigh}"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column small-12">
+                    <input type="radio" name="gradeCertainty" value="UNKNOWN" id="unknown-grade" ${cmd.gradeCertainty ==
+                            Boulder.GradeCertainty.UNKNOWN ? 'checked' : ''}>
+                    <label for="unknown-grade" class="inline">
+                        <g:message code="bcomp.boulder.gradeCertainty.unknown.label"/>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -73,45 +115,8 @@
     </div>
 
     <div class="row">
-        <div class="small-3 column">
-            <label class="right inline">Grade</label>
-        </div>
-
-        <div class="small-9 column">
-            <p><small>use grades: ${bcomp.gym.Grade.FONT_GRADES}</small></p>
-            <div class="row">
-                <div class="column small-12">
-                    <input type="radio" name="gradeCertainty" value="ASSIGNED"
-                           id="assigned-grade" ${cmd.gradeCertainty == Boulder.GradeCertainty.ASSIGNED ? 'checked' : ''}>
-                    <label for="assigned-grade" class="inline">assigned</label>
-                    <input type="text" name="grade" placeholder="6b+" value="${cmd.grade}"/>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="column small-12">
-                    <input type="radio" name="gradeCertainty" value="RANGE" id="grade-range" ${cmd.gradeCertainty ==
-                            Boulder.GradeCertainty.RANGE ? 'checked' : ''}>
-                    <label for="grade-range" class="inline">range</label>
-                    <input type="text" name="gradeRangeLow" placeholder="6a+" value="${cmd.gradeRangeLow}"/>
-                    -
-                    <input type="text" name="gradeRangeHigh" placeholder="6c+" value="${cmd.gradeRangeHigh}"/>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="column small-12">
-                    <input type="radio" name="gradeCertainty" value="UNKNOWN" id="unknown-grade" ${cmd.gradeCertainty ==
-                            Boulder.GradeCertainty.UNKNOWN ? 'checked' : ''}>
-                    <label for="unknown-grade" class="inline">unknown</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="small-9 small-offset-3">
-            <g:submitButton name="submit" class="button" value="${message(code: 'default.button.create.label')}"/>
+            <g:submitButton name="submit" class="button" value="${message(code: 'default.button.set.label')}"/>
         </div>
     </div>
 </g:form>

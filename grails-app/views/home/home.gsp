@@ -19,14 +19,14 @@
     <div class="medium-4 column">
         <g:link controller="boulder" action="createForm" class="button">
             <i class="fi-plus"></i>
-            <g:message code="default.new.label" args="[message(code: 'bcomp.boulder.label')]"/>
+            <g:message code="default.set.label" args="[message(code: 'bcomp.boulder.label')]"/>
         </g:link>
     </div>
 
     <div class="medium-4 column">
         <g:link controller="ascent" action="createForm" class="button">
             <i class="fi-pencil"></i>
-            <g:message code="default.new.label" args="[message(code: 'bcomp.ascent.label')]"/>
+            <g:message code="default.log.label" args="[message(code: 'bcomp.ascent.label')]"/>
         </g:link>
     </div>
 

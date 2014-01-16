@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>${message(code: 'bcomp.leaderboard.label')}</title>
+    <title>${boulderer.username}'s <g:message code="bcomp.ascents.label"/> in ${gym.name}</title>
 </head>
 
 <body id="home-page">
 
 <div class="row">
     <div class="medium-12 columns">
-        <h1>${boulderer.username}'s ascents in ${gym.name}</h1>
+        <h1>${boulderer.username}'s <g:message code="bcomp.ascents.label"/> in ${gym.name}</h1>
     </div>
 </div>
 
@@ -18,9 +18,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Grade</th>
-                    <th>Style</th>
+                    <th><g:message code="bcomp.date.label"/></th>
+                    <th><g:message code="bcomp.boulder.grade.label"/></th>
+                    <th><g:message code="bcomp.ascent.style.label"/></th>
                 </tr>
             </thead>
             <tbody>

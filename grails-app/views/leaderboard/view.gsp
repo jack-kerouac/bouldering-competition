@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>${message(code: 'bcomp.leaderboard.label')}</title>
+    <title>${gym.name} - <g:message code="bcomp.leaderboard.label"/></title>
 </head>
 
 <body id="home-page">
 
 <div class="row">
     <div class="medium-12 columns">
-        <h1>${message(code: 'bcomp.leaderboard.label')}</h1>
+        <h1>${gym.name} - <g:message code="bcomp.leaderboard.label"/></h1>
     </div>
 </div>
 
@@ -18,10 +18,9 @@
         <table>
             <thead>
             <tr>
-                <th>Position</th>
-                <th>Boulderer</th>
-                <th>Score</th>
-                <th>Last Session</th>
+                <th><g:message code="bcomp.leaderboard.position.label"/></th>
+                <th><g:message code="bcomp.userRole.boulderer.label"/></th>
+                <th><g:message code="bcomp.leaderboard.score.label"/></th>
             </tr>
             </thead>
             <tbody>
@@ -31,7 +30,6 @@
                     <td><g:link controller="boulderer" action="listAscents"
                                 params="[username: it.boulderer.username]">${it.boulderer.username}</g:link></td>
                     <td>${it.score}: ${it.countTops} tops (${it.countFlashes} flash)</td>
-                    <td><g:formatDate type="date" date="${it.lastSession}"/></td>
                 </tr>
             </g:each>
             </tbody>

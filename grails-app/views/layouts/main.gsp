@@ -1,3 +1,4 @@
+<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en">
@@ -39,15 +40,17 @@
                     <a href="#"><sec:loggedInUserInfo field="username"/></a>
                     <ul class="dropdown">
                         <li><g:link controller='boulderer' action='listAscents' params="[username:
-                                sec.loggedInUserInfo(field: 'username')]">My ascents</g:link></li>
-                        <li><g:link controller='logout'>Logout</g:link></li>
+                                sec.loggedInUserInfo(field: 'username')]">
+                                <g:message code="bcomp.ascents.label"/>
+                            </g:link></li>
+                        <li><g:link controller='logout'><g:message code="default.button.logout.label"/></g:link></li>
                     </ul>
                 </li>
             </ul>
 
             <!-- Left Nav Section -->
             <ul class="left">
-                <li><a href="#">Boulderwelt</a></li>
+                %{--<li><a href="#">Boulderwelt</a></li>--}%
             </ul>
         </section>
     </nav>
@@ -73,7 +76,10 @@
 
 <div class="footer" role="contentinfo"></div>
 
-<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
+<script>
+    var locale = '${RequestContextUtils.getLocale(request).toString().replace('_', '-')}';
+</script>
+
 <r:layoutResources/>
 
 <script>

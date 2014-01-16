@@ -46,7 +46,7 @@ class BoulderController {
 
             boulderService.setBoulder(cmd.gym, b)
 
-            flashHelper.confirm 'default.created.message': [b.color, 'bcomp.boulder.label']
+            flashHelper.confirm 'default.set.message': [b.color, 'bcomp.boulder.label']
 
             // store some options in session so that they do not need to be entered upon creating the next boulder
             session.lastColor = cmd.color

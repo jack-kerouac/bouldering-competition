@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title><g:message code="default.new.label" args="[message(code: 'bcomp.ascent.label')]"/></title>
+    <title><g:message code="default.log.label" args="[message(code: 'bcomp.ascent.label')]"/></title>
 </head>
 
 <body id="create-ascent-page">
 
 <div class="row">
     <div class="small-12 column">
-        <h1><g:message code="default.new.label" args="[message(code: 'bcomp.ascent.label')]"/></h1>
+        <h1><g:message code="default.log.label" args="[message(code: 'bcomp.ascent.label')]"/></h1>
 
         <p>Markers show the color of the boulder. Zoom in by double click (desktop) or pinching (mobile).</p>
     </div>
@@ -32,7 +32,7 @@
 
     <div class="row">
         <div class="small-3 column">
-            <label class="right inline">Date</label>
+            <label class="right inline"><g:message code="bcomp.date.label"/></label>
         </div>
 
         <div class="small-9 column ${hasErrors(field: 'date', 'error')}">
@@ -43,22 +43,22 @@
 
     <div class="row">
         <div class="small-3 column">
-            <label class="right inline">Style</label>
+            <label class="right inline"><g:message code="bcomp.ascent.style.label"/></label>
         </div>
 
         <div class="small-9 column ${hasErrors(field: 'tries', 'error')}">
             <input type="radio" name="style" value="flash" id="flash" ${cmd.style == Ascent.Style.flash ?
                     'checked' : ''}>
-            <label for="flash" class="inline">flash</label>
+            <label for="flash" class="inline"><g:message code="bcomp.ascent.style.flash.label"/></label>
             <input type="radio" name="style" value="top" id="top" ${cmd.style == Ascent.Style.top ? 'checked'
                     : ''}>
-            <label for="top" class="inline">top</label>
+            <label for="top" class="inline"><g:message code="bcomp.ascent.style.top.label"/></label>
         </div>
     </div>
 
     <div class="row">
         <div class="small-9 small-offset-3">
-            <g:submitButton name="submit" class="button" value="${message(code: 'default.button.create.label')}"/>
+            <g:submitButton name="submit" class="button" value="${message(code: 'default.button.log.label')}"/>
         </div>
     </div>
 </g:form>

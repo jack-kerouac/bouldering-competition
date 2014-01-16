@@ -10,6 +10,6 @@ class LeaderboardController {
 
     def view() {
         def gym = Gym.findByName('Boulderwelt')
-        [ranking: leaderboardService.calculateRanking(gym)]
+        [gym: gym, ranking: leaderboardService.calculateRanking(gym)]
     }
 }
