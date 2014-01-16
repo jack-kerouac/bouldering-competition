@@ -65,6 +65,8 @@ grails.project.dependency.resolution = {
         compile ":scaffolding:2.0.1"
         compile ':cache:1.1.1'
 
+        compile ":cache-headers:1.1.5"
+
         compile ":flash-helper:0.9.6"
 
         compile ":cloud-bees:0.6.2"

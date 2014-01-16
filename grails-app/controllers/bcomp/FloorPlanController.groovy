@@ -8,6 +8,8 @@ import grails.plugin.springsecurity.annotation.Secured
 class FloorPlanController {
 
     def image(Long gymId, Long floorPlanId) {
+        cache shared: true, validFor: 3600  // 1hr on content
+
         Gym gym = Gym.findById(gymId)
         assert gym.floorPlans.any { it.id == floorPlanId}
         FloorPlan fp = FloorPlan.findById(floorPlanId)
