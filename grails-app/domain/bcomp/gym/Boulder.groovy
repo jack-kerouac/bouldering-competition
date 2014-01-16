@@ -48,6 +48,7 @@ class Boulder {
     public void assignedGrade(Grade grade) {
         initialGradeCertainty = GradeCertainty.ASSIGNED;
         initialGradeRangeLow = grade;
+        initialGradeRangeHigh = Grade.zero();
     }
 
     public boolean hasAssignedGrade() {

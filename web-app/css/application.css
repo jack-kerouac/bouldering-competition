@@ -20,14 +20,9 @@ input[readonly] {
     padding-right: 10px;
 }
 
-#create-ascent-page input[name='tries'] {
+#create-boulder-page input[name='grade'], #create-boulder-page input[name='gradeRangeLow'], #create-boulder-page input[name='gradeRangeHigh'] {
     width: 5em;
     display: inline-block;
-}
-
-#create-ascent-page label[for='tries'] {
-    display: inline-block;
-    margin-left: 0.5em;
 }
 
 #create-boulder-page input[name="x"], #create-boulder-page input[name="y"] {

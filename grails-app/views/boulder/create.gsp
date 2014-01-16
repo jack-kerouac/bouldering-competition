@@ -74,25 +74,30 @@
         </div>
 
         <div class="small-9 column">
+            <p><small>use grades: ${bcomp.gym.Grade.FONT_GRADES}</small></p>
             <div class="row">
                 <div class="column small-12">
-                    <input type="radio" name="initialGradeCertainty" value="ASSIGNED" id="assigned-grade" ${cmd.initialGradeCertainty ==
-                            Boulder.GradeCertainty.ASSIGNED ? 'checked' : ''}>
+                    <input type="radio" name="gradeCertainty" value="ASSIGNED"
+                           id="assigned-grade" ${cmd.gradeCertainty == Boulder.GradeCertainty.ASSIGNED ? 'checked' : ''}>
                     <label for="assigned-grade" class="inline">assigned</label>
+                    <input type="text" name="grade" placeholder="6b+"/>
                 </div>
             </div>
 
             <div class="row">
                 <div class="column small-12">
-                    <input type="radio" name="initialGradeCertainty" value="RANGE" id="grade-range" ${cmd.initialGradeCertainty ==
+                    <input type="radio" name="gradeCertainty" value="RANGE" id="grade-range" ${cmd.gradeCertainty ==
                             Boulder.GradeCertainty.RANGE ? 'checked' : ''}>
                     <label for="grade-range" class="inline">range</label>
+                    <input type="text" name="gradeRangeLow" placeholder="6a+"/>
+                    -
+                    <input type="text" name="gradeRangeHigh" placeholder="6c+"/>
                 </div>
             </div>
 
             <div class="row">
                 <div class="column small-12">
-                    <input type="radio" name="initialGradeCertainty" value="UNKNOWN" id="unknown-grade" ${cmd.initialGradeCertainty ==
+                    <input type="radio" name="gradeCertainty" value="UNKNOWN" id="unknown-grade" ${cmd.gradeCertainty ==
                             Boulder.GradeCertainty.UNKNOWN ? 'checked' : ''}>
                     <label for="unknown-grade" class="inline">unknown</label>
                 </div>

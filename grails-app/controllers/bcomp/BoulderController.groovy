@@ -20,13 +20,14 @@ class BoulderController {
             Boulder b = new Boulder()
             b.properties = cmd.properties
             b.onFloorPlan(cmd.floorPlan, cmd.x, cmd.y)
-            switch(cmd.initialGradeCertainty) {
+            // TODO: validation of entered grades, bind errors to fields, display errors in view
+            switch(cmd.gradeCertainty) {
                 case Boulder.GradeCertainty.ASSIGNED:
-                    b.assignedGrade(Grade.fromFontScale(cmd.initialGrade));
+                    b.assignedGrade(Grade.fromFontScale(cmd.grade));
                     break;
                 case Boulder.GradeCertainty.RANGE:
-                    b.gradeRange(Grade.fromFontScale(cmd.initialGradeRangeLow),
-                            Grade.fromFontScale(cmd.initialGradeRangeHigh));
+                    b.gradeRange(Grade.fromFontScale(cmd.gradeRangeLow),
+                            Grade.fromFontScale(cmd.gradeRangeHigh));
                     break;
                 case Boulder.GradeCertainty.UNKNOWN:
                     b.unknownGrade();

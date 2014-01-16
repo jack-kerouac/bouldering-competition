@@ -17,11 +17,11 @@ class CreateBoulderCommand {
     FloorPlan floorPlan
     Double x, y
 
-    Boulder.GradeCertainty initialGradeCertainty
-    String initialGrade
+    Boulder.GradeCertainty gradeCertainty
+    String grade
 
-    String initialGradeRangeLow
-    String initialGradeRangeHigh
+    String gradeRangeLow
+    String gradeRangeHigh
 
     BoulderColor color
 
