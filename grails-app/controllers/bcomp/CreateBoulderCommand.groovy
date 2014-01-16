@@ -34,6 +34,17 @@ class CreateBoulderCommand {
         }
         x min: 0.0d, max: 1.0d
         y min: 0.0d, max: 1.0d
+
+        gradeCertainty nullable: false
+        grade nullable: true, validator: { grade, cmd ->
+            return cmd.gradeCertainty == Boulder.GradeCertainty.ASSIGNED ? grade != null : true
+        }
+        gradeRangeLow nullable: true, validator: { gradeRangeLow, cmd ->
+            return cmd.gradeCertainty == Boulder.GradeCertainty.RANGE ? gradeRangeLow != null : true
+        }
+        gradeRangeHigh nullable: true, validator: { gradeRangeHigh, cmd ->
+            return cmd.gradeCertainty == Boulder.GradeCertainty.RANGE ? gradeRangeHigh != null : true
+        }
     }
 
 }
