@@ -13,7 +13,15 @@ class BoulderController {
 
     def createForm() {
         def gym = Gym.findByName('Boulderwelt')
+
         def cmd = flash.cmd ?: new CreateBoulderCommand()
+        // retrieve stored values for fields from session
+        cmd.color = session.lastColor
+        cmd.gradeCertainty = session.lastGradeCertainty
+        cmd.grade = session.lastGrade
+        cmd.gradeRangeLow = session.lastGradeRangeLow
+        cmd.gradeRangeHigh = session.lastGradeRangeHigh
+
         render view: 'create', model: [gym: gym, colors: BoulderColor.values(), cmd: cmd]
     }
 
@@ -39,6 +47,14 @@ class BoulderController {
             boulderService.setBoulder(cmd.gym, b)
 
             flashHelper.confirm 'default.created.message': [b.color, 'bcomp.boulder.label']
+
+            // store some options in session so that they do not need to be entered upon creating the next boulder
+            session.lastColor = cmd.color
+            session.lastGradeCertainty = cmd.gradeCertainty
+            session.lastGrade = cmd.grade
+            session.lastGradeRangeLow = cmd.gradeRangeLow
+            session.lastGradeRangeHigh = cmd.gradeRangeHigh
+
             redirect controller: 'home', action: 'home'
         }
         else {

@@ -32,7 +32,11 @@
                     <option value="${color}" data-color-primary="${rgb(color: color.primaryColor)}"
                         <g:if test="${color.hasSecondaryColor()}">
                             data-color-secondary="${rgb(color: color.secondaryColor)}"
-                        </g:if>/>
+                        </g:if>
+                        <g:if test="${cmd.color == color}">
+                            selected
+                        </g:if>
+                    />
                     ${color}
                     </option>
                 </g:each>
@@ -80,7 +84,7 @@
                     <input type="radio" name="gradeCertainty" value="ASSIGNED"
                            id="assigned-grade" ${cmd.gradeCertainty == Boulder.GradeCertainty.ASSIGNED ? 'checked' : ''}>
                     <label for="assigned-grade" class="inline">assigned</label>
-                    <input type="text" name="grade" placeholder="6b+"/>
+                    <input type="text" name="grade" placeholder="6b+" value="${cmd.grade}"/>
                 </div>
             </div>
 
@@ -89,9 +93,9 @@
                     <input type="radio" name="gradeCertainty" value="RANGE" id="grade-range" ${cmd.gradeCertainty ==
                             Boulder.GradeCertainty.RANGE ? 'checked' : ''}>
                     <label for="grade-range" class="inline">range</label>
-                    <input type="text" name="gradeRangeLow" placeholder="6a+"/>
+                    <input type="text" name="gradeRangeLow" placeholder="6a+" value="${cmd.gradeRangeLow}"/>
                     -
-                    <input type="text" name="gradeRangeHigh" placeholder="6c+"/>
+                    <input type="text" name="gradeRangeHigh" placeholder="6c+" value="${cmd.gradeRangeHigh}"/>
                 </div>
             </div>
 
