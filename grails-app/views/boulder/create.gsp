@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="bcomp.gym.Boulder" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main"/>
@@ -65,6 +65,38 @@
             <input type="text" id="y" name="y" readonly/>
             <tmpl:/shared/fieldError field="x"/>
             <tmpl:/shared/fieldError field="y"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="small-3 column">
+            <label class="right inline">Grade</label>
+        </div>
+
+        <div class="small-9 column">
+            <div class="row">
+                <div class="column small-12">
+                    <input type="radio" name="initialGradeCertainty" value="ASSIGNED" id="assigned-grade" ${cmd.initialGradeCertainty ==
+                            Boulder.GradeCertainty.ASSIGNED ? 'checked' : ''}>
+                    <label for="assigned-grade" class="inline">assigned</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column small-12">
+                    <input type="radio" name="initialGradeCertainty" value="RANGE" id="grade-range" ${cmd.initialGradeCertainty ==
+                            Boulder.GradeCertainty.RANGE ? 'checked' : ''}>
+                    <label for="grade-range" class="inline">range</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column small-12">
+                    <input type="radio" name="initialGradeCertainty" value="UNKNOWN" id="unknown-grade" ${cmd.initialGradeCertainty ==
+                            Boulder.GradeCertainty.UNKNOWN ? 'checked' : ''}>
+                    <label for="unknown-grade" class="inline">unknown</label>
+                </div>
+            </div>
         </div>
     </div>
 

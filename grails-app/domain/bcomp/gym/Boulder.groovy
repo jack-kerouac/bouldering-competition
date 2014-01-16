@@ -2,6 +2,10 @@ package bcomp.gym
 
 class Boulder {
 
+    enum GradeCertainty {
+        UNKNOWN, RANGE, ASSIGNED;
+    }
+
     static constraints = {
         color nullable: false
     }
@@ -18,6 +22,7 @@ class Boulder {
 
     static embedded = ['initialGradeRangeLow', 'initialGradeRangeHigh', 'currentGrade']
 
+    GradeCertainty initialGradeCertainty;
     Grade initialGradeRangeLow, initialGradeRangeHigh;
 
     Grade currentGrade
@@ -26,15 +31,13 @@ class Boulder {
     Date end
 
     public Boulder() {
-        this.currentGrade = Grade.lowest()
-        double currentGradeVariance = 0
+        this.initialGradeRangeLow = Grade.zero();
+        this.initialGradeRangeHigh = Grade.zero();
+
+        this.currentGrade = Grade.zero()
+        this.currentGradeVariance = 0
         end = new Date(2050, 1, 1)
     }
-
-    public com.google.common.collect.Range<Grade> getGradeRange() {
-        return com.google.common.collect.Range.closed(initialGradeRangeLow, initialGradeRangeHigh)
-    }
-
 
     public void onFloorPlan(FloorPlan floorPlan, double x, double y) {
         location = new OnFloorPlan(floorPlan: floorPlan, x: x, y: y)
@@ -42,27 +45,48 @@ class Boulder {
     }
 
 
-    public void knownGrade(Grade grade) {
+    public void assignedGrade(Grade grade) {
+        initialGradeCertainty = GradeCertainty.ASSIGNED;
         initialGradeRangeLow = grade;
-        initialGradeRangeHigh = grade;
     }
 
-    public boolean hasKnownGrade() {
-        return initialGradeRangeLow == initialGradeRangeHigh;
+    public boolean hasAssignedGrade() {
+        return initialGradeCertainty == GradeCertainty.ASSIGNED;
+
     }
 
-    public void knownGradeRange(Grade rangeLow, Grade rangeHigh) {
-        this.initialGradeRangeLow = rangeLow;
-        this.initialGradeRangeHigh = rangeHigh;
+    public Grade getAssignedGrade() {
+        assert hasAssignedGrade();
+        return initialGradeRangeLow;
+    }
+
+    public void gradeRange(Grade rangeLow, Grade rangeHigh) {
+        initialGradeCertainty = GradeCertainty.RANGE;
+        initialGradeRangeLow = rangeLow;
+        initialGradeRangeHigh = rangeHigh;
+    }
+
+    public boolean hasGradeRange() {
+        return initialGradeCertainty == GradeCertainty.RANGE;
+    }
+
+    public Grade getGradeRangeLow() {
+        assert hasGradeRange()
+        return initialGradeRangeLow;
+    }
+
+    public Grade getGradeRangeHigh() {
+        assert hasGradeRange()
+        return initialGradeRangeHigh;
     }
 
     public void unknownGrade() {
+        initialGradeCertainty = GradeCertainty.UNKNOWN;
         initialGradeRangeLow = Grade.lowest()
         initialGradeRangeHigh = Grade.highest()
     }
 
-    public boolean hasKnownRange() {
-        def ret = !(initialGradeRangeLow == Grade.lowest() && initialGradeRangeHigh == Grade.highest())
-        return ret && initialGradeRangeLow != initialGradeRangeHigh
+    public boolean hasUnknownGrade() {
+        return initialGradeCertainty == GradeCertainty.UNKNOWN;
     }
 }

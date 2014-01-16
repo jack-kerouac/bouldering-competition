@@ -33,7 +33,7 @@ class User {
 	}
 
     public User() {
-        this.currentGrade = Grade.lowest()
+        this.currentGrade = Grade.zero()
         this.currentGradeVariance = 0
     }
 

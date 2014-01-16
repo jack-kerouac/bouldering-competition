@@ -3,6 +3,7 @@ package bcomp
 import bcomp.gym.Boulder
 import bcomp.gym.BoulderColor
 import bcomp.gym.FloorPlan
+import bcomp.gym.Grade
 import bcomp.gym.Gym
 import bcomp.gym.Location
 import bcomp.gym.OnFloorPlan
@@ -15,6 +16,12 @@ class CreateBoulderCommand {
 
     FloorPlan floorPlan
     Double x, y
+
+    Boulder.GradeCertainty initialGradeCertainty
+    String initialGrade
+
+    String initialGradeRangeLow
+    String initialGradeRangeHigh
 
     BoulderColor color
 

@@ -2,6 +2,7 @@ package bcomp
 
 import bcomp.gym.Boulder
 import bcomp.gym.BoulderColor
+import bcomp.gym.Grade
 import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
 
@@ -19,6 +20,18 @@ class BoulderController {
             Boulder b = new Boulder()
             b.properties = cmd.properties
             b.onFloorPlan(cmd.floorPlan, cmd.x, cmd.y)
+            switch(cmd.initialGradeCertainty) {
+                case Boulder.GradeCertainty.ASSIGNED:
+                    b.assignedGrade(Grade.fromFontScale(cmd.initialGrade));
+                    break;
+                case Boulder.GradeCertainty.RANGE:
+                    b.gradeRange(Grade.fromFontScale(cmd.initialGradeRangeLow),
+                            Grade.fromFontScale(cmd.initialGradeRangeHigh));
+                    break;
+                case Boulder.GradeCertainty.UNKNOWN:
+                    b.unknownGrade();
+                    break;
+            }
             b.save()
 
             flashHelper.confirm 'default.created.message': [b.color, 'bcomp.boulder.label']
