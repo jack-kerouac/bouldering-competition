@@ -11,7 +11,7 @@ class LeaderboardService {
 
     def calculateRanking(Gym gym) {
         def ascents = Ascent.where {
-            boulder.section.gym == gym
+            boulder.gym == gym
         }
 
         def ranking = [:]
@@ -24,7 +24,7 @@ class LeaderboardService {
                 ranking.put(a.boulderer, r)
             }
 
-            r.lastSession = a.date.after(r.lastSession) ? a.date : r.lastSession
+            r.lastSession = a.session.date.after(r.lastSession) ? a.session.date : r.lastSession
 
             r.countTops++
             switch (a.style) {
@@ -41,13 +41,12 @@ class LeaderboardService {
             it.score = POINTS_FLASH * it.countFlashes + POINTS_TOP * (it.countTops - it.countFlashes)
         }
 
-        if(ranking.size() == 0)
+        if (ranking.size() == 0)
             return ranking
-        else if(ranking.size() == 1) {
+        else if (ranking.size() == 1) {
             ranking[0].position = 1;
             return ranking
-        }
-        else {
+        } else {
             def sorted = ranking.sort { it.score }.reverse()
             sorted[0].position = 1;
             int pos = 1

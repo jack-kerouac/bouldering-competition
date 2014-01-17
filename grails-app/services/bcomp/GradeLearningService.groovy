@@ -39,7 +39,7 @@ class GradeLearningService {
         def numberOfAscentsThatCurrentGradeCountsFor = 10
 
         def ascents = Ascent.where {
-            boulderer == user
+            session.boulderer == user
         }
         double gradeValue = 0
         double weights = 0

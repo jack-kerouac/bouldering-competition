@@ -1,6 +1,5 @@
 package bcomp
 
-import bcomp.aaa.User
 import bcomp.gym.Boulder
 
 class Ascent {
@@ -9,13 +8,19 @@ class Ascent {
         flash, top
     }
 
-    Date date
     Style style
 
-    static belongsTo = [boulder: Boulder, boulderer: User]
+    static belongsTo = [boulder: Boulder, session: BoulderingSession]
 
     static constraints = {
         boulder nullable: false
+        session nullable: false
     }
+
+    // useful since we often handle ascents themselves
+    def getBoulderer() {
+        return session.boulderer
+    }
+
 }
 

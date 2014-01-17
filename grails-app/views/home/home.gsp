@@ -24,9 +24,9 @@
     </div>
 
     <div class="medium-4 column">
-        <g:link controller="ascent" action="createForm" class="button">
+        <g:link controller="boulderingSession" action="createForm" class="button">
             <i class="fi-pencil"></i>
-            <g:message code="default.log.label" args="[message(code: 'bcomp.ascent.label')]"/>
+            <g:message code="default.log.label" args="[message(code: 'bcomp.boulderingSession.label')]"/>
         </g:link>
     </div>
 

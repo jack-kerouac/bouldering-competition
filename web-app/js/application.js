@@ -20,16 +20,49 @@ $(function () {
 
 			var markers = fp.markBoulders($boulders.find('li'));
 
-			$.each(markers, function(i, marker) {
-				marker.on('click', function() {
-					// TODO: remove chosen class from other markers
-					$(marker._icon).addClass('chosen');
+			if ($('#log-session-page').exists()) {
+				$.each(markers, function (i, marker) {
+					function setAscentStyle($boulder, style) {
+						$boulder.find('input:radio[value=' + style + ']').prop('checked', true);
+					}
 
-					var $boulder = marker.options.$boulder;
-					$boulder.find('input[type="radio"]').click();
+					function getAscentStyle($boulder) {
+						return $boulder.find('input:radio:checked').val();
+					}
+
+					var popupContent =
+						'<input id="flash" type="checkbox" class="style-select" value="flash">' +
+							'<label for="flash">flash</label>' +
+							'<input id="top" type="checkbox" class="style-select" value="top">' +
+							'<label for="top">top</label>';
+
+					marker.bindPopup(
+						popupContent, {
+							offset: [0, -30],
+							closeButton: false
+						});
+
+					marker.on('popupopen', function (e) {
+						var $popupContent = $(e.popup._contentNode);
+						var $boulder = e.target.options.$boulder;
+
+						// set checkboxes according to current style
+						var style = getAscentStyle($boulder);
+						$popupContent.find('input:checkbox.style-select[value=' + style + ']').prop('checked', true);
+
+						// set click handlers that change style
+						$popupContent.find('input:checkbox.style-select').click(function () {
+							if ($(this).is(':checked')) {
+								$popupContent.find('input:checkbox.style-select').not(this).prop('checked', false);
+							}
+							var style = $popupContent.find('input:checkbox.style-select:checked').val();
+							if (!style)
+								style = "none";
+							setAscentStyle($boulder, style);
+						});
+					});
 				});
-			});
-
+			}
 		}
 
 
@@ -173,7 +206,7 @@ function initFloorPlan($floorPlanImg) {
 				riseOnHover: true,
 				color: 'rgb(0,0,0)'
 			},
-			setColor: function(newColor) {
+			setColor: function (newColor) {
 				L.Util.setOptions(this, {color: newColor});
 				colorIcon.call(this);
 			}
@@ -222,12 +255,6 @@ function initFloorPlan($floorPlanImg) {
 			throw new Error('boulder ' + $boulder + ' has no ID!');
 
 		marker.options.$boulder = $boulder;
-
-		marker.bindPopup(
-			'current grade: ' + $boulder.data('current-font-grade'),
-			{
-				offset: [0, -30]
-			});
 	}
 
 	function markBoulders($boulders) {
@@ -268,7 +295,8 @@ function initFloorPlan($floorPlanImg) {
 		height: height,
 		map: map,
 		addMarker: addMarker,
-		markBoulders: markBoulders
+		markBoulders: markBoulders,
+		$mapDiv: $mapDiv
 	};
 }
 

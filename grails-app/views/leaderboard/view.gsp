@@ -27,7 +27,7 @@
             <g:each in="${ranking.sort({it.position})}">
                 <tr>
                     <td>${it.position}</td>
-                    <td><g:link controller="boulderer" action="listAscents"
+                    <td><g:link controller="boulderer" action="listSessions"
                                 params="[username: it.boulderer.username]">${it.boulderer.username}</g:link></td>
                     <td>${it.score}: ${it.countTops} tops (${it.countFlashes} flash)</td>
                 </tr>

@@ -13,7 +13,9 @@ class GradeLearningController {
         def gym = Gym.findByName('Boulderwelt')
         def users = [:]
         for(User user : User.findAll()){
-            def ascents = Ascent.findAllByBoulderer(user)
+            def ascents = Ascent.where {
+                session.boulderer == user
+            }
             users.put(user, ascents)
         }
 

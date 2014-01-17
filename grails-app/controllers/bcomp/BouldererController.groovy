@@ -8,15 +8,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 @Secured(['ROLE_BOULDERER'])
 class BouldererController {
 
-    def listAscents(String username) {
-        def gym = Gym.findByName('Boulderwelt')
+    def listSessions(String username) {
+        def _gym = Gym.findByName('Boulderwelt')
         def boulderer_ = User.findByUsername(username)
         if(boulderer_ == null)
             throw new UsernameNotFoundException("boulderer ${username} not found")
-        def ascents = Ascent.where {
+        def sessions = BoulderingSession.where {
             boulderer == boulderer_
-            boulder.section.gym == gym
+            gym == _gym
         }.order('date', 'desc')
-        render view: 'listAscents', model: [gym: gym, boulderer: boulderer_, ascents: ascents]
+        render view: 'listSessions', model: [gym: _gym, boulderer: boulderer_, sessions: sessions]
     }
 }
