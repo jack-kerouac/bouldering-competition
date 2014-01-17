@@ -112,15 +112,15 @@ $(function () {
 
 	$('#show-meta-page table.boulders tbody tr').css({cursor: 'pointer'});
 	$('#show-meta-page table.boulders tbody tr').click(function (e) {
-		var mu = parseFloat($(this).find('td:nth-child(3) span:nth-child(1)').text());
-		var sigma = Math.sqrt(parseFloat($(this).find('td:nth-child(4)').text()));
+		var mu = parseFloat($(this).find('td:nth-child(3) span:nth-child(1)').text().replace(',', '.'));
+		var sigma = Math.sqrt(parseFloat($(this).find('td:nth-child(4)').text().replace(',', '.')));
 		displayChart(mu, sigma);
 	});
 
 	$('#show-meta-page table.users tbody tr').css({cursor: 'pointer'});
 	$('#show-meta-page table.users tbody tr').click(function (e) {
-		var mu = parseFloat($(this).find('td:nth-child(4) span:nth-child(1)').text());
-		var sigma = Math.sqrt(parseFloat($(this).find('td:nth-child(5)').text()));
+		var mu = parseFloat($(this).find('td:nth-child(4) span:nth-child(1)').text().replace(',', '.'));
+		var sigma = Math.sqrt(parseFloat($(this).find('td:nth-child(5)').text().replace(',', '.')));
 		displayChart(mu, sigma);
 	});
 });
