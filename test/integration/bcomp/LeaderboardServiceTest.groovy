@@ -2,6 +2,8 @@ package bcomp
 
 import bcomp.aaa.User
 import bcomp.gym.Boulder
+import bcomp.gym.FloorPlan
+import bcomp.gym.Grade
 import bcomp.gym.Gym
 
 /**
@@ -9,37 +11,49 @@ import bcomp.gym.Gym
  */
 class LeaderboardServiceTest extends GroovyTestCase {
 
+    def grailsApplication
+
     def leaderboardService
+
+    def boulderService
 
     Gym hg
     Boulder b1, b2, b3
     User flo, chris, fia
 
 
-    void setUp() {
-        hg = new Gym('Heavens Gate')
+    void createFixture() {
+        hg = SampleData.createGym("ABC", grailsApplication)
+        FloorPlan fp = hg.floorPlans.first()
         hg.save()
 
-        b1 = new Boulder(grade: 'yellow')
-        hg.addToBoulders(b1)
-        b2 = new Boulder(grade: 'red')
-        hg.addToBoulders(b2)
-        b3 = new Boulder(grade: 'black')
-        hg.addToBoulders(b3)
+        b1 = SampleData.createBoulder1(fp)
+        boulderService.setBoulder(hg, b1)
 
-        flo = new User(username: 'flo', password: 'p')
+        b2 = SampleData.createBoulder2(fp)
+        boulderService.setBoulder(hg, b2)
+
+        b3 = SampleData.createBoulder3(fp)
+        boulderService.setBoulder(hg, b3)
+
+        hg.save(flush: true)
+
+        flo = new User(username: 'flo', password: 'p', initialGrade: Grade.fromFontScale('6a'))
         flo.save()
-        chris = new User(username: 'chris', password: 'p')
+        chris = new User(username: 'chris', password: 'p', initialGrade: Grade.fromFontScale('6a'))
         chris.save()
-        fia = new User(username: 'fia', password: 'p')
+        fia = new User(username: 'fia', password: 'p', initialGrade: Grade.fromFontScale('6a'))
         fia.save()
     }
 
     void testSimpleCalculate() {
-        Ascent a1 = new Ascent(date: new Date(), boulderer: flo, boulder: b1, style: Ascent.Style.flash)
-        a1.save()
-        Ascent a2 = new Ascent(date: new Date(), boulderer: chris, boulder: b1, style: Ascent.Style.top, tries: 3)
-        a2.save()
+        createFixture()
+        BoulderingSession s1 = new BoulderingSession(gym: hg, boulderer: flo, date: new Date());
+        Ascent a1 = new Ascent(boulder: b1, style: Ascent.Style.flash)
+        s1.addToAscents(a1).save()
+        BoulderingSession s2 = new BoulderingSession(gym: hg, boulderer: chris, date: new Date());
+        Ascent a2 = new Ascent(boulder: b1, style: Ascent.Style.top)
+        s2.addToAscents(a2).save()
 
         def ranking = leaderboardService.calculateRanking(hg)
         assert ranking.size() == 2
@@ -47,7 +61,7 @@ class LeaderboardServiceTest extends GroovyTestCase {
         def rankFlo = ranking.find { rank -> rank.boulderer.username == 'flo' }
         assertNotNull rankFlo
         assert rankFlo.position == 1
-        assert rankFlo.lastSession == a1.date
+        assert rankFlo.lastSession == s1.date
         assert rankFlo.countFlashes == 1
         assert rankFlo.countTops == 1
         assert rankFlo.score == LeaderboardService.POINTS_FLASH
@@ -55,19 +69,22 @@ class LeaderboardServiceTest extends GroovyTestCase {
         def rankChris = ranking.find { it.boulderer.username == 'chris' }
         assertNotNull rankChris
         assert rankChris.position == 2
-        assert rankChris.lastSession == a2.date
+        assert rankChris.lastSession == s2.date
         assert rankChris.countFlashes == 0
         assert rankChris.countTops == 1
         assert rankChris.score == LeaderboardService.POINTS_TOP
     }
 
     void testScore() {
-        Ascent a1 = new Ascent(date: new Date(), boulderer: flo, boulder: b1, style: Ascent.Style.flash)
-        a1.save()
-        Ascent a2 = new Ascent(date: new Date(), boulderer: flo, boulder: b2, style: Ascent.Style.flash)
-        a2.save()
-        Ascent a3 = new Ascent(date: new Date(), boulderer: flo, boulder: b3, style: Ascent.Style.top, tries: 3)
-        a3.save()
+        createFixture()
+        BoulderingSession s = new BoulderingSession(gym: hg, boulderer: flo, date: new Date());
+        Ascent a1 = new Ascent(boulder: b1, style: Ascent.Style.flash)
+        s.addToAscents(a1);
+        Ascent a2 = new Ascent(boulder: b2, style: Ascent.Style.flash)
+        s.addToAscents(a2);
+        Ascent a3 = new Ascent(boulder: b3, style: Ascent.Style.top, tries: 3)
+        s.addToAscents(a3);
+        s.save()
 
         def ranking = leaderboardService.calculateRanking(hg)
 
@@ -76,10 +93,13 @@ class LeaderboardServiceTest extends GroovyTestCase {
     }
 
     void testEqualScore() {
-        Ascent a1 = new Ascent(date: new Date(), boulderer: flo, boulder: b1, style: Ascent.Style.flash)
-        a1.save()
-        Ascent a2 = new Ascent(date: new Date(), boulderer: chris, boulder: b1, style: Ascent.Style.flash)
-        a2.save()
+        createFixture()
+        BoulderingSession s1 = new BoulderingSession(gym: hg, boulderer: flo, date: new Date());
+        Ascent a1 = new Ascent(boulder: b1, style: Ascent.Style.flash)
+        s1.addToAscents(a1).save()
+        BoulderingSession s2 = new BoulderingSession(gym: hg, boulderer: chris, date: new Date());
+        Ascent a2 = new Ascent(boulder: b1, style: Ascent.Style.flash)
+        s2.addToAscents(a2).save()
 
         def ranking = leaderboardService.calculateRanking(hg)
 

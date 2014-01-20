@@ -1,3 +1,4 @@
+import bcomp.SampleData
 import bcomp.aaa.Role
 import bcomp.aaa.User
 import bcomp.aaa.UserRole
@@ -15,64 +16,32 @@ class BootStrap {
         Gym gym = Gym.findByName('Boulderwelt')
         FloorPlan fp = gym.floorPlans.first()
 
-        Boulder b1 = new Boulder(color: BoulderColor.RED)
-        b1.onFloorPlan(fp, 534 / 2000, 298 / 1393)
-        b1.gradeRange(Grade.fromFontScale('1A'), Grade.fromFontScale('8A'))
-        boulderService.setBoulder(gym, b1)
+        boulderService.setBoulder(gym, SampleData.createBoulder1(fp))
 
-        Boulder b2 = new Boulder(color: BoulderColor.RED)
-        b2.onFloorPlan(fp, 743 / 2000, 343 / 1393)
-        b2.gradeRange(Grade.fromFontScale('1A'), Grade.fromFontScale('8A'))
-        boulderService.setBoulder(gym, b2)
+        boulderService.setBoulder(gym, SampleData.createBoulder2(fp))
 
-        Boulder b3 = new Boulder(color: BoulderColor.WHITE)
-        b3.onFloorPlan(fp, 566 / 2000, 292 / 1393)
-        b3.unknownGrade()
-        boulderService.setBoulder(gym, b3)
+        boulderService.setBoulder(gym, SampleData.createBoulder3(fp))
 
-        Boulder b4 = new Boulder(color: BoulderColor.WHITE)
-        b4.onFloorPlan(fp, 612 / 2000, 481 / 1393)
-        b4.gradeRange(Grade.fromFontScale('5C'), Grade.fromFontScale('6a+'))
-        boulderService.setBoulder(gym, b4)
+        boulderService.setBoulder(gym, SampleData.createBoulder4(fp))
 
-        Boulder b5 = new Boulder(color: BoulderColor.BLACK)
-        b5.onFloorPlan(fp, 751 / 2000, 659 / 1393)
-        b5.gradeRange(Grade.fromFontScale('6b'), Grade.fromFontScale('7a'))
-        boulderService.setBoulder(gym, b5)
+        boulderService.setBoulder(gym, SampleData.createBoulder5(fp))
 
-        Boulder b6 = new Boulder(color: BoulderColor.YELLOW_BLACK)
-        b6.onFloorPlan(fp, 783 / 2000, 366 / 1393)
-        b6.gradeRange(Grade.fromFontScale('3B'), Grade.fromFontScale('4A'))
-        boulderService.setBoulder(gym, b6)
+        boulderService.setBoulder(gym, SampleData.createBoulder6(fp))
 
         /* known grades */
-        Boulder b7 = new Boulder(color: BoulderColor.RED)
-        b7.onFloorPlan(fp, 0.4056701030927835, 0.8858173076923077)
-        b7.assignedGrade(Grade.fromFontScale('6c'))
-        boulderService.setBoulder(gym, b7)
+        boulderService.setBoulder(gym, SampleData.createBoulder7(fp))
 
-        Boulder b8 = new Boulder(color: BoulderColor.BROWN)
-        b8.onFloorPlan(fp, 0.5128865979381443, 0.8636279585798816)
-        b8.assignedGrade(Grade.fromFontScale('7a+'))
-        boulderService.setBoulder(gym, b8)
+        boulderService.setBoulder(gym, SampleData.createBoulder8(fp))
 
-        Boulder b9 = new Boulder(color: BoulderColor.YELLOW)
-        b9.onFloorPlan(fp, 0.5304123711340206, 0.8680658284023669)
-        b9.assignedGrade(Grade.fromFontScale('7a'))
-        boulderService.setBoulder(gym, b9)
+        boulderService.setBoulder(gym, SampleData.createBoulder9(fp))
 
         gym.save(flush: true)
     }
 
     private void createGym() {
-        Gym gym = new Gym('Boulderwelt')
+        Gym gym = SampleData.createGym('Boulderwelt', grailsApplication);
 
-        def filePath = 'resources/halle_big.jpg'
-        def imageFile = grailsApplication.getParentContext().getResource("classpath:$filePath").getFile()
-        FloorPlan fp = new FloorPlan(ImageIO.read(imageFile))
-        gym.addToFloorPlans(fp)
-
-        gym.save(flash: true)
+        gym.save(flush: true)
     }
 
     def bouldererRole
