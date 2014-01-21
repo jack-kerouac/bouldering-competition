@@ -114,6 +114,34 @@ $(function () {
 	}
 
 
+	if ($('#list-sessions-page').exists()) {
+		var data = [];
+		$('#sessions > li').each(function (e) {
+			var date = Date.parse($(this).find('time').attr('datetime'));
+			var grade = parseFloat($(this).find('.grade').text().replace(',', '.'));
+			data.push([date, grade]);
+		});
+		$('#sessions').hide();
+
+		var grades = $(".chart").data('grades')
+		$.plot($(".chart"), [ data ], {
+			xaxis: {
+				mode: "time",
+				timeformat: "%Y/%m/%d",
+				tickSize: [1, "day"]
+			},
+			yaxis: {
+				min: 0,
+				max: 1.0,
+				ticks: grades
+			},
+			series: {
+				lines: { show: true, fill: false },
+				points: { show: true, fill: false }
+			}
+		});
+	}
+
 	function displayChart(mu, sigma) {
 		var dd = [];
 

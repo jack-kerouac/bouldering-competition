@@ -1,4 +1,6 @@
 import bcomp.HomeController
+import bcomp.aaa.User
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 class UrlMappings {
 
@@ -14,6 +16,8 @@ class UrlMappings {
         "/gyms/$gymId/floorPlans/$floorPlanId"(controller: 'floorPlan', action: 'image')
 
         "/boulderer/$username/ascents"(controller: 'boulderer', action: 'listAscents')
+        "/boulderer/$username/sessions"(controller: 'boulderer', action: 'listSessions')
+
 
         "/sessions/"(controller: 'boulderingSession') {
             action = [POST: 'log']

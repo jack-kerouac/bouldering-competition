@@ -2,6 +2,7 @@ package bcomp
 
 import bcomp.aaa.User
 import bcomp.gym.Boulder
+import bcomp.gym.Grade
 import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -34,6 +35,26 @@ class BouldererController {
         }
 
         render view: 'listAscents', model: [gym: _gym, boulderer: boulderer_, ascents: ascents]
+    }
+
+    def listSessions(String username) {
+        def boulderer_ = User.findByUsername(username)
+        if (boulderer_ == null)
+            throw new UsernameNotFoundException("boulderer ${username} not found")
+        def sessions = BoulderingSession.where {
+            boulderer == boulderer_
+        }.order('date', 'desc')
+
+
+        def s = []
+        sessions.each {
+            def stats = [:]
+            stats['date'] = it.date
+            stats['currentGrade'] = Grade.fromFontScale('6A')
+            s << stats
+        }
+
+        render view: 'listSessions', model: [boulderer: boulderer_, sessions: s]
     }
 
 }
