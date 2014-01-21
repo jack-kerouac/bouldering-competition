@@ -1,4 +1,5 @@
 import bcomp.SampleData
+import bcomp.UserService
 import bcomp.aaa.Role
 import bcomp.aaa.User
 import bcomp.aaa.UserRole
@@ -9,6 +10,8 @@ import javax.imageio.ImageIO
 class BootStrap {
 
     def grailsApplication
+
+    def userService
 
     def boulderService
 
@@ -44,16 +47,14 @@ class BootStrap {
         gym.save(flush: true)
     }
 
-    def bouldererRole
-
     private void createBoulderer(String username, Grade initialGrade) {
         def user = new User(username: username, password: 'p', initialGrade: initialGrade)
-        user.save(flush: true)
-        UserRole.create user, bouldererRole, true
+
+        userService.registerBoulderer(user)
     }
 
     private void createSecurityData() {
-        bouldererRole = new Role(authority: 'ROLE_BOULDERER').save(flush: true)
+        new Role(authority: UserService.BOULDERER_AUTHORITY).save(flush: true)
 
         createBoulderer 'flo', Grade.fromFontScale('7b')
         createBoulderer 'christoph', Grade.fromFontScale('6c')

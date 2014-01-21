@@ -8,16 +8,13 @@ import grails.transaction.Transactional
 @Transactional
 class GradeLearningService {
 
+    def userService
+
     def boulderService
 
     def resetCurrentUserGrades() {
-        // probability should be 90% that personal level is at most two font grades away from personal level
-        // => sigma = 1.645 (see http://de.wikipedia.org/wiki/Normalverteilung)
-        double variance = (2 * Grade.oneFontGradeDifference() / 1.645)**2
-
         User.findAll().each { user ->
-            user.currentGrade = user.initialGrade
-            user.currentGradeVariance = variance
+            userService.resetCurrentBouldererGrades(user)
         }
     }
 
