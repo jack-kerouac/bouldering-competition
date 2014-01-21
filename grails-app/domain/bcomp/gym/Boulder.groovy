@@ -9,6 +9,7 @@ class Boulder {
     static constraints = {
         color nullable: false
         description nullable: true
+        end nullable: true
     }
 
     static belongsTo = [gym: Gym]
@@ -39,7 +40,6 @@ class Boulder {
 
         this.currentGrade = Grade.zero()
         this.currentGradeVariance = 0
-        end = new Date(2050, 1, 1)
     }
 
     public void onFloorPlan(FloorPlan floorPlan, double x, double y) {
