@@ -8,6 +8,7 @@ class Boulder {
 
     static constraints = {
         color nullable: false
+        description nullable: true
     }
 
     static belongsTo = [gym: Gym]
@@ -29,6 +30,8 @@ class Boulder {
     double currentGradeVariance
 
     Date end
+
+    String description
 
     public Boulder() {
         this.initialGradeRangeLow = Grade.zero();
