@@ -8,13 +8,13 @@ import grails.transaction.Transactional
 @Transactional
 class GradeLearningService {
 
-    def userService
+    def bouldererService
 
     def boulderService
 
     def resetCurrentUserGrades() {
         User.findAll().each { user ->
-            userService.resetCurrentBouldererGrades(user)
+            bouldererService.resetCurrentBouldererGrades(user)
         }
     }
 
@@ -31,27 +31,14 @@ class GradeLearningService {
     }
 
     private void updateCurrentGrade(User user) {
-        // if there is only one ascent, it counts as 1 : numberOfAscentsThatCurrentGradeCountsFor in the grade
-        // calculation
-        def numberOfAscentsThatCurrentGradeCountsFor = 10
-
-        def ascents = Ascent.where {
+        def all = Ascent.where {
             session.boulderer == user
         }
-        double gradeValue = 0
-        double weights = 0
-        ascents.each { ascent ->
-            Boulder boulder = ascent.boulder
-            def weight = 1 / boulder.currentGradeVariance
-            gradeValue += boulder.currentGrade.value * weight
-            weights += weight
-        }
-        def weight = 1 / user.currentGradeVariance
-        gradeValue += numberOfAscentsThatCurrentGradeCountsFor * user.currentGrade.value * weight
-        weights += numberOfAscentsThatCurrentGradeCountsFor * weight
 
-        user.currentGrade = new Grade(gradeValue / weights)
+        user.currentGrade = bouldererService.calculateGrade(user, all)
     }
+
+
 
     def updateCurrentBoulderGrades() {
         Boulder.findAll().each { boulder ->

@@ -15,6 +15,8 @@ class User {
 
     static embedded = ['initialGrade', 'currentGrade']
 
+    Date registrationDate
+
     Grade initialGrade
 
     Grade currentGrade
@@ -26,6 +28,7 @@ class User {
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false
+        registrationDate nullable: false
 	}
 
 	static mapping = {

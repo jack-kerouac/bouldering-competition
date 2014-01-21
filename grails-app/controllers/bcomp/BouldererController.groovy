@@ -2,13 +2,15 @@ package bcomp
 
 import bcomp.aaa.User
 import bcomp.gym.Boulder
-import bcomp.gym.Grade
 import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 @Secured(['ROLE_BOULDERER'])
 class BouldererController {
+
+    def bouldererService
+
 
     def listAscents(String username) {
         def _gym = Gym.findByName('Boulderwelt')
@@ -37,24 +39,14 @@ class BouldererController {
         render view: 'listAscents', model: [gym: _gym, boulderer: boulderer_, ascents: ascents]
     }
 
-    def listSessions(String username) {
-        def boulderer_ = User.findByUsername(username)
-        if (boulderer_ == null)
+    def statistics(String username) {
+        def boulderer = User.findByUsername(username)
+        if (boulderer == null)
             throw new UsernameNotFoundException("boulderer ${username} not found")
-        def sessions = BoulderingSession.where {
-            boulderer == boulderer_
-        }.order('date', 'desc')
 
+        def stats = bouldererService.getSessionStatistics(boulderer)
 
-        def s = []
-        sessions.each {
-            def stats = [:]
-            stats['date'] = it.date
-            stats['currentGrade'] = Grade.fromFontScale('6A')
-            s << stats
-        }
-
-        render view: 'listSessions', model: [boulderer: boulderer_, sessions: s]
+        render view: 'statistics', model: [boulderer: boulderer, stats: stats]
     }
 
 }

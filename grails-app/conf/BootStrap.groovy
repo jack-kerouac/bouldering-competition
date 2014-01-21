@@ -1,5 +1,6 @@
+import bcomp.BouldererService
 import bcomp.SampleData
-import bcomp.UserService
+import bcomp.BouldererService
 import bcomp.aaa.Role
 import bcomp.aaa.User
 import bcomp.aaa.UserRole
@@ -11,7 +12,7 @@ class BootStrap {
 
     def grailsApplication
 
-    def userService
+    def bouldererService
 
     def boulderService
 
@@ -50,11 +51,11 @@ class BootStrap {
     private void createBoulderer(String username, Grade initialGrade) {
         def user = new User(username: username, password: 'p', initialGrade: initialGrade)
 
-        userService.registerBoulderer(user)
+        bouldererService.registerBoulderer(user)
     }
 
     private void createSecurityData() {
-        new Role(authority: UserService.BOULDERER_AUTHORITY).save(flush: true)
+        new Role(authority: BouldererService.BOULDERER_AUTHORITY).save(flush: true)
 
         createBoulderer 'flo', Grade.fromFontScale('7b')
         createBoulderer 'christoph', Grade.fromFontScale('6c')

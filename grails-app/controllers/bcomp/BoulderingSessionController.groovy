@@ -30,7 +30,7 @@ class BoulderingSessionController {
             s.save()
 
             flashHelper.confirm 'default.logged.message': [g.message(code: 'bcomp.boulderingSession.label'), s.date]
-            redirect controller: 'boulderer', action: 'listSessions', params: ['username': s.boulderer.username]
+            redirect controller: 'boulderer', action: 'statistics', params: ['username': s.boulderer.username]
         }
         else {
             // put command object into flash scope before redirecting, making it available to the view action

@@ -43,6 +43,10 @@
                                 sec.loggedInUserInfo(field: 'username')]">
                                 <g:message code="bcomp.ascents.label"/>
                             </g:link></li>
+                        <li><g:link controller='boulderer' action='statistics' params="[username:
+                                sec.loggedInUserInfo(field: 'username')]">
+                            <g:message code="bcomp.statistics.label"/>
+                        </g:link></li>
                         <li><g:link controller='logout'><g:message code="default.button.logout.label"/></g:link></li>
                     </ul>
                 </li>

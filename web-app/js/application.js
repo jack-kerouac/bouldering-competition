@@ -116,6 +116,10 @@ $(function () {
 
 	if ($('#list-sessions-page').exists()) {
 		var data = [];
+		var registrationDate = Date.parse($('.about-boulderer time').attr('datetime'));
+		var initialGrade = parseFloat($('.about-boulderer .grade').text().replace(',', '.'));
+		data.push([registrationDate, initialGrade]);
+
 		$('#sessions > li').each(function (e) {
 			var date = Date.parse($(this).find('time').attr('datetime'));
 			var grade = parseFloat($(this).find('.grade').text().replace(',', '.'));
@@ -127,12 +131,11 @@ $(function () {
 		$.plot($(".chart"), [ data ], {
 			xaxis: {
 				mode: "time",
-				timeformat: "%Y/%m/%d",
 				tickSize: [1, "day"]
 			},
 			yaxis: {
-				min: 0,
-				max: 1.0,
+				min: 0.4,
+				max: 0.9,
 				ticks: grades
 			},
 			series: {
