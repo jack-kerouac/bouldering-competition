@@ -46,6 +46,10 @@ input[readonly] {
     height: 40em;
 }
 
+.leaflet-container form, .leaflet-container input[type=checkbox] {
+    margin: 0;
+}
+
 .boulder-marker {
     width: 28px;
     height: 48px;
