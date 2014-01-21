@@ -93,4 +93,19 @@ class Boulder {
     public boolean hasUnknownGrade() {
         return initialGradeCertainty == GradeCertainty.UNKNOWN;
     }
+
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (!(o instanceof Boulder)) return false
+
+        Boulder boulder = (Boulder) o
+
+        if (id != boulder.id) return false
+
+        return true
+    }
+
+    int hashCode() {
+        return (id != null ? id.hashCode() : 0)
+    }
 }

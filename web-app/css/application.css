@@ -4,10 +4,6 @@ body {
     font-family: "Open Sans", sans-serif !important;
 }
 
-i[class^='fi-'], i[class*=' fi-'] {
-    font-size: 16px;
-}
-
 input[readonly] {
     color: #999999;
 }
@@ -36,12 +32,22 @@ input[readonly] {
     display: inline-block;
 }
 
+
+#list-ascents-page .leaflet-popup-content ul {
+    margin: 0;
+}
+
+#list-ascents-page .leaflet-popup-content li {
+    font-size: 0.9em;
+    list-style: none;
+}
+
+
 .boulder-location-map {
     position: relative;
     margin-bottom: 30px;
     border: 2px solid #ccc;
 }
-
 
 .boulder-location-map .map {
     height: 40em;

@@ -39,9 +39,9 @@
                 <li class="has-dropdown">
                     <a href="#"><sec:loggedInUserInfo field="username"/></a>
                     <ul class="dropdown">
-                        <li><g:link controller='boulderer' action='listSessions' params="[username:
+                        <li><g:link controller='boulderer' action='listAscents' params="[username:
                                 sec.loggedInUserInfo(field: 'username')]">
-                                <g:message code="bcomp.boulderingSessions.label"/>
+                                <g:message code="bcomp.ascents.label"/>
                             </g:link></li>
                         <li><g:link controller='logout'><g:message code="default.button.logout.label"/></g:link></li>
                     </ul>

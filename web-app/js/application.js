@@ -18,7 +18,7 @@ $(function () {
 		if ($boulders.exist()) {
 			$boulders.hide();
 
-			var markers = fp.markBoulders($boulders.find('li'));
+			var markers = fp.markBoulders($boulders.children('li'));
 
 			if ($('#log-session-page').exists()) {
 				$.each(markers, function (i, marker) {
@@ -63,8 +63,19 @@ $(function () {
 					});
 				});
 			}
-		}
+			if ($('#list-ascents-page').exists()) {
+				$.each(markers, function (i, marker) {
+					var $boulder = marker.options.$boulder;
+					var popupContent = $boulder.html();
 
+					marker.bindPopup(
+						popupContent, {
+							offset: [0, -30],
+							closeButton: false
+						});
+				});
+			}
+		}
 
 		if ($('#create-boulder-page').exists()) {
 			var marker = fp.addMarker(100, 200, {draggable: true});

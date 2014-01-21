@@ -13,7 +13,7 @@ class UrlMappings {
 
         "/gyms/$gymId/floorPlans/$floorPlanId"(controller: 'floorPlan', action: 'image')
 
-        "/boulderer/$username/sessions"(controller: 'boulderer', action: 'listSessions')
+        "/boulderer/$username/ascents"(controller: 'boulderer', action: 'listAscents')
 
         "/sessions/"(controller: 'boulderingSession') {
             action = [POST: 'log']
