@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><g:layoutTitle default="Grails"/> - Bouldering Competition</title>
+    <title><g:layoutTitle default="Grails"/> - <g:message code="bcomp.title"/></title>
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
@@ -28,7 +28,7 @@
     <nav class="top-bar fixed contain-to-grid" data-topbar>
         <ul class="title-area">
             <li class="name">
-                <h1><g:link controller="home">BComp</g:link></h1>
+                <h1><g:link controller="home"><g:message code="bcomp.title"/></g:link></h1>
             </li>
             <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>

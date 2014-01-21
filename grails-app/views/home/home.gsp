@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="medium-12 columns">
-        <h1>Bouldering Competition</h1>
+        <h1><g:message code="bcomp.title"/></h1>
         <p>Sollte euch irgendwas auffallen, Fehler, Verbesserungsvorschläge, neue Ideen,
         dann benutzt die orange Sprechblase rechts unten! Danke. Florian</p>
     </div>

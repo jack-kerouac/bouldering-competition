@@ -99,7 +99,7 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        grails.serverURL = "http://bcomp.florianrampp.de"
+        grails.serverURL = "http://chalkup.de"
     }
 }
 
