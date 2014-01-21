@@ -159,6 +159,7 @@ function getColors($boulder) {
 
 
 function initFloorPlan($floorPlanImg) {
+	var factor = 1.35;
 	var width = parseInt($floorPlanImg.attr('width'));
 	var height = parseInt($floorPlanImg.attr('height'));
 	var src = $floorPlanImg.attr('src');
@@ -172,7 +173,14 @@ function initFloorPlan($floorPlanImg) {
 	});
 
 	map.toLatLng = function (x, y) {
-		return map.unproject([x, y], map.getMaxZoom())
+		return map.unproject([x * factor, y * factor], map.getMaxZoom())
+	};
+
+	map.toPoint = function (lat, lng) {
+		var point = map.project([lat, lng], map.getMaxZoom());
+		point.x /= factor;
+		point.y /= factor;
+		return point;
 	};
 
 	var southWest = map.toLatLng(0, height);
@@ -180,6 +188,7 @@ function initFloorPlan($floorPlanImg) {
 	var imageBounds = new L.LatLngBounds(southWest, northEast);
 	map.setMaxBounds(imageBounds);
 	map.fitBounds(imageBounds);
+
 
 	L.imageOverlay(src, imageBounds, {
 		attribution: 'Boulderwelt',
@@ -199,7 +208,8 @@ function initFloorPlan($floorPlanImg) {
 
 		var BoulderMarker = L.Marker.extend({
 			getPoint: function () {
-				return map.project(marker.getLatLng(), map.getMaxZoom());
+				var latLng = marker.getLatLng();
+				return map.toPoint(latLng.lat, latLng.lng);
 			},
 			options: {
 				icon: myIcon,
