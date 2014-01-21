@@ -31,7 +31,7 @@
     </div>
 
     <div class="row">
-        <div class="small-12 column">
+        <div class="medium-12 small-11 column">
             <div class="boulder-location-map">
 
                 <tmpl:/shared/floorPlan floorPlan="${gym.floorPlans.first()}"/>

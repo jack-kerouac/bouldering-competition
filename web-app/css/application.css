@@ -39,6 +39,7 @@ input[readonly] {
 .boulder-location-map {
     position: relative;
     margin-bottom: 30px;
+    border: 2px solid #ccc;
 }
 
 
