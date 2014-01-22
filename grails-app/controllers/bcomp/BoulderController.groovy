@@ -28,7 +28,8 @@ class BoulderController {
     def create(CreateBoulderCommand cmd) {
         if(cmd.validate()) {
             Boulder b = new Boulder()
-            b.properties = cmd.properties
+            b.gym = cmd.gym
+            b.color = cmd.color
             b.onFloorPlan(cmd.floorPlan, cmd.x, cmd.y)
             // TODO: validation of entered grades, bind errors to fields, display errors in view
             switch(cmd.gradeCertainty) {

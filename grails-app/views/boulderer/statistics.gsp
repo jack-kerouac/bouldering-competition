@@ -39,7 +39,7 @@
             <g:each in="${stats}" var="stat">
                 <tr>
                     <td><tmpl:/shared/date date="${stat.session.date}"/></td>
-                    <td class="grade">${stat.currentGrade.value}</td>
+                    <td class="grade">${stat.grade.mean.value}</td>
                     <td class="ascent-count">${stat.session.ascents.size()}</td>
                     %{--<td class="score">320</td>--}%
                 </tr>

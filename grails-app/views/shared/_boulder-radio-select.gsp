@@ -1,5 +1,5 @@
 <h2>Boulder ${boulder.id}</h2>
-<p>current grade: ${boulder.currentGrade.toFontScale()}</p>
+<p>current grade: ${boulder.grade.mean.toFontScale()}</p>
 <input type="hidden" name="ascents[${number}].boulder.id" value="${boulder.id}">
 
 

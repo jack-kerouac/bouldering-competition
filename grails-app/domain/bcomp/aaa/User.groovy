@@ -1,6 +1,7 @@
 package bcomp.aaa
 
 import bcomp.gym.Grade
+import bcomp.gym.TentativeGrade
 
 class User {
 
@@ -13,17 +14,31 @@ class User {
 	boolean accountLocked
 	boolean passwordExpired
 
-    static embedded = ['initialGrade', 'currentGrade']
+    static embedded = ['initialGrade']
 
     Date registrationDate
 
     Grade initialGrade
 
-    Grade currentGrade
-    double currentGradeVariance
+    /**
+     * cannot make these fields private, otherwise ignored by GORM. Use grade property instead!
+     */
+    double gradeMean
+    /**
+     * cannot make these fields private, otherwise ignored by GORM. Use grade property instead!
+     */
+    double gradeVariance
 
+    static transients = ['grade', 'springSecurityService']
 
-	static transients = ['springSecurityService']
+    public TentativeGrade getGrade() {
+        return new TentativeGrade(mean: new Grade(this.gradeMean), variance: gradeVariance)
+    }
+
+    public void setGrade(TentativeGrade grade) {
+        this.gradeMean = grade.mean.value
+        this.gradeVariance = grade.variance
+    }
 
 	static constraints = {
 		username blank: false, unique: true
@@ -34,11 +49,6 @@ class User {
 	static mapping = {
 		password column: '`password`'
 	}
-
-    public User() {
-        this.currentGrade = Grade.zero()
-        this.currentGradeVariance = 0
-    }
 
     Set<Role> getAuthorities() {
 		UserRole.findAllByUser(this).collect { it.role } as Set

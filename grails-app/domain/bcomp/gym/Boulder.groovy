@@ -22,13 +22,31 @@ class Boulder {
      */
     BoulderColor color
 
-    static embedded = ['initialGradeRangeLow', 'initialGradeRangeHigh', 'currentGrade']
+    static embedded = ['initialGradeRangeLow', 'initialGradeRangeHigh']
 
     GradeCertainty initialGradeCertainty;
     Grade initialGradeRangeLow, initialGradeRangeHigh;
 
-    Grade currentGrade
-    double currentGradeVariance
+    /**
+     * cannot make these fields private, otherwise ignored by GORM. Use grade property instead!
+     */
+    double gradeMean
+    /**
+     * cannot make these fields private, otherwise ignored by GORM. Use grade property instead!
+     */
+    double gradeVariance
+
+    static transients = ['grade']
+
+    public TentativeGrade getGrade() {
+        return new TentativeGrade(mean: new Grade(this.gradeMean), variance: gradeVariance)
+    }
+
+    public void setGrade(TentativeGrade grade) {
+        this.gradeMean = grade.mean.value
+        this.gradeVariance = grade.variance
+    }
+
 
     Date end
 
@@ -37,9 +55,6 @@ class Boulder {
     public Boulder() {
         this.initialGradeRangeLow = Grade.zero();
         this.initialGradeRangeHigh = Grade.zero();
-
-        this.currentGrade = Grade.zero()
-        this.currentGradeVariance = 0
     }
 
     public void onFloorPlan(FloorPlan floorPlan, double x, double y) {

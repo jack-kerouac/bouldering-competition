@@ -34,11 +34,11 @@
                     <td>${user.username}</td>
                     <td>${user.initialGrade}</td>
                     <td>${(ascents.collect({ "$it.boulder.id ($it.style)" }) as List).join(', ')}</td>
-                    <td><span><g:formatNumber number="${user.currentGrade.value}" minFractionDigits="4"
+                    <td><span><g:formatNumber number="${user.grade.mean.value}" minFractionDigits="4"
                                               maxFractionDigits="4"/></span>
-                        <span>(${user.currentGrade.toFontScale()})</span>
+                        <span>(${user.grade.mean.toFontScale()})</span>
                     </td>
-                    <td><g:formatNumber number="${user.currentGradeVariance}" minFractionDigits="4"
+                    <td><g:formatNumber number="${user.grade.variance}" minFractionDigits="4"
                                         maxFractionDigits="4"/>
                     </td>
                 </tr>
@@ -71,11 +71,11 @@
                 <tr>
                     <td>${boulder.id}</td>
                     <td>${boulder.initialGradeRangeLow} - ${boulder.initialGradeRangeHigh}</td>
-                    <td><span><g:formatNumber number="${boulder.currentGrade.value}" minFractionDigits="4"
+                    <td><span><g:formatNumber number="${boulder.grade.value}" minFractionDigits="4"
                                               maxFractionDigits="4"/></span>
-                        <span>(${boulder.currentGrade.toFontScale()})</span>
+                        <span>(${boulder.grade.mean.toFontScale()})</span>
                     </td>
-                    <td><g:formatNumber number="${boulder.currentGradeVariance}" minFractionDigits="4"
+                    <td><g:formatNumber number="${boulder.grade.variance}" minFractionDigits="4"
                                         maxFractionDigits="4"/>
                     </td>
                 </tr>

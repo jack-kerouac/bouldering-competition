@@ -4,5 +4,5 @@ data-color-primary="${rgb(color: boulder.color.primaryColor)}"
 <g:if test="${boulder.color.hasSecondaryColor()}">
     data-color-secondary="${rgb(color: boulder.color.secondaryColor)}"
 </g:if>
-data-current-font-grade="${boulder.currentGrade.toFontScale()}"
+data-current-font-grade="${boulder.grade.mean.toFontScale()}"
 data-color="<g:message code="bcomp.boulder.color.${boulder.color}"/>"
