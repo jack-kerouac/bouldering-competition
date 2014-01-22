@@ -22,19 +22,5 @@ class Ascent {
         return session.boulderer
     }
 
-    boolean equals(o) {
-        if (this.is(o)) return true
-        if (!(o instanceof Ascent)) return false
-
-        Ascent ascent = (Ascent) o
-
-        if (id != ascent.id) return false
-
-        return true
-    }
-
-    int hashCode() {
-        return (id != null ? id.hashCode() : 0)
-    }
 }
 
