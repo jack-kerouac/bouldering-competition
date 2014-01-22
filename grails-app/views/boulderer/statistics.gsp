@@ -21,14 +21,31 @@
         </p>
 
         <g:set var="grades"
-               value="${bcomp.gym.Grade.FONT_GRADES.collect {[Grade.fromFontScale(it).value, "\"$it\""]} }"/>
-        <div class="chart" style="width:940px; height:400px;" data-grades="${grades}"></div>
-        <ul id="sessions">
+               value="${bcomp.gym.Grade.FONT_GRADES.collect { [Grade.fromFontScale(it).value, "\"$it\""] }}"/>
+        <h2><g:message code="bcomp.boulderingSessions.label"/></h2>
+
+        <div class="chart" data-grades="${grades}"></div>
+        <table id="sessions">
+            <thead>
+            <tr>
+                <th><g:message code="bcomp.date.label"/></th>
+                <th class="grade"><g:message code="bcomp.user.currentGrade.label"/></th>
+                <th class="ascent-count"><g:message code="bcomp.ascents.label"/></th>
+                %{-- TODO: what about score? --}%
+                %{--<th class="score"><g:message code="bcomp.leaderboard.score.label"/></th>--}%
+            </tr>
+            </thead>
+            <tbody>
             <g:each in="${stats}" var="stat">
-                <li><tmpl:/shared/date date="${stat.session.date}"/>:
-                    <span class="grade">${stat.currentGrade.value}</span></li>
+                <tr>
+                    <td><tmpl:/shared/date date="${stat.session.date}"/></td>
+                    <td class="grade">${stat.currentGrade.value}</td>
+                    <td class="ascent-count">${stat.session.ascents.size()}</td>
+                    %{--<td class="score">320</td>--}%
+                </tr>
             </g:each>
-        </ul>
+            </tbody>
+        </table>
     </div>
 </div>
 

@@ -42,6 +42,12 @@ input[readonly] {
     list-style: none;
 }
 
+#list-sessions-page .chart {
+    width: 100%;
+    height: 30em;
+    margin-bottom: 3em;
+}
+
 
 .boulder-location-map {
     position: relative;
