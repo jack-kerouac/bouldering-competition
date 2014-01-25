@@ -11,8 +11,10 @@
     <div class="small-12 column">
         <h1><g:message code="default.set.label" args="[message(code: 'bcomp.boulder.label')]"/></h1>
 
-        <p>Chose the color of the boulder and then click on the floor plan to select the start of the boulder
-        (the position in the fields below will change).</p>
+        <p>Wähle die Farbe des Boulders aus, den Grad und klicke dann auf den Grundriss unten um den Start der
+        Boulder zu markieren. Es können beliebig viele Boulder mit der gewählten Farbe und dem gewählten Grad gesetzt
+        werden. In Chrome muss man die Karte kurz verschieben/zoomen, damit die gesetzten Marker auftauchen...
+        </p>
     </div>
 </div>
 
