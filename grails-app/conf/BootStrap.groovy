@@ -1,12 +1,9 @@
 import bcomp.BouldererService
 import bcomp.SampleData
-import bcomp.BouldererService
 import bcomp.aaa.Role
 import bcomp.aaa.User
-import bcomp.aaa.UserRole
 import bcomp.gym.*
-
-import javax.imageio.ImageIO
+import grails.converters.JSON
 
 class BootStrap {
 
@@ -67,6 +64,88 @@ class BootStrap {
         createBoulderer 'tony', Grade.fromFontScale('6c')
     }
 
+
+    def registerObjectMarshallers() {
+        JSON.registerObjectMarshaller(BoulderColor) {
+            it.toString()
+        }
+
+        JSON.registerObjectMarshaller(Boulder.GradeCertainty) {
+            it.toString()
+        }
+
+        JSON.registerObjectMarshaller(Grade) { grade ->
+            def map = [:]
+            map['value'] = grade.value
+            map['font'] = grade.toFontScale()
+            return map
+        }
+
+        JSON.registerObjectMarshaller(TentativeGrade) { tentGrade ->
+            def map = [:]
+            map['mean'] = tentGrade.mean
+            map['variance'] = tentGrade.variance
+            map['sigma'] = tentGrade.sigma
+            return map
+        }
+
+        JSON.registerObjectMarshaller(FloorPlan) { FloorPlan floorPlan ->
+            def map = [:]
+            map['widthInPx'] = floorPlan.widthInPx
+            map['heightInPx'] = floorPlan.heightInPx
+            // TODO: how to externalize this?
+            map['imgUrl'] =  "/gyms/$floorPlan.gym.id/floorPlans/$floorPlan.id"
+            return map
+        }
+
+        JSON.registerObjectMarshaller(Gym) { Gym gym ->
+            def map = [:]
+            map['id'] = gym.id
+            map['name'] = gym.name
+            map['floorPlans'] = gym.floorPlans
+            return map
+        }
+
+
+        JSON.registerObjectMarshaller(Boulder) { Boulder boulder ->
+            def map = [:]
+            map['id'] = boulder.id
+            map['color'] = boulder.color
+            map['grade'] = boulder.grade
+            map['description'] = boulder.description
+            map['end'] = boulder.end
+
+            def initialGrade = [:]
+            initialGrade['certainty'] = boulder.initialGradeCertainty
+            switch (boulder.initialGradeCertainty) {
+                case Boulder.GradeCertainty.ASSIGNED:
+                    initialGrade['grade'] = boulder.assignedGrade
+                    break;
+                case Boulder.GradeCertainty.RANGE:
+                    initialGrade['gradeLow'] = boulder.gradeRangeLow
+                    initialGrade['gradeHigh'] = boulder.gradeRangeHigh
+                    break;
+            }
+            map['initialGrade'] = initialGrade
+
+            def location = [:]
+            if (boulder.location instanceof OnFloorPlan) {
+                OnFloorPlan ofp = boulder.location
+                location['floorPlan'] = ofp.floorPlan
+                location['x'] = ofp.x
+                location['y'] = ofp.y
+            } else
+                throw new RuntimeException('cannot convert location that is not on floorplan')
+
+            map['location'] = location
+
+            // links
+            map['gym'] = boulder.gym.id
+            return map
+        }
+
+    }
+
     def init = { servletContext ->
         environments {
             production {
@@ -80,6 +159,7 @@ class BootStrap {
             }
         }
 
+        registerObjectMarshallers()
     }
 
     def destroy = {

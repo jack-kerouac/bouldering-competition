@@ -1,5 +1,8 @@
 package bcomp.gym
 
+import grails.rest.Resource
+
+@Resource(formats = ['json'])
 class Boulder {
 
     enum GradeCertainty {

@@ -1,8 +1,8 @@
 package bcomp.gym
 
-/**
- * User: florian
- */
+import grails.rest.Resource
+
+@Resource(formats = ['json'])
 class Gym {
 
     String name
