@@ -10,12 +10,12 @@ import bcomp.gym.OnFloorPlan
 import grails.validation.Validateable
 
 @Validateable
-class CreateBoulderCommand {
+class CreateBouldersCommand {
 
     Gym gym
 
     FloorPlan floorPlan
-    Double x, y
+    Set<Coordinates> coordinates
 
     Boulder.GradeCertainty gradeCertainty
     String grade
@@ -32,8 +32,6 @@ class CreateBoulderCommand {
         floorPlan nullable: false, validator: { floorPlan, cmd ->
             return cmd.gym.floorPlans.contains(floorPlan)
         }
-        x min: 0.0d, max: 1.0d
-        y min: 0.0d, max: 1.0d
 
         gradeCertainty nullable: false
         grade nullable: true, validator: { grade, cmd ->
@@ -47,4 +45,14 @@ class CreateBoulderCommand {
         }
     }
 
+}
+
+@Validateable
+class Coordinates {
+    Double x, y
+
+    static constraints = {
+        x min: 0.0d, max: 1.0d
+        y min: 0.0d, max: 1.0d
+    }
 }

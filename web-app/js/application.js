@@ -78,7 +78,14 @@ $(function () {
 		}
 
 		if ($('#create-boulder-page').exists()) {
-			var marker = fp.addMarker(100, 200, {draggable: true});
+			fp.$mapDiv.css({cursor: 'crossHair'});
+
+			var markers = [];
+
+			function updatePositionFields(i, point) {
+				$('input[name="coordinates[' + i + '].x"]').val((point.x / fp.width).toLocaleString(locale));
+				$('input[name="coordinates[' + i + '].y"]').val((point.y / fp.height).toLocaleString(locale));
+			}
 
 			function getSelectedColor($select) {
 				var val = $select.val();
@@ -91,25 +98,36 @@ $(function () {
 			var $select = $('select[name="color"]');
 			$select.change(function () {
 				var colors = getSelectedColor($(this));
+				$.each(markers, function () {
+					this.setColor(colors);
+				});
+			});
+
+			fp.map.on('click', function (e) {
+				var marker = fp.addMarker(e, {draggable: true});
+				// update colors
+				var colors = getSelectedColor($select);
 				marker.setColor(colors);
+
+				var markerNumber = markers.length;
+
+				// add pos fields
+				$('ul.coordinates').append('<li>' +
+					'<input type="hidden" name="coordinates[' + markerNumber + '].x"/>' +
+					'<input type="hidden" name="coordinates[' + markerNumber + '].y"/>' +
+					'</li>')
+
+				// update pos
+				marker.on('dragend', function (e) {
+					var marker = e.target;
+					var point = marker.getPoint();
+					updatePositionFields(markerNumber, point);
+				});
+				updatePositionFields(markerNumber, marker.getPoint());
+
+
+				markers.push(marker);
 			});
-
-			var colors = getSelectedColor($select);
-			marker.setColor(colors);
-
-
-			function updatePositionFields(point) {
-				$('#x').val((point.x / fp.width).toLocaleString(locale));
-				$('#y').val((point.y / fp.height).toLocaleString(locale));
-			}
-
-			marker.on('drag', function (e) {
-				var marker = e.target;
-				var point = marker.getPoint();
-				updatePositionFields(point);
-			});
-
-			updatePositionFields(marker.getPoint());
 		}
 	}
 
@@ -242,23 +260,23 @@ function initFloorPlan($floorPlanImg) {
 		crs: L.CRS.Simple
 	});
 
-	map.toLatLng = function (x, y) {
-		return map.unproject([x * factor, y * factor], map.getMaxZoom())
+	map.toLatLng = function (point) {
+		point = L.point(point);
+		return map.unproject([point.x * factor, point.y * factor], map.getMaxZoom())
 	};
 
-	map.toPoint = function (lat, lng) {
-		var point = map.project([lat, lng], map.getMaxZoom());
+	map.toPoint = function (latLng) {
+		var point = map.project(latLng, map.getMaxZoom());
 		point.x /= factor;
 		point.y /= factor;
 		return point;
 	};
 
-	var southWest = map.toLatLng(0, height);
-	var northEast = map.toLatLng(width, 0);
+	var southWest = map.toLatLng([0, height]);
+	var northEast = map.toLatLng([width, 0]);
 	var imageBounds = new L.LatLngBounds(southWest, northEast);
 	map.setMaxBounds(imageBounds);
 	map.fitBounds(imageBounds);
-
 
 	L.imageOverlay(src, imageBounds, {
 		attribution: 'Boulderwelt',
@@ -269,7 +287,7 @@ function initFloorPlan($floorPlanImg) {
 		return $(marker._icon);
 	}
 
-	function createMarker(x, y, options) {
+	function createMarker(p, options) {
 		var myIcon = L.divIcon({
 			className: 'boulder-marker',
 			html: '&#xf172;',
@@ -279,7 +297,7 @@ function initFloorPlan($floorPlanImg) {
 		var BoulderMarker = L.Marker.extend({
 			getPoint: function () {
 				var latLng = marker.getLatLng();
-				return map.toPoint(latLng.lat, latLng.lng);
+				return map.toPoint(latLng);
 			},
 			options: {
 				icon: myIcon,
@@ -292,7 +310,7 @@ function initFloorPlan($floorPlanImg) {
 			}
 		});
 
-		var marker = new BoulderMarker(map.toLatLng(x, y), options);
+		var marker = new BoulderMarker(map.toLatLng(p), options);
 
 
 		function colorIcon() {
@@ -323,8 +341,9 @@ function initFloorPlan($floorPlanImg) {
 		return marker;
 	}
 
-	function addMarker(x, y, options) {
-		var marker = createMarker(x, y, options);
+	function addMarker(e, options) {
+		var p = map.toPoint(e.latlng);
+		var marker = createMarker(p, options);
 		marker.addTo(map);
 		return marker;
 	}
@@ -344,7 +363,7 @@ function initFloorPlan($floorPlanImg) {
 
 		$boulders.each(function () {
 			var b = $(this);
-			var marker = createMarker(b.data('x'), b.data('y'), {
+			var marker = createMarker([b.data('x'), b.data('y')], {
 				color: getColors(b)
 			});
 

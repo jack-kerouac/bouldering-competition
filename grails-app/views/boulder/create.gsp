@@ -35,8 +35,7 @@
                         </g:if>
                         <g:if test="${cmd.color == color}">
                             selected
-                        </g:if>
-                    />
+                        </g:if>/>
                     <g:message code="bcomp.boulder.color.${color}"/>
                     </option>
                 </g:each>
@@ -53,11 +52,13 @@
 
         <div class="small-9 column">
             <p><small>use grades: ${bcomp.gym.Grade.FONT_GRADES}</small></p>
+
             <div class="row">
                 <div class="column small-12">
                     <input type="radio" name="gradeCertainty" value="ASSIGNED"
                            id="assigned-grade" ${cmd.gradeCertainty == Boulder.GradeCertainty.ASSIGNED ? 'checked' : ''}>
-                    <label for="assigned-grade" class="inline"><g:message code="bcomp.boulder.gradeCertainty.assigned.label"/></label>
+                    <label for="assigned-grade" class="inline"><g:message
+                            code="bcomp.boulder.gradeCertainty.assigned.label"/></label>
                     <input type="text" name="grade" placeholder="6b+" value="${cmd.grade}"/>
                 </div>
             </div>
@@ -97,21 +98,8 @@
                 <input type="hidden" name="floorPlan.id" value="${floorPlan.id}"/>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="small-3 column">
-            <label class="right inline">Position</label>
-        </div>
-
-        <div class="small-9 column">
-            <label for="x" class="inline">x:</label>
-            <input type="text" id="x" name="x" readonly/>
-            <label for="x" class="inline">y:</label>
-            <input type="text" id="y" name="y" readonly/>
-            <tmpl:/shared/fieldError field="x"/>
-            <tmpl:/shared/fieldError field="y"/>
-        </div>
+        <ul class="coordinates" style="display: none">
+        </ul>
     </div>
 
     <div class="row">
