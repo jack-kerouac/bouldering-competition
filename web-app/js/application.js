@@ -329,7 +329,7 @@ function initFloorPlan($floorPlanImg) {
 				// use text gradient for two colored boulders
 				$icon.css({
 					color: 'black',
-					background: '-webkit-linear-gradient(' + color[0] + ', ' + color[1] + ')',
+					background: 'linear-gradient(' + color[0] + ', ' + color[1] + ')',
 					'-webkit-background-clip': 'text',
 					'-webkit-text-fill-color': 'transparent'
 				});
