@@ -105,6 +105,17 @@ class Boulder {
         initialGradeRangeHigh = Grade.highest()
     }
 
+    public String getInitialGrade() {
+        switch(initialGradeCertainty) {
+            case GradeCertainty.ASSIGNED:
+                return getAssignedGrade().toFontScale()
+            case GradeCertainty.RANGE:
+                return getGradeRangeLow().toFontScale() + " – " + getGradeRangeHigh().toFontScale()
+            case GradeCertainty.UNKNOWN:
+                return "?"
+        }
+    }
+
     public boolean hasUnknownGrade() {
         return initialGradeCertainty == GradeCertainty.UNKNOWN;
     }

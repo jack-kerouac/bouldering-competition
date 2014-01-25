@@ -1,3 +1,5 @@
+data-id="${boulder.id}"
+data-initial-grade="${boulder.initialGrade}"
 data-x="${boulder.location.x * boulder.location.floorPlan.widthInPx}"
 data-y="${boulder.location.y * boulder.location.floorPlan.heightInPx}"
 data-color-primary="${rgb(color: boulder.color.primaryColor)}"

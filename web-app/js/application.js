@@ -31,7 +31,9 @@ $(function () {
 					}
 
 					var popupContent =
-						'<input id="flash" type="checkbox" class="style-select" value="flash">' +
+						'<p><small>ID: ' + marker.options.$boulder.data('id') + '</small>, ' +
+							'<small>grade: ' + marker.options.$boulder.data('initial-grade') + '</small></p>' +
+							'<input id="flash" type="checkbox" class="style-select" value="flash">' +
 							'<label for="flash">flash</label>' +
 							'<input id="top" type="checkbox" class="style-select" value="top">' +
 							'<label for="top">top</label>';
