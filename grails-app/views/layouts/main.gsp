@@ -1,7 +1,7 @@
 <%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" ng-app="chalkUpApp">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -18,7 +18,7 @@
     <r:layoutResources/>
 </head>
 
-<body id="${pageProperty(name: 'body.id')}">
+<body id="${pageProperty(name: 'body.id')}" ng-controller="${pageProperty(name: 'body.ng-controller')}">
 <div class="row">
     <nav class="top-bar fixed contain-to-grid" data-topbar>
         <ul class="title-area">

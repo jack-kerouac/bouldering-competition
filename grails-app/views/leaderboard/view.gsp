@@ -5,7 +5,7 @@
     <title>${gym.name} - <g:message code="bcomp.leaderboard.label"/></title>
 </head>
 
-<body id="home-page">
+<body>
 
 <div class="row">
     <div class="medium-12 columns">

@@ -1,6 +1,9 @@
+var chalkUpApp = angular.module('chalkUpApp', ['chalkUpServices', 'chalkUpControllers']);
+
 $(document).foundation();
 
-$(function () {
+window.initChalkUp = function () {
+
 	jQuery.fn.exist = function () {
 		return jQuery(this).length != 0;
 	};
@@ -235,7 +238,7 @@ $(function () {
 		var sigma = Math.sqrt(parseFloat($(this).find('td:nth-child(5)').text().replace(',', '.')));
 		displayChart(mu, sigma);
 	});
-});
+}
 
 
 function getColors($boulder) {

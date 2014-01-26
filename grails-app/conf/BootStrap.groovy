@@ -66,8 +66,13 @@ class BootStrap {
 
 
     def registerObjectMarshallers() {
-        JSON.registerObjectMarshaller(BoulderColor) {
-            it.toString()
+        JSON.registerObjectMarshaller(BoulderColor) { BoulderColor color ->
+            def map = [:]
+            map['name'] = color.toString()
+            map['primary'] = "rgb($color.primaryColor.red, $color.primaryColor.green, $color.primaryColor.blue)"
+            if(color.secondaryColor)
+                map['secondary'] = "rgb($color.secondaryColor.red, $color.secondaryColor.green, $color.secondaryColor.blue)"
+            return map
         }
 
         JSON.registerObjectMarshaller(Boulder.GradeCertainty) {
@@ -91,10 +96,12 @@ class BootStrap {
 
         JSON.registerObjectMarshaller(FloorPlan) { FloorPlan floorPlan ->
             def map = [:]
-            map['widthInPx'] = floorPlan.widthInPx
-            map['heightInPx'] = floorPlan.heightInPx
+            map['id'] = floorPlan.id
+            map['img'] = [:]
+            map['img']['widthInPx'] = floorPlan.widthInPx
+            map['img']['heightInPx'] = floorPlan.heightInPx
             // TODO: how to externalize this?
-            map['imgUrl'] =  "/gyms/$floorPlan.gym.id/floorPlans/$floorPlan.id"
+            map['img']['url'] = "/gyms/$floorPlan.gym.id/floorPlans/$floorPlan.id"
             return map
         }
 

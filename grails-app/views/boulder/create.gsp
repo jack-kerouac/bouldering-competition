@@ -5,7 +5,7 @@
     <title><g:message code="default.set.label" args="[message(code: 'bcomp.boulder.label')]"/></title>
 </head>
 
-<body id="create-boulder-page">
+<body id="create-boulder-page" ng-controller="BoulderCtrl">
 
 <div class="row">
     <div class="small-12 column">

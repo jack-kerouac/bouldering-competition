@@ -5,7 +5,7 @@
     <title>${boulderer.username}'s <g:message code="bcomp.statistics.label"/></title>
 </head>
 
-<body id="list-sessions-page">
+<body id="list-sessions-page"  ng-controller="StatisticsCtrl">
 
 <div class="row">
     <div class="medium-12 columns">
