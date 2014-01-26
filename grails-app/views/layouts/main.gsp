@@ -11,15 +11,10 @@
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
-    <!-- If you are using CSS version, only link these 2 files, you may add app.css to use for your overrides if you like. -->
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'normalize.css')}">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'foundation.css')}">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'foundation-icons.css')}">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'leaflet.css')}">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}">
-    <script src="${resource(dir: 'js', file: 'vendor/custom.modernizr.js')}"></script>
+
+    <r:require module="application" />
+
     <g:layoutHead/>
-    <g:javascript library="application"/>
     <r:layoutResources/>
 </head>
 
@@ -80,13 +75,11 @@
 
 <div class="footer" role="contentinfo"></div>
 
-<script>
+<r:script>
     var locale = '${RequestContextUtils.getLocale(request).toString().replace('_', '-')}';
-</script>
+</r:script>
 
-<r:layoutResources/>
-
-<script>
+<r:script>
     // Include the UserVoice JavaScript SDK (only needed once on a page)
     UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/2oIoDbuTLfxbQe92GPJLAA.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
 
@@ -133,11 +126,11 @@
 
     // Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
     UserVoice.push(['autoprompt', {}]);
-</script>
+</r:script>
 
 
 <!-- Google Analytics -->
-<script>
+<r:script>
     (function (b, o, i, l, e, r) {
         b.GoogleAnalyticsObject = l;
         b[l] || (b[l] =
@@ -152,7 +145,9 @@
     }(window, document, 'script', 'ga'));
     ga('create', 'UA-47002539-1');
     ga('send', 'pageview');
-</script>
+</r:script>
+
+<r:layoutResources/>
 
 </body>
 </html>
