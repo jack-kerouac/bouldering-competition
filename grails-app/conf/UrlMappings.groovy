@@ -23,9 +23,6 @@ class UrlMappings {
 
         "/"(controller: 'home', action: 'home')
 
-        "/foundation"(view: '/foundation')
-
-
         "/status"(view: "/index")
         "500"(view: '/error')
 
