@@ -34,7 +34,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="stat in statistics">
-                    <td>{{ stat.session.date | amDateFormat: 'LLLL'}}</td>
+                    <td>{{ stat.session.date | amDateFormat: 'LL'}}</td>
                     <td>{{ stat.grade.mean.font }}</td>
                     <td>{{ stat.session.ascents.length }}</td>
                 </tr>

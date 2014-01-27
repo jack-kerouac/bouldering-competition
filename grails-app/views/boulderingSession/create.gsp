@@ -25,7 +25,6 @@
 
         <div class="small-9 column ${hasErrors(field: 'date', 'error')}">
             <input type="date" ng-model="session.date">
-            <tmpl:/shared/fieldError field="date"/>
         </div>
     </div>
 
