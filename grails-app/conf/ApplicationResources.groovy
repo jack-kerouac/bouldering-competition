@@ -36,6 +36,7 @@ modules = {
         resource url: 'js/application.js'
         resource url: 'js/services.js'
         resource url: 'js/controllers.js'
+        resource url: 'js/directives.js'
 
         resource url: 'css/application.css'
     }
