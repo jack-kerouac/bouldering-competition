@@ -1,4 +1,34 @@
-var chalkUpApp = angular.module('chalkUpApp', ['chalkUpServices', 'chalkUpControllers']);
+var chalkUpApp = angular.module('chalkUpApp', ['chalkUpServices', 'chalkUpControllers', 'angularMoment']).
+	run(function ($window) {
+		$window.moment.lang(window.locale.language);
+	});
+
+var flotChartDirective = function () {
+	return {
+		restrict: 'A',
+		link: function (scope, elem, attrs) {
+			var chart = null;
+
+			// If the options change replot
+			scope.$watch(attrs.options, function (options) {
+				chart = $.plot(elem, scope.$eval(attrs.data), options);
+				elem.show();
+				chart.setData(scope.$eval(attrs.data));
+				chart.setupGrid();
+				chart.draw();
+			}, true);
+
+			// If the data changes somehow, update it in the chart
+			scope.$watch(attrs.data, function (data) {
+				chart.setData(data);
+				chart.setupGrid();
+				chart.draw();
+			}, true);
+		}
+	};
+};
+chalkUpApp.directive('flotChart', flotChartDirective);
+
 
 $(document).foundation();
 
@@ -136,65 +166,6 @@ window.initChalkUp = function () {
 		}
 	}
 
-
-	if ($('#list-sessions-page').exists()) {
-		var currentGradeData = [];
-		var ascentCountData = [];
-		var scoreData = [];
-
-		var registrationDate = Date.parse($('.about-boulderer time').attr('datetime'));
-		var initialGrade = parseFloat($('.about-boulderer .grade').text().replace(',', '.'));
-		currentGradeData.push([registrationDate, initialGrade]);
-
-		$('#sessions tbody tr').each(function (e) {
-			var date = Date.parse($(this).find('time').attr('datetime'));
-			var grade = parseFloat($(this).find('.grade').text().replace(',', '.'));
-			currentGradeData.push([date, grade]);
-			var ascentCount = parseInt($(this).find('.ascent-count').text());
-			ascentCountData.push([date, ascentCount]);
-			var score = parseInt($(this).find('.score').text());
-			scoreData.push([date, score]);
-		});
-
-		var gradeColor = 'rgb(203,75,75)';
-		var ascentCountColor = 'rgb(175,216,248)';
-		var scoreColor = 'rgb(237,194,64)';
-
-		var grades = $(".chart").data('grades')
-		$.plot($(".chart"), [
-			{ data: currentGradeData, label: $('#sessions thead th.grade').text(), color: gradeColor, yaxis: 1 },
-			{ data: ascentCountData, label: $('#sessions thead th.ascent-count').text(), color: ascentCountColor, yaxis: 2 }
-			// TODO: what about score?
-//			{ data: scoreData, label: $('#sessions thead th.score').text(), color: scoreColor, yaxis: 3}
-		], {
-			xaxis: {
-				mode: "time",
-				tickSize: [1, "day"]
-			},
-			yaxes: [
-				{
-					min: 0.3,
-					max: 0.9,
-					ticks: grades,
-					font: { color: gradeColor }
-				},
-				{
-					tickDecimals: 0,
-					position: 'right',
-					font: { color: ascentCountColor }
-				},
-				{
-					tickDecimals: 0,
-					position: 'right',
-					font: { color: scoreColor }
-				}
-			],
-			series: {
-				lines: { show: true, fill: false },
-				points: { show: true, fill: false }
-			}
-		});
-	}
 
 	function displayChart(mu, sigma) {
 		var dd = [];

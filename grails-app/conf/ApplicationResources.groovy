@@ -1,7 +1,6 @@
 modules = {
-    jquery {
-        // JQUERY AND PLUGINS
-        resource url: 'js/vendor/jquery.js'
+    flot {
+        dependsOn 'jquery'
         resource url: 'js/vendor/jquery.flot.js'
         resource url: 'js/vendor/jquery.flot.time.js'
     }
@@ -16,8 +15,10 @@ modules = {
         resource url: 'css/foundation-icons.css'
     }
     angular {
+        dependsOn 'moment'
         resource url: 'js/vendor/angular.js'
         resource url: 'js/vendor/angular-resource.js'
+        resource url: 'js/vendor/angular-moment.min.js'
     }
     leaflet {
         // LEAFLET AND PLUGINS
@@ -31,7 +32,7 @@ modules = {
         resource url: 'js/vendor/underscore.js'
     }
     application {
-        dependsOn 'jquery', 'foundation', 'angular', 'leaflet', 'moment', 'underscore'
+        dependsOn 'jquery', 'foundation', 'angular', 'leaflet', 'flot', 'moment', 'underscore'
         resource url: 'js/application.js'
         resource url: 'js/services.js'
         resource url: 'js/controllers.js'

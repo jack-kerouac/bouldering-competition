@@ -14,6 +14,13 @@
 
     <r:require module="application" />
 
+    <r:script disposition="head">
+    window.locale = {
+        country: '${RequestContextUtils.getLocale(request).country}',
+        language: '${RequestContextUtils.getLocale(request).language}'
+    };
+    </r:script>
+
     <g:layoutHead/>
     <r:layoutResources/>
 </head>
@@ -74,10 +81,6 @@
 </div>
 
 <div class="footer" role="contentinfo"></div>
-
-<r:script>
-    var locale = '${RequestContextUtils.getLocale(request).toString().replace('_', '-')}';
-</r:script>
 
 <r:script>
     // Include the UserVoice JavaScript SDK (only needed once on a page)

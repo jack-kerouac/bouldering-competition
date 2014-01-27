@@ -24,12 +24,16 @@ class UrlMappings {
 
 
 
+        "/grades"(resource: "grade")
+
         "/gyms"(resources: "gym") {
             "/boulders"(controller: 'gym', action: 'boulders')
         }
         "/boulders"(resources: "boulder")
 
-        "/users"(resources: "user")
+        "/users"(resources: "user") {
+            "/statistics"(controller: 'user', action: 'statistics')
+        }
         "/sessions"(resources: 'boulderingSession')
     }
 }

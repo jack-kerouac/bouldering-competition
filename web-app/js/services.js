@@ -197,6 +197,22 @@ var floorPlan = function() {
 floorPlan.$inject = [];
 chalkUpServices.factory('floorPlan', floorPlan);
 
+// USER SERVICE
+var user = function ($resource) {
+	return $resource('/users/:userId?format=json');
+};
+user.$inject = ['$resource'];
+chalkUpServices.factory('user', user);
+
+
+// STATISTICS SERVICE
+var statistics = function ($resource) {
+	return $resource('/users/:userId/statistics?format=json');
+};
+statistics.$inject = ['$resource'];
+chalkUpServices.factory('statistics', statistics);
+
+
 
 // BOULDERING SESSION SERVICE
 var boulderingSession = function ($resource) {
@@ -204,3 +220,12 @@ var boulderingSession = function ($resource) {
 };
 boulderingSession.$inject = ['$resource'];
 chalkUpServices.factory('boulderingSession', boulderingSession);
+
+
+
+// GRADES SERVICE
+var grade = function ($resource) {
+	return $resource('/grades?format=json');
+};
+grade.$inject = ['$resource'];
+chalkUpServices.factory('grade', grade);

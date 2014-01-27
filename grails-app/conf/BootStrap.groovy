@@ -162,6 +162,8 @@ class BootStrap {
             map['username'] = user.username
             map['registrationDate'] = user.registrationDate
             map['grade'] = user.grade
+            map['initialGrade'] = user.initialGrade
+
             return map
         }
 
@@ -177,7 +179,7 @@ class BootStrap {
         JSON.registerObjectMarshaller(Ascent) { Ascent ascent ->
             def map = [:]
             map['id'] = ascent.id
-            map['style'] = ascent.style
+            map['style'] = ascent.style.toString()
             map['boulder'] = ascent.boulder.id
             return map
         }
