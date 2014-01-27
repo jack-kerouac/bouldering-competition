@@ -1,11 +1,13 @@
 var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices']);
 
-var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, boulderingSession) {
+var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, user, boulderingSession) {
 
 	$scope.session = {};
 	$scope.session.date = moment().format('YYYY-MM-DD');
 	// TODO: get it differently, somehow
-	$scope.session.boulderer = { id: $('input[name="boulderer.id"]').val()}
+	$scope.user = user.get({userId: parseInt($('input[name="boulderer.id"]').val())}, function(user) {
+		$scope.session.boulderer = user;
+	});
 
 	$scope.gyms = gym.query(function (gyms) {
 		$scope.session.gym = gyms[0];
@@ -73,7 +75,7 @@ var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, bou
 
 	$scope.logSession = function () {
 		boulderingSession.save($scope.session, function () {
-				$window.location.href = '/boulderer/flo/statistics';
+				$window.location.href = '/boulderer/' + $scope.user.username + '/statistics';
 			},
 			function (httpResponse) {
 				$scope.errors = httpResponse.data.errors;
@@ -81,7 +83,7 @@ var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, bou
 	}
 
 };
-sessionCtrl.$inject = ['$scope', '$http', '$window', 'gym', 'boulder', 'floorPlan', 'boulderingSession'];
+sessionCtrl.$inject = ['$scope', '$http', '$window', 'gym', 'boulder', 'floorPlan', 'user', 'boulderingSession'];
 chalkUpControllers.controller('SessionCtrl', sessionCtrl);
 
 
