@@ -16,15 +16,21 @@ chalkUpServices.factory('boulder', boulder);
 
 
 // FLOOR PLAN SERVICE
-var floorPlan = function() {
+var floorPlan = function () {
 	// TODO: I should probably not interact with the DOM here...
-	var init = function(floorPlan, $mapDiv) {
+	var init = function (floorPlan, $mapDiv) {
 		var factor = 1.35;
 
 		var map = L.map($mapDiv[0], {
 			maxZoom: 10,
 			crs: L.CRS.Simple
 		});
+
+		L.control.fullscreen({
+			position: 'topleft',
+			forceSeparateButton: true
+		}).addTo(map);
+
 
 		map.toLatLng = function (point) {
 			point = L.point(point);
@@ -128,7 +134,7 @@ var floorPlan = function() {
 		}
 
 
-		 function markerAscentPopup(marker, boulder, getAscentStyle, setAscentStyle) {
+		function markerAscentPopup(marker, boulder, getAscentStyle, setAscentStyle) {
 			var popupContent =
 				'<p><small>ID: ' + boulder.id + '</small>, ' +
 					'<small>grade: ' + boulder.initialGrade.readable + '</small></p>' +
@@ -213,14 +219,12 @@ statistics.$inject = ['$resource'];
 chalkUpServices.factory('statistics', statistics);
 
 
-
 // BOULDERING SESSION SERVICE
 var boulderingSession = function ($resource) {
 	return $resource('/sessions/:sessionId?format=json');
 };
 boulderingSession.$inject = ['$resource'];
 chalkUpServices.factory('boulderingSession', boulderingSession);
-
 
 
 // GRADES SERVICE

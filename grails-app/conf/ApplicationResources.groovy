@@ -24,6 +24,9 @@ modules = {
         // LEAFLET AND PLUGINS
         resource url: 'js/vendor/leaflet-src.js'
         resource url: 'css/leaflet.css'
+
+        resource url: 'js/vendor/Control.FullScreen.js'
+        resource url: 'css/Control.FullScreen.css'
     }
     moment {
         resource url: 'js/vendor/moment-with-langs.js'
