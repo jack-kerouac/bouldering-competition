@@ -6,11 +6,12 @@ import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
 import grails.validation.Validateable
+import org.springframework.http.HttpStatus
 
 @Secured(['ROLE_BOULDERER'])
 class BoulderingSessionController extends RestfulController {
 
-    static responseFormats = ['html', 'json']
+    static responseFormats = ['json', 'html']
 
     BoulderingSessionController() {
         super(BoulderingSession)
@@ -24,7 +25,7 @@ class BoulderingSessionController extends RestfulController {
 
 
     def save(BoulderingSessionCommand cmd) {
-        if (cmd.validate()) {
+        if (!cmd.hasErrors()) {
             BoulderingSession s = new BoulderingSession()
             s.date = cmd.date
             s.boulderer = cmd.boulderer
@@ -32,20 +33,23 @@ class BoulderingSessionController extends RestfulController {
 
             for (AscentCommand aCmd : cmd.ascents) {
                 aCmd.validate()
-                if (aCmd.style != AscentCommand.Style.none) {
-                    Ascent a = new Ascent(boulder: aCmd.boulder, style: Ascent.Style.valueOf(aCmd.style.toString()))
-                    s.addToAscents(a)
-                }
+                Ascent a = new Ascent(boulder: aCmd.boulder, style: aCmd.style)
+                s.addToAscents(a)
             }
 
             s.save()
 
-            flashHelper.confirm 'default.logged.message': [g.message(code: 'bcomp.boulderingSession.label'), s.date]
-            redirect controller: 'boulderer', action: 'statistics', params: ['username': s.boulderer.username]
+            request.withFormat {
+                html {
+                    flashHelper.confirm 'default.logged.message': [g.message(code: 'bcomp.boulderingSession.label'), s.date]
+                    redirect controller: 'boulderer', action: 'statistics', params: ['username': s.boulderer.username]
+                }
+                'json' {
+                    render(contentType: "application/json", status: HttpStatus.CREATED) { s }
+                }
+            }
         } else {
-            // put command object into flash scope before redirecting, making it available to the view action
-            flash.cmd = cmd
-            redirect action: 'create'
+            respond cmd.errors, view: 'create'
         }
     }
 }
@@ -57,6 +61,7 @@ class BoulderingSessionCommand {
     static constraints = {
         gym nullable: false
         boulderer nullable: false
+        ascents nullable: false, minSize: 1
     }
 
     Date date = new Date()
@@ -67,18 +72,16 @@ class BoulderingSessionCommand {
 
 }
 
+
 @Validateable
 class AscentCommand {
-
-    enum Style {
-        flash, top, none;
-    }
-
-    Style style = Style.none
-
-    Boulder boulder
 
     static constraints = {
         importFrom Ascent
     }
+
+    Ascent.Style style
+
+    Boulder boulder
+
 }

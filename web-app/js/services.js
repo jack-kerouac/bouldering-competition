@@ -196,3 +196,11 @@ var floorPlan = function() {
 }
 floorPlan.$inject = [];
 chalkUpServices.factory('floorPlan', floorPlan);
+
+
+// BOULDERING SESSION SERVICE
+var boulderingSession = function ($resource) {
+	return $resource('/sessions/:sessionId?format=json');
+};
+boulderingSession.$inject = ['$resource'];
+chalkUpServices.factory('boulderingSession', boulderingSession);

@@ -24,7 +24,7 @@
         </div>
 
         <div class="small-9 column ${hasErrors(field: 'date', 'error')}">
-            <input name="date" type="date" ng-model="date">
+            <input type="date" ng-model="session.date">
             <tmpl:/shared/fieldError field="date"/>
         </div>
     </div>
@@ -35,29 +35,29 @@
         </div>
 
         <div class="small-9 column">
-            <select ng-model="gym" ng-options="gym.name for gym in gyms" required></select>
-            <input type="hidden" name="gym.id" value="{{gym.id}}"/>
-
-            <tmpl:/shared/fieldError field="gym"/>
+            <select ng-model="session.gym" ng-options="gym.name for gym in gyms" required></select>
         </div>
     </div>
 
 
     <div class="row">
-
         <div class="medium-12 small-11 column">
             <div class="boulder-location-map">
                 <div class="map"></div>
-
-                <ul>
-                    <li ng-repeat="(boulderId, style) in ascents">
-                        {{boulderId}}, {{style}}
-                    </li>
-                </ul>
             </div>
-            <tmpl:/shared/fieldError field="boulder"/>
         </div>
     </div>
+
+    <div class="row" ng-if="errors">
+        <div class="medium-12 column">
+            <ul class="error">
+                <li ng-repeat="error in errors">
+                    <small class="error">{{error}}</small>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 
     <div class="row">
         <div class="small-9 small-offset-3">

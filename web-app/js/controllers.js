@@ -1,32 +1,55 @@
 var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices']);
 
-var sessionCtrl = function ($scope, $http, gym, boulder, floorPlan) {
-	$scope.date = moment().format('YYYY-MM-DD');
+var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, boulderingSession) {
 
-	$scope.gyms = gym.query();
+	$scope.session = {};
+	$scope.session.date = moment().format('YYYY-MM-DD');
+	$scope.session.boulderer = { id: $('input[name="boulderer.id"]').val()}
+
+	$scope.gyms = gym.query(function (gyms) {
+		$scope.session.gym = gyms[0];
+	});
+
 
 	$scope.boulderOrderProp = 'id';
-	$scope.$watch('gym', function (newValue, oldValue) {
+	$scope.$watch('session.gym', function (newValue, oldValue) {
 		if (newValue === oldValue)
 			return;
 		var gym = newValue;
 
+		// reset ascents
+		// we cannot use an object which would be much easier, but Grails databinding requires a stupid set
+		$scope.session.ascents = [];
+
 		var fp = floorPlan.init(gym.floorPlans[0], $('div.map'));
 
-		$scope.ascents = {};
-
 		function setAscentStyle(boulder, style) {
-			if(style === "none") {
-				delete $scope.ascents[boulder.id];
+			var ascent = _.find($scope.session.ascents, function (ascent) {
+				return ascent.boulder === boulder
+			});
+			if (ascent && style === "none") {
+				var index = $scope.session.ascents.indexOf(ascent);
+				$scope.session.ascents.splice(index, 1);
+			}
+			else if (ascent) {
+				ascent.style = style;
 			}
 			else {
-				$scope.ascents[boulder.id] = style;
+				ascent = {boulder: boulder, style: style};
+				$scope.session.ascents.push(ascent);
 			}
+
 			$scope.$apply();
 		}
 
 		function getAscentStyle(boulder) {
-			return $scope.ascents[boulder.id];
+			var ascent = _.find($scope.session.ascents, function (ascent) {
+				return ascent.boulder === boulder
+			});
+			if (ascent)
+				return ascent.style;
+			else
+				return undefined;
 		}
 
 		$scope.boulders = boulder.query({gymId: gym.id}, function (boulders) {
@@ -47,12 +70,17 @@ var sessionCtrl = function ($scope, $http, gym, boulder, floorPlan) {
 	});
 
 
-	$scope.logSession = function() {
-		console.log($scope);
+	$scope.logSession = function () {
+		boulderingSession.save($scope.session, function() {
+			$window.location.href = '/boulderer/flo/statistics';
+		},
+		function(httpResponse) {
+			$scope.errors = httpResponse.data.errors;
+		});
 	}
 
 };
-sessionCtrl.$inject = ['$scope', '$http', 'gym', 'boulder', 'floorPlan'];
+sessionCtrl.$inject = ['$scope', '$http', '$window', 'gym', 'boulder', 'floorPlan', 'boulderingSession'];
 chalkUpControllers.controller('SessionCtrl', sessionCtrl);
 
 

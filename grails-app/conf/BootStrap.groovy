@@ -11,6 +11,8 @@ class BootStrap {
 
     def grailsApplication
 
+    def messageSource
+
     def bouldererService
 
     def boulderService
@@ -70,7 +72,8 @@ class BootStrap {
     def registerObjectMarshallers() {
         JSON.registerObjectMarshaller(BoulderColor) { BoulderColor color ->
             def map = [:]
-            map['name'] = color.toString()
+            // TODO: how to not specify locale here?
+            map['name'] = messageSource.getMessage("bcomp.boulder.color.$color", null, Locale.GERMAN)
             map['primary'] = "rgb($color.primaryColor.red, $color.primaryColor.green, $color.primaryColor.blue)"
             if (color.secondaryColor)
                 map['secondary'] = "rgb($color.secondaryColor.red, $color.secondaryColor.green, $color.secondaryColor.blue)"
