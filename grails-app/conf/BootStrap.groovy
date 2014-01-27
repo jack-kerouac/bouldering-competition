@@ -129,6 +129,7 @@ class BootStrap {
 
             def initialGrade = [:]
             initialGrade['certainty'] = boulder.initialGradeCertainty
+            initialGrade['readable'] = boulder.initialGrade
             switch (boulder.initialGradeCertainty) {
                 case Boulder.GradeCertainty.ASSIGNED:
                     initialGrade['grade'] = boulder.assignedGrade

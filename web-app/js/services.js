@@ -131,7 +131,7 @@ var floorPlan = function() {
 		 function markerAscentPopup(marker, boulder, getAscentStyle, setAscentStyle) {
 			var popupContent =
 				'<p><small>ID: ' + boulder.id + '</small>, ' +
-					'<small>grade: ' + boulder.initialGrade + '</small></p>' +
+					'<small>grade: ' + boulder.initialGrade.readable + '</small></p>' +
 					'<input id="flash" type="checkbox" class="style-select" value="flash">' +
 					'<label for="flash">flash</label>' +
 					'<input id="top" type="checkbox" class="style-select" value="top">' +
