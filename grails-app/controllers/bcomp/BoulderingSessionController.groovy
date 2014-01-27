@@ -4,24 +4,35 @@ import bcomp.aaa.User
 import bcomp.gym.Boulder
 import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
+import grails.rest.RestfulController
 import grails.validation.Validateable
 
-/**
- * User: florian
- */
 @Secured(['ROLE_BOULDERER'])
-class BoulderingSessionController {
+class BoulderingSessionController extends RestfulController {
 
-    def log(BoulderingSessionCommand cmd) {
-        if(cmd.validate()) {
+    static responseFormats = ['html', 'json']
+
+    BoulderingSessionController() {
+        super(BoulderingSession)
+    }
+
+    def create() {
+        def boulderer = getPrincipal()
+        def cmd = flash.cmd ?: new BoulderingSessionCommand()
+        [boulderer: boulderer, cmd: cmd]
+    }
+
+
+    def save(BoulderingSessionCommand cmd) {
+        if (cmd.validate()) {
             BoulderingSession s = new BoulderingSession()
             s.date = cmd.date
             s.boulderer = cmd.boulderer
             s.gym = cmd.gym
 
-            for(AscentCommand aCmd : cmd.ascents) {
+            for (AscentCommand aCmd : cmd.ascents) {
                 aCmd.validate()
-                if(aCmd.style != AscentCommand.Style.none) {
+                if (aCmd.style != AscentCommand.Style.none) {
                     Ascent a = new Ascent(boulder: aCmd.boulder, style: Ascent.Style.valueOf(aCmd.style.toString()))
                     s.addToAscents(a)
                 }
@@ -31,27 +42,22 @@ class BoulderingSessionController {
 
             flashHelper.confirm 'default.logged.message': [g.message(code: 'bcomp.boulderingSession.label'), s.date]
             redirect controller: 'boulderer', action: 'statistics', params: ['username': s.boulderer.username]
-        }
-        else {
+        } else {
             // put command object into flash scope before redirecting, making it available to the view action
             flash.cmd = cmd
-            redirect action: 'createForm'
+            redirect action: 'create'
         }
     }
-
-    def createForm() {
-        def gym = Gym.findByName('Boulderwelt')
-        def boulders = gym.boulders
-        def boulderer = getPrincipal()
-        def cmd = flash.cmd ?: new BoulderingSessionCommand()
-        render view: 'createForm', model: [gym: gym, boulders: boulders, boulderer: boulderer, cmd: cmd]
-    }
-
 }
 
 
 @Validateable
 class BoulderingSessionCommand {
+
+    static constraints = {
+        gym nullable: false
+        boulderer nullable: false
+    }
 
     Date date = new Date()
     Gym gym

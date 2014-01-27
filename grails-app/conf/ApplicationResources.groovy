@@ -24,8 +24,11 @@ modules = {
         resource url: 'js/vendor/leaflet-src.js'
         resource url: 'css/leaflet.css'
     }
+    moment {
+        resource url: 'js/vendor/moment-with-langs.js'
+    }
     application {
-        dependsOn 'jquery', 'foundation', 'angular', 'leaflet'
+        dependsOn 'jquery', 'foundation', 'angular', 'leaflet', 'moment'
         resource url: 'js/application.js'
         resource url: 'js/services.js'
         resource url: 'js/controllers.js'

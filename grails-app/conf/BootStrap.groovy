@@ -1,4 +1,6 @@
+import bcomp.Ascent
 import bcomp.BouldererService
+import bcomp.BoulderingSession
 import bcomp.SampleData
 import bcomp.aaa.Role
 import bcomp.aaa.User
@@ -70,7 +72,7 @@ class BootStrap {
             def map = [:]
             map['name'] = color.toString()
             map['primary'] = "rgb($color.primaryColor.red, $color.primaryColor.green, $color.primaryColor.blue)"
-            if(color.secondaryColor)
+            if (color.secondaryColor)
                 map['secondary'] = "rgb($color.secondaryColor.red, $color.secondaryColor.green, $color.secondaryColor.blue)"
             return map
         }
@@ -148,6 +150,32 @@ class BootStrap {
 
             // links
             map['gym'] = boulder.gym.id
+            return map
+        }
+
+        JSON.registerObjectMarshaller(User) { User user ->
+            def map = [:]
+            map['id'] = user.id
+            map['username'] = user.username
+            map['registrationDate'] = user.registrationDate
+            map['grade'] = user.grade
+            return map
+        }
+
+        JSON.registerObjectMarshaller(BoulderingSession) { BoulderingSession session ->
+            def map = [:]
+            map['id'] = session.id
+            map['date'] = session.date
+            map['ascents'] = session.ascents
+            map['boulderer'] = session.boulderer.id
+            return map
+        }
+
+        JSON.registerObjectMarshaller(Ascent) { Ascent ascent ->
+            def map = [:]
+            map['id'] = ascent.id
+            map['style'] = ascent.style
+            map['boulder'] = ascent.boulder.id
             return map
         }
 

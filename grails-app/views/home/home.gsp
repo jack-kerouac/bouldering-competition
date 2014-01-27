@@ -10,6 +10,7 @@
 <div class="row">
     <div class="medium-12 columns">
         <h1><g:message code="bcomp.title"/></h1>
+
         <p>Sollte euch irgendwas auffallen, Fehler, Verbesserungsvorschläge, neue Ideen,
         dann benutzt die orange Sprechblase rechts unten! Danke. Florian</p>
     </div>
@@ -24,7 +25,7 @@
     </div>
 
     <div class="medium-4 column">
-        <g:link controller="boulderingSession" action="createForm" class="button">
+        <g:link resource="boulderingSession" action="create" class="button">
             <i class="fi-pencil"></i>
             <g:message code="default.log.label" args="[message(code: 'bcomp.boulderingSession.label')]"/>
         </g:link>
@@ -43,6 +44,7 @@
         <div class="column medium-6">
             <p><small><g:link controller="gradeLearning" action="showMeta">Grade Learning Algorithm</g:link></small></p>
         </div>
+
         <div class="column medium-6">
             <p><small>${grails.util.Environment.getCurrentEnvironment()}</small></p>
         </div>
