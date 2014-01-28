@@ -1,7 +1,5 @@
 package bcomp.gym
 
-import grails.rest.Resource
-
 class Gym {
 
     String name

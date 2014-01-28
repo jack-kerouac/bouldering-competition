@@ -18,7 +18,7 @@
 
 <div class="row content">
     <div class="medium-4 column">
-        <g:link controller="boulder" action="createForm" class="button">
+        <g:link resource="boulder" action="create" class="button">
             <i class="fi-plus"></i>
             <g:message code="default.set.label" args="[message(code: 'bcomp.boulder.label')]"/>
         </g:link>

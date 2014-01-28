@@ -1,32 +1,28 @@
 package bcomp
 
 import bcomp.gym.Boulder
-import bcomp.gym.BoulderColor
 import bcomp.gym.Grade
-import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
+import grails.rest.RestfulController
+import org.springframework.http.HttpStatus
 
 @Secured(['ROLE_BOULDERER'])
-class BoulderController {
+class BoulderController extends RestfulController {
 
     def boulderService
 
-    def createForm() {
-        def gym = Gym.findByName('Boulderwelt')
+    static responseFormats = ['json', 'html']
 
-        def cmd = flash.cmd ?: new CreateBouldersCommand()
-        // retrieve stored values for fields from session
-        cmd.color = session.lastColor
-        cmd.gradeCertainty = session.lastGradeCertainty
-        cmd.grade = session.lastGrade
-        cmd.gradeRangeLow = session.lastGradeRangeLow
-        cmd.gradeRangeHigh = session.lastGradeRangeHigh
-
-        render view: 'create', model: [gym: gym, colors: BoulderColor.values(), cmd: cmd]
+    BoulderController() {
+        super(Boulder)
     }
 
-    def create(CreateBouldersCommand cmd) {
-        if (cmd.validate()) {
+    def create() {
+        []
+    }
+
+    def save(CreateBouldersCommand cmd) {
+        if (!cmd.hasErrors()) {
             cmd.coordinates.each { coordinates ->
                 Boulder b = new Boulder()
                 b.gym = cmd.gym
@@ -49,20 +45,18 @@ class BoulderController {
                 boulderService.setBoulder(cmd.gym, b)
             }
 
-            flashHelper.confirm 'default.set.message': ["bcomp.boulder.color.$cmd.color", 'bcomp.boulder.label'], true
-
-            // store some options in session so that they do not need to be entered upon creating the next boulder
-            session.lastColor = cmd.color
-            session.lastGradeCertainty = cmd.gradeCertainty
-            session.lastGrade = cmd.grade
-            session.lastGradeRangeLow = cmd.gradeRangeLow
-            session.lastGradeRangeHigh = cmd.gradeRangeHigh
-
-            redirect controller: 'home', action: 'home'
+            request.withFormat {
+                html {
+                    flashHelper.confirm 'default.set.message': ["bcomp.boulder.color.$cmd.color", 'bcomp.boulder.label'], true
+                    redirect controller: 'home', action: 'home'
+                }
+                'json' {
+                    // TODO: what to return?
+                    render(contentType: "application/json", status: HttpStatus.CREATED) { null }
+                }
+            }
         } else {
-            // put command object into flash scope before redirecting, making it available to the view action
-            flash.cmd = cmd
-            redirect action: 'createForm'
+            respond cmd.errors, view: 'create'
         }
     }
 
