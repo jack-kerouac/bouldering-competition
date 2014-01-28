@@ -7,34 +7,34 @@
 
 <body id="home-page">
 
-<div class="row">
-    <div class="medium-12 columns">
-        <h1><g:message code="bcomp.title"/></h1>
-        <p>Sollte euch irgendwas auffallen, Fehler, Verbesserungsvorschläge, neue Ideen,
-        dann benutzt die orange Sprechblase rechts unten! Danke. Florian</p>
-    </div>
-</div>
-
 <div class="row content">
-    <div class="medium-4 column">
+    <h1>Tasks</h1>
+    <div class="medium-4 columns">
         <g:link controller="boulder" action="createForm" class="button">
             <i class="fi-plus"></i>
             <g:message code="default.set.label" args="[message(code: 'bcomp.boulder.label')]"/>
         </g:link>
     </div>
 
-    <div class="medium-4 column">
+    <div class="medium-4 columns">
         <g:link controller="boulderingSession" action="createForm" class="button">
             <i class="fi-pencil"></i>
             <g:message code="default.log.label" args="[message(code: 'bcomp.boulderingSession.label')]"/>
         </g:link>
     </div>
 
-    <div class="medium-4 column">
+    <div class="medium-4 columns">
         <g:link controller="leaderboard" action="view" class="button">
             <i class="fi-results"></i>
             <g:message code="default.show.label" args="[message(code: 'bcomp.leaderboard.label')]"/>
         </g:link>
+    </div>
+</div>
+
+<div class="row">
+    <div class="medium-12 columns">
+        <p>Sollte euch irgendwas auffallen, Fehler, Verbesserungsvorschläge, neue Ideen,
+        dann benutzt die orange Sprechblase rechts unten! Danke. Florian</p>
     </div>
 </div>
 
