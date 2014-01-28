@@ -24,7 +24,7 @@ class UrlMappings {
         }
         "/sessions/create"(controller: 'boulderingSession', action: 'createForm')
 
-        "/"(controller: 'home', action: 'home')
+        "/"(controller: 'index', action: 'index')
 
         "/foundation"(view:'/foundation')
 
