@@ -5,7 +5,7 @@
     <title><g:message code="default.log.label" args="[message(code: 'bcomp.boulderingSession.label')]"/></title>
 </head>
 
-<body id="log-session-page" ng-controller="SessionCtrl">
+<body id="log-session-page">
 
 <div class="row">
     <div class="small-12 column">
@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<form ng-submit="logSession()">
+<form ng-controller="SessionCtrl" ng-submit="logSession()">
     <input type="hidden" name="boulderer.id" value="${boulderer.id}"/>
 
     <div class="row">

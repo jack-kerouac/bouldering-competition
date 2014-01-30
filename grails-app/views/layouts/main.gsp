@@ -25,7 +25,7 @@
     <r:layoutResources/>
 </head>
 
-<body id="${pageProperty(name: 'body.id')}" ng-controller="${pageProperty(name: 'body.ng-controller')}">
+<body id="${pageProperty(name: 'body.id')}">
 <div class="row">
     <nav class="top-bar fixed contain-to-grid" data-topbar>
         <ul class="title-area">

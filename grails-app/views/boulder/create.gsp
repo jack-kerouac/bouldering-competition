@@ -5,7 +5,7 @@
     <title><g:message code="default.set.label" args="[message(code: 'bcomp.boulder.label')]"/></title>
 </head>
 
-<body id="create-boulder-page" ng-controller="BoulderCtrl">
+<body id="create-boulder-page">
 
 <div class="row">
     <div class="small-12 column">
@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<form ng-submit="registerBoulders()">
+<form ng-controller="BoulderCtrl" ng-submit="registerBoulders()">
 
     <div class="row">
         <div class="small-3 column">

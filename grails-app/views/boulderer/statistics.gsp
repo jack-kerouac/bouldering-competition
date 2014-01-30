@@ -5,7 +5,7 @@
     <title>${boulderer.username}'s <g:message code="bcomp.statistics.label"/></title>
 </head>
 
-<body id="list-sessions-page" ng-controller="StatisticsCtrl">
+<body id="list-sessions-page">
 
 <div class="row">
     <div class="medium-12 columns">
@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<div class="row content">
+<div ng-controller="StatisticsCtrl" class="row content">
     <div class="medium-12 column">
         <input type="hidden" name="boulderer.id" value="${boulderer.id}"/>
 
@@ -40,6 +40,7 @@
                 </tr>
             </tbody>
         </table>
+
         <div flot-chart data="chart.data" options="chart.options"/>
     </div>
 </div>
