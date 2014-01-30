@@ -72,8 +72,9 @@ class BootStrap {
     def registerObjectMarshallers() {
         JSON.registerObjectMarshaller(BoulderColor) { BoulderColor color ->
             def map = [:]
-            // TODO: how to not specify locale here?
-            map['name'] = messageSource.getMessage("bcomp.boulder.color.$color", null, Locale.GERMAN)
+            map['name'] = color.toString();
+            map['germanName'] = messageSource.getMessage("bcomp.boulder.color.$color", null, Locale.GERMAN);
+            map['englishName'] = messageSource.getMessage("bcomp.boulder.color.$color", null, Locale.ENGLISH);
             map['primary'] = "rgb($color.primaryColor.red, $color.primaryColor.green, $color.primaryColor.blue)"
             if (color.secondaryColor)
                 map['secondary'] = "rgb($color.secondaryColor.red, $color.secondaryColor.green, $color.secondaryColor.blue)"

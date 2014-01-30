@@ -174,7 +174,8 @@ var floorPlan = function () {
 			var layerGroups = {};
 
 			$.each(markers, function (index, marker) {
-				var colorName = marker.options.color.name;
+				// TODO: use proper locale here
+				var colorName = marker.options.color.germanName;
 				if (!(colorName in layerGroups)) {
 					layerGroups[colorName] = L.layerGroup();
 				}
