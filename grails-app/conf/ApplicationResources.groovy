@@ -26,4 +26,11 @@ modules = {
 
         resource url: 'css/application.css'
     }
+
+    index {
+        resource url: 'js/vendor/jquery.scrollTo.min.js'
+        resource url: 'js/vendor/jquery.localScroll.min.js'
+        resource url: 'js/vendor/jquery.parallax.js'
+        resource url: 'js/index.js'
+    }
 }

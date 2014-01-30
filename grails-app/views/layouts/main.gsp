@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><g:layoutTitle default="Grails"/> - <g:message code="bcomp.title"/></title>
+    <title><g:layoutTitle default="ChalkUp!"/> - <g:message code="bcomp.title"/></title>
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
@@ -23,33 +23,59 @@
     <nav class="top-bar fixed contain-to-grid" data-topbar>
         <ul class="title-area">
             <li class="name">
-                <h1><g:link controller="home"><g:message code="bcomp.title"/></g:link></h1>
+                <h1><g:link controller="index"><g:message code="bcomp.title"/></g:link></h1>
             </li>
             <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>
 
         <section class="top-bar-section">
-            <!-- Right Nav Section -->
-            <ul class="right">
-                <li class="has-dropdown">
-                    <a href="#"><sec:loggedInUserInfo field="username"/></a>
-                    <ul class="dropdown">
-                        <li><g:link controller='boulderer' action='listAscents' params="[username:
-                                sec.loggedInUserInfo(field: 'username')]">
-                                <g:message code="bcomp.ascents.label"/>
-                            </g:link></li>
-                        <li><g:link controller='boulderer' action='statistics' params="[username:
-                                sec.loggedInUserInfo(field: 'username')]">
-                            <g:message code="bcomp.statistics.label"/>
-                        </g:link></li>
-                        <li><g:link controller='logout'><g:message code="default.button.logout.label"/></g:link></li>
-                    </ul>
-                </li>
-            </ul>
-
             <!-- Left Nav Section -->
             <ul class="left">
+                <sec:ifLoggedIn>
+                    <li>
+                        <g:link controller='home' action='home'>
+                            <g:message code="default.home.label"/>
+                        </g:link>
+                    </li>
+                </sec:ifLoggedIn>
                 %{--<li><a href="#">Boulderwelt</a></li>--}%
+            </ul>
+
+            <!-- Right Nav Section -->
+            <ul class="right">
+                <sec:ifLoggedIn>
+                    <li class="has-dropdown">
+                        <a href="#"><sec:loggedInUserInfo field="username"/></a>
+                        <ul class="dropdown">
+                            <li><g:link controller='boulderer' action='listAscents' params="[username:
+                                    sec.loggedInUserInfo(field: 'username')]">
+                                    <g:message code="bcomp.ascents.label"/>
+                                </g:link></li>
+                            <li><g:link controller='boulderer' action='statistics' params="[username:
+                                    sec.loggedInUserInfo(field: 'username')]">
+                                <g:message code="bcomp.statistics.label"/>
+                            </g:link></li>
+                            <li><g:link controller='logout'><g:message code="default.button.logout.label"/></g:link></li>
+                        </ul>
+                    </li>
+                </sec:ifLoggedIn>
+                <sec:ifNotLoggedIn>
+                    <li class='has-form'>
+                        <!-- TODO: Set the action in a controller like LoginController does! -->
+                        <form action='/j_spring_security_check' method='POST' class='login-form'>
+                            <input type='text' name='j_username' id='username' size="10"
+                                   placeholder="${message(code: "springSecurity.login.username.label")}"/>
+
+                            <input type='password' name='j_password' id='password'
+                                   placeholder="${message(code: "springSecurity.login.password.label")}"/>
+
+                            <!-- TODO: Bring back the "remember me" thing here? -->
+
+                            <input type='submit' id="submit" class="button"
+                                   value='${message(code: "springSecurity.login.button")}'/>
+                        </form>
+                    </li >
+                </sec:ifNotLoggedIn>
             </ul>
         </section>
     </nav>

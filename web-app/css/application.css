@@ -8,6 +8,50 @@ input[readonly] {
     color: #999999;
 }
 
+.top-bar-section .login-form input[type='text'],
+.top-bar-section .login-form input[type='password'] {
+    width: 10em;
+    height: 3ex;
+    display: inline-block;
+}
+
+.top-bar-section .login-form label {
+    color: white;
+
+}
+
+#index-page .story {
+    width: 40%;
+    margin: 20px;
+}
+
+#index-page #intro {
+    background:url(/images/bg/firstBG.jpg) 50% 0 no-repeat fixed;
+    color: white;
+    height: 600px;
+}
+#index-page #intro .story {
+    float: left;
+}
+
+#index-page #how-it-works {
+    background: url(/images/bg/secondBG.jpg) 50% 0 no-repeat fixed;
+    color: white;
+    height: 600px;
+}
+#index-page #how-it-works .story {
+    float: right;
+}
+
+#index-page #get-the-app {
+    background: url(/images/bg/thirdBG.jpg) 50% 0 no-repeat fixed;
+    color: white;
+    height: 600px;
+}
+#index-page #get-the-app .story {
+    float: left;
+}
+
 #home-page .content a.button {
     width: 100%;
 }
