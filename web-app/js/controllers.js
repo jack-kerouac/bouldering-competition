@@ -24,6 +24,8 @@ var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, use
 		// we cannot use an object which would be much easier, but Grails databinding requires a stupid set
 		$scope.session.ascents = [];
 
+		if (gym.floorPlans.length > 1)
+			throw new Error("gym has more than one floor plan, make it selectable");
 		var fp = floorPlan.init(gym.floorPlans[0], $('div.map'));
 
 		function setAscentStyle(boulder, style) {
@@ -88,10 +90,23 @@ chalkUpControllers.controller('SessionCtrl', sessionCtrl);
 
 
 var boulderCtrl = function ($scope, $window, gym, grade, floorPlan, boulders) {
-	$scope.gyms = gym.query(function (gyms) {
-		var gym = gyms[0];
 
-		$scope.boulders.gym = gym;
+	function findColor(name) {
+		return _.find($scope.boulders.gym.colors, function (color) {
+			return color.name == name;
+		});
+	}
+
+	$scope.gyms = gym.query(function (gyms) {
+		$scope.boulders.gym = gyms[0];
+	});
+
+	$scope.$watch('boulders.gym', function(newValue, oldValue) {
+		if(newValue === oldValue)
+			return;
+
+		var gym = newValue;
+
 		if (gym.floorPlans.length > 1)
 			throw new Error("gym has more than one floor plan, make it selectable");
 		$scope.boulders.floorPlan = gym.floorPlans[0];
@@ -103,22 +118,6 @@ var boulderCtrl = function ($scope, $window, gym, grade, floorPlan, boulders) {
 		fp.cursor('crossHair');
 
 		$scope.markers = [];
-
-
-		function findColor(name) {
-			return _.find(gym.colors, function (color) {
-				return color.name == name;
-			});
-		}
-
-		$scope.$watch('boulders.color', function (newValue, oldValue) {
-			if (newValue === oldValue)
-				return;
-			var color = findColor(newValue);
-			_.map($scope.markers, function (marker) {
-				marker.setColor(color);
-			});
-		});
 
 		fp.map.on('click', function (e) {
 			var markerNumber = $scope.markers.length;
@@ -144,6 +143,17 @@ var boulderCtrl = function ($scope, $window, gym, grade, floorPlan, boulders) {
 			});
 		});
 	});
+
+
+	$scope.$watch('boulders.color', function (newValue, oldValue) {
+		if (newValue === oldValue)
+			return;
+		var color = findColor(newValue);
+		_.map($scope.markers, function (marker) {
+			marker.setColor(color);
+		});
+	});
+
 
 	$scope.boulders = {};
 	$scope.boulders.gradeCertainty = 'UNKNOWN';
