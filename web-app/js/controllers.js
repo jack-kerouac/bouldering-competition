@@ -5,7 +5,7 @@ var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, use
 	$scope.session = {};
 	$scope.session.date = moment().format('YYYY-MM-DD');
 	// TODO: get it differently, somehow
-	$scope.user = user.get({userId: parseInt($('input[name="boulderer.id"]').val())}, function(user) {
+	$scope.user = user.get({userId: parseInt($('input[name="boulderer.id"]').val())}, function (user) {
 		$scope.session.boulderer = user;
 	});
 
@@ -87,10 +87,85 @@ sessionCtrl.$inject = ['$scope', '$http', '$window', 'gym', 'boulder', 'floorPla
 chalkUpControllers.controller('SessionCtrl', sessionCtrl);
 
 
-var boulderCtrl = function ($scope) {
-	window.initChalkUp()
+var boulderCtrl = function ($scope, $window, gym, grade, floorPlan, boulders) {
+	$scope.gyms = gym.query(function (gyms) {
+		var gym = gyms[0];
+
+		$scope.boulders.gym = gym;
+		if (gym.floorPlans.length > 1)
+			throw new Error("gym has more than one floor plan, make it selectable");
+		$scope.boulders.floorPlan = gym.floorPlans[0];
+
+		$scope.boulders.color = gym.colors[0].name;
+		$scope.boulders.coordinates = [];
+
+		var fp = floorPlan.init(gym.floorPlans[0], $('div.map'));
+		fp.cursor('crossHair');
+
+		$scope.markers = [];
+
+
+		function findColor(name) {
+			return _.find(gym.colors, function (color) {
+				return color.name == name;
+			});
+		}
+
+		$scope.$watch('boulders.color', function (newValue, oldValue) {
+			if (newValue === oldValue)
+				return;
+			var color = findColor(newValue);
+			_.map($scope.markers, function (marker) {
+				marker.setColor(color);
+			});
+		});
+
+		fp.map.on('click', function (e) {
+			var markerNumber = $scope.markers.length;
+
+			var marker = fp.addMarker(e, {draggable: true});
+			var color = findColor($scope.boulders.color);
+			marker.setColor(color);
+
+			$scope.markers.push(marker);
+			var p = marker.getPoint();
+			$scope.boulders.coordinates.push({
+				x: p.x / fp.width,
+				y: p.y / fp.height
+			});
+
+			marker.on('dragend', function (e) {
+				var marker = e.target;
+				var p = marker.getPoint();
+				$scope.boulders.coordinates[markerNumber] = {
+					x: p.x / fp.width,
+					y: p.y / fp.height
+				};
+			});
+		});
+	});
+
+	$scope.boulders = {};
+	$scope.boulders.gradeCertainty = 'UNKNOWN';
+
+	$scope.grades = grade.query();
+
+	$scope.registerBoulders = function () {
+		if($scope.boulders.coordinates.length === 0) {
+			// TODO: proper error handling
+			$scope.errors = { message: "must at least set one boulder" };
+			return;
+		}
+
+		boulders.save($scope.boulders, function () {
+				$window.location.href = '/home';
+			},
+			function (httpResponse) {
+				$scope.errors = httpResponse.data.errors;
+			});
+	}
 }
-boulderCtrl.$inject = ['$scope'];
+boulderCtrl.$inject = ['$scope', '$window', 'gym', 'grade', 'floorPlan', 'boulders'];
 chalkUpControllers.controller('BoulderCtrl', boulderCtrl);
 
 

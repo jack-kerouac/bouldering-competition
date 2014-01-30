@@ -23,12 +23,14 @@ class BoulderController extends RestfulController {
 
     def save(CreateBouldersCommand cmd) {
         if (!cmd.hasErrors()) {
+            List<Boulder> boulders = [] as List;
+
             cmd.coordinates.each { coordinates ->
                 Boulder b = new Boulder()
                 b.gym = cmd.gym
                 b.color = cmd.color
                 b.onFloorPlan(cmd.floorPlan, coordinates.x, coordinates.y)
-                // TODO: validation of entered grades, bind errors to fields, display errors in view
+                // TODO: validation of entered grades
                 switch (cmd.gradeCertainty) {
                     case Boulder.GradeCertainty.ASSIGNED:
                         b.assignedGrade(Grade.fromFontScale(cmd.grade));
@@ -43,6 +45,8 @@ class BoulderController extends RestfulController {
                 }
 
                 boulderService.setBoulder(cmd.gym, b)
+
+                boulders.add(b)
             }
 
             request.withFormat {
@@ -52,7 +56,7 @@ class BoulderController extends RestfulController {
                 }
                 'json' {
                     // TODO: what to return?
-                    render(contentType: "application/json", status: HttpStatus.CREATED) { null }
+                    render(contentType: "application/json", status: HttpStatus.CREATED) { ['boulders': boulders] }
                 }
             }
         } else {

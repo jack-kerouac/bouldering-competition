@@ -14,6 +14,14 @@ var boulder = function ($resource) {
 boulder.$inject = ['$resource'];
 chalkUpServices.factory('boulder', boulder);
 
+// TODO: differentiate this from gym boulder service!
+// BOULDER SERVICE
+var boulders = function ($resource) {
+	return $resource('/boulders/:boulderId');
+};
+boulders.$inject = ['$resource'];
+chalkUpServices.factory('boulders', boulders);
+
 
 // FLOOR PLAN SERVICE
 var floorPlan = function () {
@@ -188,12 +196,19 @@ var floorPlan = function () {
 			return layerGroups;
 		}
 
+		function cursor(cursor) {
+			$mapDiv.css({cursor: cursor});
+		}
+
 		return {
+			width: width,
+			height: height,
 			map: map,
 			addMarker: addMarker,
 			mark: mark,
 			markerAscentPopup: markerAscentPopup,
-			layerControlByColor: layerControlByColor
+			layerControlByColor: layerControlByColor,
+			cursor: cursor
 		};
 	};
 
