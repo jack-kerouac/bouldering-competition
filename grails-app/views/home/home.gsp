@@ -9,15 +9,18 @@
 
 <div class="row content">
     <h1>Tasks</h1>
+
     <div class="medium-4 columns">
-        <g:link controller="boulder" action="createForm" class="button">
+        <g:link resource="boulder" action="create" class="button">
             <i class="fi-plus"></i>
             <g:message code="default.set.label" args="[message(code: 'bcomp.boulder.label')]"/>
         </g:link>
     </div>
 
+
     <div class="medium-4 columns">
-        <g:link controller="boulderingSession" action="createForm" class="button">
+        <g:link resource="boulderingSession" action="create" class="button">
+
             <i class="fi-pencil"></i>
             <g:message code="default.log.label" args="[message(code: 'bcomp.boulderingSession.label')]"/>
         </g:link>
@@ -43,6 +46,7 @@
         <div class="column medium-6">
             <p><small><g:link controller="gradeLearning" action="showMeta">Grade Learning Algorithm</g:link></small></p>
         </div>
+
         <div class="column medium-6">
             <p><small>${grails.util.Environment.getCurrentEnvironment()}</small></p>
         </div>

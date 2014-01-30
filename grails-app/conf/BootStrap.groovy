@@ -1,4 +1,6 @@
+import bcomp.Ascent
 import bcomp.BouldererService
+import bcomp.BoulderingSession
 import bcomp.SampleData
 import bcomp.aaa.Role
 import bcomp.aaa.User
@@ -8,6 +10,8 @@ import grails.converters.JSON
 class BootStrap {
 
     def grailsApplication
+
+    def messageSource
 
     def bouldererService
 
@@ -66,8 +70,15 @@ class BootStrap {
 
 
     def registerObjectMarshallers() {
-        JSON.registerObjectMarshaller(BoulderColor) {
-            it.toString()
+        JSON.registerObjectMarshaller(BoulderColor) { BoulderColor color ->
+            def map = [:]
+            map['name'] = color.toString();
+            map['germanName'] = messageSource.getMessage("bcomp.boulder.color.$color", null, Locale.GERMAN);
+            map['englishName'] = messageSource.getMessage("bcomp.boulder.color.$color", null, Locale.ENGLISH);
+            map['primary'] = "rgb($color.primaryColor.red, $color.primaryColor.green, $color.primaryColor.blue)"
+            if (color.secondaryColor)
+                map['secondary'] = "rgb($color.secondaryColor.red, $color.secondaryColor.green, $color.secondaryColor.blue)"
+            return map
         }
 
         JSON.registerObjectMarshaller(Boulder.GradeCertainty) {
@@ -91,10 +102,12 @@ class BootStrap {
 
         JSON.registerObjectMarshaller(FloorPlan) { FloorPlan floorPlan ->
             def map = [:]
-            map['widthInPx'] = floorPlan.widthInPx
-            map['heightInPx'] = floorPlan.heightInPx
+            map['id'] = floorPlan.id
+            map['img'] = [:]
+            map['img']['widthInPx'] = floorPlan.widthInPx
+            map['img']['heightInPx'] = floorPlan.heightInPx
             // TODO: how to externalize this?
-            map['imgUrl'] =  "/gyms/$floorPlan.gym.id/floorPlans/$floorPlan.id"
+            map['img']['url'] = "/gyms/$floorPlan.gym.id/floorPlans/$floorPlan.id"
             return map
         }
 
@@ -103,6 +116,7 @@ class BootStrap {
             map['id'] = gym.id
             map['name'] = gym.name
             map['floorPlans'] = gym.floorPlans
+            map['colors'] = BoulderColor.values()
             return map
         }
 
@@ -117,6 +131,7 @@ class BootStrap {
 
             def initialGrade = [:]
             initialGrade['certainty'] = boulder.initialGradeCertainty
+            initialGrade['readable'] = boulder.initialGrade
             switch (boulder.initialGradeCertainty) {
                 case Boulder.GradeCertainty.ASSIGNED:
                     initialGrade['grade'] = boulder.assignedGrade
@@ -141,6 +156,34 @@ class BootStrap {
 
             // links
             map['gym'] = boulder.gym.id
+            return map
+        }
+
+        JSON.registerObjectMarshaller(User) { User user ->
+            def map = [:]
+            map['id'] = user.id
+            map['username'] = user.username
+            map['registrationDate'] = user.registrationDate
+            map['grade'] = user.grade
+            map['initialGrade'] = user.initialGrade
+
+            return map
+        }
+
+        JSON.registerObjectMarshaller(BoulderingSession) { BoulderingSession session ->
+            def map = [:]
+            map['id'] = session.id
+            map['date'] = session.date
+            map['ascents'] = session.ascents
+            map['boulderer'] = session.boulderer.id
+            return map
+        }
+
+        JSON.registerObjectMarshaller(Ascent) { Ascent ascent ->
+            def map = [:]
+            map['id'] = ascent.id
+            map['style'] = ascent.style.toString()
+            map['boulder'] = ascent.boulder.id
             return map
         }
 

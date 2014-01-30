@@ -2,6 +2,7 @@ package bcomp.aaa
 
 import bcomp.gym.Grade
 import bcomp.gym.TentativeGrade
+import grails.rest.Resource
 
 class User {
 

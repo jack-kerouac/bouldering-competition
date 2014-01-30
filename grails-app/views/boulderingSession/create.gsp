@@ -15,8 +15,7 @@
     </div>
 </div>
 
-<g:form action="log">
-    <input type="hidden" name="gym.id" value="${gym.id}"/>
+<form ng-controller="SessionCtrl" ng-submit="logSession()">
     <input type="hidden" name="boulderer.id" value="${boulderer.id}"/>
 
     <div class="row">
@@ -25,29 +24,46 @@
         </div>
 
         <div class="small-9 column ${hasErrors(field: 'date', 'error')}">
-            <input name="date" type="date" value="${formatDate(date: cmd.date, format: 'yyyy-MM-dd')}">
-            <tmpl:/shared/fieldError field="date"/>
+            <input type="date" ng-model="session.date">
         </div>
     </div>
 
     <div class="row">
-        <div class="medium-12 small-11 column">
-            <div class="boulder-location-map">
+        <div class="small-3 column">
+            <label class="right inline"><g:message code="bcomp.gym.label"/></label>
+        </div>
 
-                <tmpl:/shared/floorPlan floorPlan="${gym.floorPlans.first()}"/>
-
-                <tmpl:/shared/boulders boulders="${boulders}" boulderTemplate="/shared/boulder-radio-select"/>
-            </div>
-            <tmpl:/shared/fieldError field="boulder"/>
+        <div class="small-9 column">
+            <select ng-model="session.gym" ng-options="gym.name for gym in gyms" required></select>
         </div>
     </div>
+
+
+    <div class="row">
+        <div class="medium-12 small-11 column">
+            <div class="boulder-location-map">
+                <div class="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="errors">
+        <div class="medium-12 column">
+            <ul class="error">
+                <li ng-repeat="error in errors">
+                    <small class="error">{{error}}</small>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 
     <div class="row">
         <div class="small-9 small-offset-3">
             <g:submitButton name="submit" class="button" value="${message(code: 'default.button.log.label')}"/>
         </div>
     </div>
-</g:form>
+</form>
 
 </body>
 </html>

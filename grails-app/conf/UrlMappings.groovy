@@ -1,3 +1,5 @@
+import bcomp.BoulderingSessionController
+
 class UrlMappings {
 
     static mappings = {
@@ -16,11 +18,6 @@ class UrlMappings {
         "/boulderer/$username/statistics"(controller: 'boulderer', action: 'statistics')
 
 
-        "/sessions/"(controller: 'boulderingSession') {
-            action = [POST: 'log']
-        }
-        "/sessions/create"(controller: 'boulderingSession', action: 'createForm')
-
         "/"(controller: 'index', action: 'index')
 
         "/status"(view: "/index")
@@ -28,8 +25,16 @@ class UrlMappings {
 
 
 
-        "/api/gyms"(resources: "gym") {
-            "/boulders"(resources: "boulder")
+        "/grades"(resource: "grade")
+
+        "/gyms"(resources: "gym") {
+            "/boulders"(controller: 'gym', action: 'boulders')
         }
+        "/boulders"(resources: "boulder")
+
+        "/users"(resources: "user") {
+            "/statistics"(controller: 'user', action: 'statistics')
+        }
+        "/sessions"(resources: 'boulderingSession')
     }
 }

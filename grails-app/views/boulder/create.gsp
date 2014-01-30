@@ -18,70 +18,64 @@
     </div>
 </div>
 
-<g:form action="create">
+<form ng-controller="BoulderCtrl" ng-submit="registerBoulders()">
 
-    <input type="hidden" name="gym.id" value="${gym.id}"/>
+    <div class="row">
+        <div class="small-3 column">
+            <label class="right inline"><g:message code="bcomp.gym.label"/></label>
+        </div>
 
+        <div class="small-9 column">
+            <select ng-model="boulders.gym" ng-options="gym.name for gym in gyms" required></select>
+        </div>
+    </div>
 
     <div class="row">
         <div class="small-3 column">
             <label class="right inline"><g:message code="bcomp.boulder.color.label"/></label>
         </div>
 
-        <div class="small-9 column ${hasErrors(field: 'color', 'error')}">
-            <select name="color">
-                <g:each in="${colors}" var="color">
-                    <option value="${color}" data-color-primary="${rgb(color: color.primaryColor)}"
-                        <g:if test="${color.hasSecondaryColor()}">
-                            data-color-secondary="${rgb(color: color.secondaryColor)}"
-                        </g:if>
-                        <g:if test="${cmd.color == color}">
-                            selected
-                        </g:if>/>
-                    <g:message code="bcomp.boulder.color.${color}"/>
-                    </option>
-                </g:each>
+        <div class="small-9 column">
+            <select ng-model="boulders.color" required>
+                %{-- TODO: use proper locale here --}%
+                <option ng-repeat="color in boulders.gym.colors" value="{{color.name}}">{{color.germanName}}</option>
             </select>
-            <tmpl:/shared/fieldError field="color"/>
         </div>
     </div>
 
 
-    <div class="row">
+    <div class="row grades">
         <div class="small-3 column">
             <label class="right inline"><g:message code="bcomp.boulder.grade.label"/></label>
         </div>
 
         <div class="small-9 column">
-            <p><small>use grades: ${bcomp.gym.Grade.FONT_GRADES}</small></p>
+            <p><small>use grades: <span ng-repeat="grade in grades">{{ grade.font }},</span></small></p>
 
             <div class="row">
                 <div class="column small-12">
-                    <input type="radio" name="gradeCertainty" value="ASSIGNED"
-                           id="assigned-grade" ${cmd.gradeCertainty == Boulder.GradeCertainty.ASSIGNED ? 'checked' : ''}>
+                    <input type="radio" id="assigned-grade" ng-model="boulders.gradeCertainty" value="ASSIGNED">
                     <label for="assigned-grade" class="inline"><g:message
                             code="bcomp.boulder.gradeCertainty.assigned.label"/></label>
-                    <input type="text" name="grade" placeholder="6b+" value="${cmd.grade}"/>
+                    <input type="text" ng-model="boulders.grade" placeholder="6b+"/>
                 </div>
             </div>
 
             <div class="row">
                 <div class="column small-12">
-                    <input type="radio" name="gradeCertainty" value="RANGE" id="grade-range" ${cmd.gradeCertainty ==
-                            Boulder.GradeCertainty.RANGE ? 'checked' : ''}>
+                    <input type="radio" id="grade-range" ng-model="boulders.gradeCertainty" value="RANGE">
                     <label for="grade-range" class="inline">
                         <g:message code="bcomp.boulder.gradeCertainty.range.label"/>
                     </label>
-                    <input type="text" name="gradeRangeLow" placeholder="6a+" value="${cmd.gradeRangeLow}"/>
+                    <input type="text" ng-model="boulders.gradeRangeLow" placeholder="6a+"/>
                     -
-                    <input type="text" name="gradeRangeHigh" placeholder="6c+" value="${cmd.gradeRangeHigh}"/>
+                    <input type="text" ng-model="boulders.gradeRangeHigh" placeholder="6c+"/>
                 </div>
             </div>
 
             <div class="row">
                 <div class="column small-12">
-                    <input type="radio" name="gradeCertainty" value="UNKNOWN" id="unknown-grade" ${cmd.gradeCertainty ==
-                            Boulder.GradeCertainty.UNKNOWN ? 'checked' : ''}>
+                    <input type="radio" id="unknown-grade" ng-model="boulders.gradeCertainty" value="UNKNOWN">
                     <label for="unknown-grade" class="inline">
                         <g:message code="bcomp.boulder.gradeCertainty.unknown.label"/>
                     </label>
@@ -92,16 +86,21 @@
 
 
     <div class="row">
-        <div class="small-12 column">
+        <div class="medium-12 small-11 column">
             <div class="boulder-location-map">
-                <g:set var="floorPlan" value="${gym.floorPlans.first()}"></g:set>
-
-                <tmpl:/shared/floorPlan floorPlan="${floorPlan}"/>
-                <input type="hidden" name="floorPlan.id" value="${floorPlan.id}"/>
+                <div class="map"></div>
             </div>
         </div>
-        <ul class="coordinates" style="display: none">
-        </ul>
+    </div>
+
+    <div class="row" ng-if="errors">
+        <div class="medium-12 column">
+            <ul class="error">
+                <li ng-repeat="error in errors">
+                    <small class="error">{{error}}</small>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="row">
@@ -109,7 +108,7 @@
             <g:submitButton name="submit" class="button" value="${message(code: 'default.button.set.label')}"/>
         </div>
     </div>
-</g:form>
+</form>
 
 </body>
 </html>

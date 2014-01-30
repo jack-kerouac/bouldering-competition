@@ -1,7 +1,7 @@
 <%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" ng-app="chalkUpApp">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -13,6 +13,13 @@
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
 
     <r:require module="application" />
+
+    <r:script disposition="head">
+    window.locale = {
+        country: '${RequestContextUtils.getLocale(request).country}',
+        language: '${RequestContextUtils.getLocale(request).language}'
+    };
+    </r:script>
 
     <g:layoutHead/>
     <r:layoutResources/>
@@ -100,10 +107,6 @@
 </div>
 
 <div class="footer" role="contentinfo"></div>
-
-<r:script>
-    var locale = '${RequestContextUtils.getLocale(request).toString().replace('_', '-')}';
-</r:script>
 
 <r:script>
     // Include the UserVoice JavaScript SDK (only needed once on a page)
