@@ -5,14 +5,16 @@ var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, Boulde
 	$scope.session = {};
 	$scope.session.date = moment().format('YYYY-MM-DD');
 	// TODO: get it differently, somehow
-	$scope.user = User.get({userId: parseInt($('input[name="boulderer.id"]').val())}, function (user) {
-		$scope.session.boulderer = user;
-	});
+	$scope.session.boulderer = User.get({userId: parseInt($('input[name="boulderer.id"]').val())});
 
-	$scope.gyms = Gym.query(function (gyms) {
-		$scope.session.gym = gyms[0];
-	});
+	$scope.gyms = Gym.query();
 
+	$scope.$watch('gyms', function (newValue, oldValue) {
+		if (newValue === oldValue)
+			return;
+
+		$scope.session.gym = $scope.gyms[0];
+	}, true);
 
 	$scope.boulderOrderProp = 'id';
 	$scope.$watch('session.gym', function (newValue, oldValue) {
@@ -57,7 +59,13 @@ var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, Boulde
 				return undefined;
 		}
 
-		$scope.boulders = Gym.boulders({gymId: gym.id}, function (boulders) {
+		$scope.boulders = Gym.boulders({gymId: gym.id});
+
+		$scope.$watch('boulders', function (newValue, oldValue) {
+			if (newValue === oldValue)
+				return;
+			var boulders = newValue;
+
 			var markers = [];
 			$.each(boulders, function (index, boulder) {
 				var marker = fp.mark(boulder);
@@ -71,13 +79,13 @@ var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, Boulde
 			for (var layerGroup in layerGroups) {
 				layerGroups[layerGroup].addTo(fp.map);
 			}
-		});
+		}, true);
 	});
 
 
 	$scope.logSession = function () {
 		BoulderingSession.save($scope.session, function () {
-				$window.location.href = '/boulderer/' + $scope.user.username + '/statistics';
+				$window.location.href = '/boulderer/' + $scope.session.boulderer.username + '/statistics';
 			},
 			function (httpResponse) {
 				$scope.errors = httpResponse.data.errors;
@@ -91,15 +99,22 @@ chalkUpControllers.controller('SessionCtrl', sessionCtrl);
 
 var boulderCtrl = function ($scope, $window, Gym, Grades, FloorPlan, Boulder) {
 
+	$scope.boulders = {};
+
 	function findColor(name) {
 		return _.find($scope.boulders.gym.colors, function (color) {
 			return color.name == name;
 		});
 	}
 
-	$scope.gyms = Gym.query(function (gyms) {
-		$scope.boulders.gym = gyms[0];
-	});
+	$scope.gyms = Gym.query();
+	$scope.$watch('gyms', function (newValue, oldValue) {
+		if (newValue === oldValue)
+			return;
+
+		$scope.boulders.gym = $scope.gyms[0];
+	}, true);
+
 
 	$scope.$watch('boulders.gym', function (newValue, oldValue) {
 		if (newValue === oldValue)
@@ -155,7 +170,6 @@ var boulderCtrl = function ($scope, $window, Gym, Grades, FloorPlan, Boulder) {
 	});
 
 
-	$scope.boulders = {};
 	$scope.boulders.gradeCertainty = 'UNKNOWN';
 
 	$scope.grades = Grades.query();
@@ -218,29 +232,41 @@ var statisticsCtrl = function ($scope, Grades, User) {
 	$scope.chart.data = [];
 
 	// TODO: get user ID differently, somehow
-	$scope.user = User.get({ userId: $('input[name="boulderer.id"]').val()}, function (user) {
+	$scope.user = User.get({ userId: $('input[name="boulderer.id"]').val()});
+
+	$scope.$watch('user', function (newValue, oldValue) {
+		if (newValue === oldValue)
+			return;
+		var user = newValue;
+
+		$scope.statistics = User.statistics({userId: user.id});
+	}, true);
+
+	$scope.$watch('statistics', function (newValue, oldValue) {
+		if (newValue === oldValue)
+			return;
+		var statistics = newValue;
+
 		var currentGradeData = [];
-		currentGradeData.push([moment(user.registrationDate).toDate(), user.initialGrade.value]);
+		currentGradeData.push([moment($scope.user.registrationDate).toDate(), $scope.user.initialGrade.value]);
 
 		var ascentCountData = [];
 
-		$scope.statistics = User.statistics({userId: user.id}, function (statistics) {
-			_.each(statistics, function (stat) {
-				var date = moment(stat.session.date).toDate();
-				var grade = stat.grade.mean.value;
-				currentGradeData.push([date, grade]);
-				var ascentCount = stat.session.ascents.length;
-				ascentCountData.push([date, ascentCount]);
-			});
-
-			// TODO: get labels differently
-			$scope.chart.data = [
-				{ data: currentGradeData, label: $('#sessions thead th.grade').text(), color: gradeColor, yaxis: 1 },
-				{ data: ascentCountData, label: $('#sessions thead th.ascent-count').text(), color: ascentCountColor, yaxis: 2 }
-			];
+		_.each(statistics, function (stat) {
+			var date = moment(stat.session.date).toDate();
+			var grade = stat.grade.mean.value;
+			currentGradeData.push([date, grade]);
+			var ascentCount = stat.session.ascents.length;
+			ascentCountData.push([date, ascentCount]);
 		});
-	});
 
+		// TODO: get labels differently
+		$scope.chart.data = [
+			{ data: currentGradeData, label: $('#sessions thead th.grade').text(), color: gradeColor, yaxis: 1 },
+			{ data: ascentCountData, label: $('#sessions thead th.ascent-count').text(), color: ascentCountColor, yaxis: 2 }
+		];
+
+	}, true)
 };
 statisticsCtrl.$inject = ['$scope', 'Grades', 'User'];
 chalkUpControllers.controller('StatisticsCtrl', statisticsCtrl);
