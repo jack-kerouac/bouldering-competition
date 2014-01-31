@@ -270,3 +270,14 @@ var statisticsCtrl = function ($scope, Grades, User) {
 };
 statisticsCtrl.$inject = ['$scope', 'Grades', 'User'];
 chalkUpControllers.controller('StatisticsCtrl', statisticsCtrl);
+
+
+
+var startCtrl = function ($scope, Gym) {
+
+	$scope.gyms = Gym.query();
+
+}
+startCtrl.$inject = ['$scope', 'Gym'];
+chalkUpControllers.controller('StartCtrl', startCtrl);
+

@@ -20,7 +20,7 @@ class BootStrap {
     def boulderService
 
     private void createBoulders() {
-        Gym gym = Gym.findByName('Boulderwelt')
+        Gym gym = Gym.findByName('Boulderwelt München')
         FloorPlan fp = gym.floorPlans.first()
 
         boulderService.setBoulder(gym, SampleData.createBoulder1(fp))
@@ -46,7 +46,7 @@ class BootStrap {
     }
 
     private void createGym() {
-        Gym gym = SampleData.createGym('Boulderwelt', grailsApplication);
+        Gym gym = SampleData.createGym('Boulderwelt München', grailsApplication);
 
         gym.save(flush: true)
     }

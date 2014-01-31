@@ -6,7 +6,6 @@ import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
 
-@Secured(['ROLE_BOULDERER'])
 class GymController extends RestfulController {
 
     static responseFormats = ['json']
@@ -34,4 +33,21 @@ class GymController extends RestfulController {
         response.outputStream << fp.getImageAsInputStream()
     }
 
+    @Override
+    @Secured(['ROLE_BOULDERER'])
+    def delete() {
+        return super.delete()
+    }
+
+    @Secured(['ROLE_BOULDERER'])
+    @Override
+    def update() {
+        return super.update()
+    }
+
+    @Secured(['ROLE_BOULDERER'])
+    @Override
+    def save() {
+        return super.save()
+    }
 }

@@ -8,13 +8,14 @@
 
 <body id="index-page">
 
-<div class="row intro">
+<div class="row intro" ng-controller="StartCtrl">
     <div>
         <div class="story">
             <div>
-                <h1>ChalkUp!</h1>
+                <h1><g:message code="bcomp.title"/></h1>
 
-                <p>ChalkUp! bietet dir die Möglichkeit, deinen persönlichen Fortschritt beim Bouldern in der Halle
+                <p><g:message
+                        code="bcomp.title"/> bietet dir die Möglichkeit, deinen persönlichen Fortschritt beim Bouldern in der Halle
                 zu verfolgen, zu visualisieren und mit anderen zu vergleichen.</p>
 
 
@@ -27,6 +28,11 @@
                         Schreib uns!
                     </a>
                 </p>
+
+                <p><g:message code="bcomp.title"/> ist bereits in folgenden Hallen verfügbar:</p>
+                <ul><li ng-repeat="gym in gyms">
+                    <span ng-bind="gym.name"></span>
+                </li></ul>
             </div>
         </div>
     </div>
@@ -52,7 +58,7 @@
         <div class="story">
             <h2>Deswegen</h2>
 
-            <p>Deswegen stellen wir dir mit ChalkUp! eine Website zur Seite...</p>
+            <p>Deswegen stellen wir dir mit <g:message code="bcomp.title"/> eine Website zur Seite...</p>
             <ul>
                 <li>die dir neue Boulder in deinen Lieblingshallen empfiehlt und dich ermutigt mehr zu
                 Bouldern.</li>
