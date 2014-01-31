@@ -1,5 +1,7 @@
-package bcomp
+package bcomp.api
 
+import bcomp.Ascent
+import bcomp.BoulderingSession
 import bcomp.aaa.User
 import bcomp.gym.Boulder
 import bcomp.gym.Gym
@@ -11,16 +13,10 @@ import org.springframework.http.HttpStatus
 @Secured(['ROLE_BOULDERER'])
 class BoulderingSessionController extends RestfulController {
 
-    static responseFormats = ['json', 'html']
+    static responseFormats = ['json']
 
     BoulderingSessionController() {
         super(BoulderingSession)
-    }
-
-    def create() {
-        def boulderer = getPrincipal()
-        def cmd = flash.cmd ?: new BoulderingSessionCommand()
-        [boulderer: boulderer, cmd: cmd]
     }
 
 
@@ -39,17 +35,9 @@ class BoulderingSessionController extends RestfulController {
 
             s.save()
 
-            request.withFormat {
-                html {
-                    flashHelper.confirm 'default.logged.message': [g.message(code: 'bcomp.boulderingSession.label'), s.date]
-                    redirect controller: 'boulderer', action: 'statistics', params: ['username': s.boulderer.username]
-                }
-                'json' {
-                    render(contentType: "application/json", status: HttpStatus.CREATED) { s }
-                }
-            }
+            render(contentType: "application/json", status: HttpStatus.CREATED) { s }
         } else {
-            respond cmd.errors, view: 'create'
+            respond cmd.errors, view: '/createSession'
         }
     }
 }

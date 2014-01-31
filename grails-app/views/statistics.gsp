@@ -2,20 +2,20 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>${boulderer.username}'s <g:message code="bcomp.statistics.label"/></title>
+    <title>${sec.loggedInUserInfo(field: 'username')}'s <g:message code="bcomp.statistics.label"/></title>
 </head>
 
 <body id="list-sessions-page">
 
 <div class="row">
     <div class="medium-12 columns">
-        <h1>${boulderer.username}'s <g:message code="bcomp.statistics.label"/></h1>
+        <h1>${sec.loggedInUserInfo(field: 'username')}'s <g:message code="bcomp.statistics.label"/></h1>
     </div>
 </div>
 
 <div ng-controller="StatisticsCtrl" class="row content">
     <div class="medium-12 column">
-        <input type="hidden" name="boulderer.id" value="${boulderer.id}"/>
+        <input type="hidden" name="boulderer.id" value="${sec.loggedInUserInfo(field: 'id')}"/>
 
         <p class="about-boulderer">
             <g:message code="bcomp.user.registration"/>: {{ user.registrationDate | amDateFormat: 'LLLL' }}<br/>

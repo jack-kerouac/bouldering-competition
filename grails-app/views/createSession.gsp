@@ -16,14 +16,14 @@
 </div>
 
 <form ng-controller="SessionCtrl" ng-submit="logSession()">
-    <input type="hidden" name="boulderer.id" value="${boulderer.id}"/>
+    <input type="hidden" name="boulderer.id" value="${sec.loggedInUserInfo(field: 'id')}"/>
 
     <div class="row">
         <div class="small-3 column">
             <label class="right inline"><g:message code="bcomp.date.label"/></label>
         </div>
 
-        <div class="small-9 column ${hasErrors(field: 'date', 'error')}">
+        <div class="small-9 column">
             <input type="date" ng-model="session.date">
         </div>
     </div>

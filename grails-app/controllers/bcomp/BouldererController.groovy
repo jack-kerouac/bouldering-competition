@@ -9,9 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 @Secured(['ROLE_BOULDERER'])
 class BouldererController {
 
-    def bouldererService
-
-
     def listAscents(String username) {
         def _gym = Gym.findByName('Boulderwelt')
         def boulderer_ = User.findByUsername(username)
@@ -37,16 +34,6 @@ class BouldererController {
         }
 
         render view: 'listAscents', model: [gym: _gym, boulderer: boulderer_, ascents: ascents]
-    }
-
-    def statistics(String username) {
-        def boulderer = User.findByUsername(username)
-        if (boulderer == null)
-            throw new UsernameNotFoundException("boulderer ${username} not found")
-
-        def stats = bouldererService.getSessionStatistics(boulderer)
-
-        render view: 'statistics', model: [boulderer: boulderer, stats: stats]
     }
 
 }

@@ -4,7 +4,7 @@
 <html class="no-js" lang="en" ng-app="chalkUpApp">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title><g:layoutTitle default="ChalkUp!"/> - <g:message code="bcomp.title"/></title>
@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
 
-    <r:require module="application" />
+    <r:require module="application"/>
 
     <r:script disposition="head">
     window.locale = {
@@ -30,7 +30,7 @@
     <nav class="top-bar fixed contain-to-grid" data-topbar>
         <ul class="title-area">
             <li class="name">
-                <h1><g:link controller="index"><g:message code="bcomp.title"/></g:link></h1>
+                <h1><a href="/"><g:message code="bcomp.title"/></a></h1>
             </li>
             <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>
@@ -40,12 +40,12 @@
             <ul class="left">
                 <sec:ifLoggedIn>
                     <li>
-                        <g:link controller='home' action='home'>
+                        <a href="/home">
                             <g:message code="default.home.label"/>
-                        </g:link>
+                        </a>
                     </li>
                 </sec:ifLoggedIn>
-                %{--<li><a href="#">Boulderwelt</a></li>--}%
+            %{--<li><a href="#">Boulderwelt</a></li>--}%
             </ul>
 
             <!-- Right Nav Section -->
@@ -56,13 +56,12 @@
                         <ul class="dropdown">
                             <li><g:link controller='boulderer' action='listAscents' params="[username:
                                     sec.loggedInUserInfo(field: 'username')]">
-                                    <g:message code="bcomp.ascents.label"/>
-                                </g:link></li>
-                            <li><g:link controller='boulderer' action='statistics' params="[username:
-                                    sec.loggedInUserInfo(field: 'username')]">
-                                <g:message code="bcomp.statistics.label"/>
+                                <g:message code="bcomp.ascents.label"/>
                             </g:link></li>
-                            <li><g:link controller='logout'><g:message code="default.button.logout.label"/></g:link></li>
+                            <li><a href="/statistics"><g:message code="bcomp.statistics.label"/></a>
+                            </li>
+                            <li><g:link plugin="spring-security-core" controller='logout'><g:message
+                                    code="default.button.logout.label"/></g:link></li>
                         </ul>
                     </li>
                 </sec:ifLoggedIn>
@@ -81,7 +80,7 @@
                             <input type='submit' id="submit" class="button"
                                    value='${message(code: "springSecurity.login.button")}'/>
                         </form>
-                    </li >
+                    </li>
                 </sec:ifNotLoggedIn>
             </ul>
         </section>
@@ -128,33 +127,33 @@
     // To enable, replace sample data with actual user traits and uncomment the line
     UserVoice.push(['identify', {
         <sec:ifLoggedIn>
-            name: '${sec.loggedInUserInfo(field: 'username')}',
+    name: '${sec.loggedInUserInfo(field: 'username')}',
             id: '${sec.loggedInUserInfo(field: 'id')}'
-        </sec:ifLoggedIn>
+</sec:ifLoggedIn>
 
-        //email:      'john.doe@example.com', // User’s email address
-        //name:       'John Doe', // User’s real name
-        //created_at: 1364406966, // Unix timestamp for the date the user signed up
-        //id:         123, // Optional: Unique id of the user (if set, this should not change)
-        //type:       'Owner', // Optional: segment your users by type
-        //account: {
-        //  id:           123, // Optional: associate multiple users with a single account
-        //  name:         'Acme, Co.', // Account name
-        //  created_at:   1364406966, // Unix timestamp for the date the account was created
-        //  monthly_rate: 9.99, // Decimal; monthly rate of the account
-        //  ltv:          1495.00, // Decimal; lifetime value of the account
-        //  plan:         'Enhanced' // Plan name for the account
-        //}
-    }]);
+    //email:      'john.doe@example.com', // User’s email address
+    //name:       'John Doe', // User’s real name
+    //created_at: 1364406966, // Unix timestamp for the date the user signed up
+    //id:         123, // Optional: Unique id of the user (if set, this should not change)
+    //type:       'Owner', // Optional: segment your users by type
+    //account: {
+    //  id:           123, // Optional: associate multiple users with a single account
+    //  name:         'Acme, Co.', // Account name
+    //  created_at:   1364406966, // Unix timestamp for the date the account was created
+    //  monthly_rate: 9.99, // Decimal; monthly rate of the account
+    //  ltv:          1495.00, // Decimal; lifetime value of the account
+    //  plan:         'Enhanced' // Plan name for the account
+    //}
+}]);
 
-    // Add default trigger to the bottom-right corner of the window:
-    UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-right' }]);
+// Add default trigger to the bottom-right corner of the window:
+UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-right' }]);
 
-    // Or, use your own custom trigger:
-    //UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
+// Or, use your own custom trigger:
+//UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
 
-    // Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
-    UserVoice.push(['autoprompt', {}]);
+// Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
+UserVoice.push(['autoprompt', {}]);
 </r:script>
 
 

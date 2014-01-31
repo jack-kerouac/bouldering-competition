@@ -1,5 +1,3 @@
-import bcomp.BoulderingSessionController
-
 class UrlMappings {
 
     static mappings = {
@@ -9,27 +7,40 @@ class UrlMappings {
             }
         }
 
+
+        // OLD
+
         "/leaderboard"(controller: 'leaderboard', action: 'view')
 
-
-        "/gyms/$gymId/floorPlans/$floorPlanId"(controller: 'floorPlan', action: 'image')
-
         "/boulderer/$username/ascents"(controller: 'boulderer', action: 'listAscents')
-        "/boulderer/$username/statistics"(controller: 'boulderer', action: 'statistics')
 
 
-        "/"(controller: 'index', action: 'index')
 
-        "/status"(view: "/index")
+        // TEMPLATES
+
+        "/"(view: '/index')
+        "/home"(view: '/home')
+        "/createBoulders"(view: '/createBoulders')
+        "/createSession"(view: '/createSession')
+
+        "/status"(view: '/grailsStatus')
+        "/statistics"(view: '/statistics')
+
+
+        "/logout"(plugin: 'spring-security-core', controller: 'logout', action: 'index')
+
         "500"(view: '/error')
 
 
+        // API
 
         "/grades"(resource: "grade")
 
         "/gyms"(resources: "gym") {
             "/boulders"(controller: 'gym', action: 'boulders')
         }
+        "/gyms/$gymId/floorPlans/$floorPlanId"(controller: 'gym', action: 'floorPlanImage')
+
         "/boulders"(resources: "boulder")
 
         "/users"(resources: "user") {

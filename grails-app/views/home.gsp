@@ -11,19 +11,19 @@
     <h1>Tasks</h1>
 
     <div class="medium-4 columns">
-        <g:link resource="boulder" action="create" class="button">
+        <a href="/createBoulders" class="button">
             <i class="fi-plus"></i>
             <g:message code="default.set.label" args="[message(code: 'bcomp.boulder.label')]"/>
-        </g:link>
+        </a>
     </div>
 
 
     <div class="medium-4 columns">
-        <g:link resource="boulderingSession" action="create" class="button">
+        <a href="/createSession" class="button">
 
             <i class="fi-pencil"></i>
             <g:message code="default.log.label" args="[message(code: 'bcomp.boulderingSession.label')]"/>
-        </g:link>
+        </a>
     </div>
 
     <div class="medium-4 columns">
@@ -44,7 +44,8 @@
 <footer>
     <div class="row">
         <div class="column medium-6">
-            <p><small><g:link controller="gradeLearning" action="showMeta">Grade Learning Algorithm</g:link></small></p>
+            <p><small><g:link controller="gradeLearning" action="showMeta">Grade Learning
+            Algorithm</g:link></small></p>
         </div>
 
         <div class="column medium-6">

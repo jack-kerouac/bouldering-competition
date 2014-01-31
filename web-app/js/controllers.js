@@ -85,7 +85,7 @@ var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, Boulde
 
 	$scope.logSession = function () {
 		BoulderingSession.save($scope.session, function () {
-				$window.location.href = '/boulderer/' + $scope.session.boulderer.username + '/statistics';
+				$window.location.href = '/statistics';
 			},
 			function (httpResponse) {
 				$scope.errors = httpResponse.data.errors;
