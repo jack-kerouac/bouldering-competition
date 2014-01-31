@@ -25,30 +25,33 @@ input[readonly] {
     margin: 20px;
 }
 
-#index-page #intro {
-    background:url(/images/bg/firstBG.jpg) 50% 0 no-repeat fixed;
+#index-page .intro > div:nth-child(1) {
+    background: url(/images/bg/firstBG.jpg) 50% 0 no-repeat fixed;
     color: white;
     height: 600px;
 }
-#index-page #intro .story {
+
+#index-page .intro > div:nth-child(1) .story {
     float: left;
 }
 
-#index-page #how-it-works {
+#index-page .intro > div:nth-child(2) {
     background: url(/images/bg/secondBG.jpg) 50% 0 no-repeat fixed;
     color: white;
     height: 600px;
 }
-#index-page #how-it-works .story {
+
+#index-page .intro > div:nth-child(2) .story {
     float: right;
 }
 
-#index-page #get-the-app {
+#index-page .intro > div:nth-child(3) {
     background: url(/images/bg/thirdBG.jpg) 50% 0 no-repeat fixed;
     color: white;
     height: 600px;
 }
-#index-page #get-the-app .story {
+
+#index-page .intro > div:nth-child(3) .story {
     float: left;
 }
 
@@ -79,7 +82,6 @@ div[flot-chart] {
     height: 30em;
     margin-bottom: 3em;
 }
-
 
 .boulder-location-map {
     position: relative;
