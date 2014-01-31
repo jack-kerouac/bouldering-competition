@@ -1,30 +1,29 @@
 var chalkUpServices = angular.module('chalkUpServices', ['ngResource']);
 
 // GYM SERVICE
-var gym = function ($resource) {
-	return $resource('/gyms/:gymId');
+var Gym = function ($resource) {
+	return $resource('/gyms/:gymId',
+		{
+			gymId: '@id'
+		},
+		{
+			boulders: { method: 'GET', url: '/gyms/:gymId/boulders', isArray: true }
+		});
 };
-gym.$inject = ['$resource'];
-chalkUpServices.factory('gym', gym);
+Gym.$inject = ['$resource'];
+chalkUpServices.factory('Gym', Gym);
+
 
 // BOULDER SERVICE
-var boulder = function ($resource) {
-	return $resource('/gyms/:gymId/boulders/:boulderId');
-};
-boulder.$inject = ['$resource'];
-chalkUpServices.factory('boulder', boulder);
-
-// TODO: differentiate this from gym boulder service!
-// BOULDER SERVICE
-var boulders = function ($resource) {
+var Boulder = function ($resource) {
 	return $resource('/boulders/:boulderId');
 };
-boulders.$inject = ['$resource'];
-chalkUpServices.factory('boulders', boulders);
+Boulder.$inject = ['$resource'];
+chalkUpServices.factory('Boulder', Boulder);
 
 
 // FLOOR PLAN SERVICE
-var floorPlan = function () {
+var FloorPlan = function () {
 	// TODO: I should probably not interact with the DOM here...
 	var init = function (floorPlan, $mapDiv) {
 		var factor = 1.35;
@@ -216,36 +215,35 @@ var floorPlan = function () {
 		init: init
 	};
 }
-floorPlan.$inject = [];
-chalkUpServices.factory('floorPlan', floorPlan);
+FloorPlan.$inject = [];
+chalkUpServices.factory('FloorPlan', FloorPlan);
 
 // USER SERVICE
-var user = function ($resource) {
-	return $resource('/users/:userId?format=json');
+var User = function ($resource) {
+	return $resource('/users/:userId?format=json',
+		{
+			userId: '@id'
+		},
+		{
+			statistics: { method: 'GET', url: '/users/:userId/statistics?format=json', isArray: true }
+		}
+	);
 };
-user.$inject = ['$resource'];
-chalkUpServices.factory('user', user);
-
-
-// STATISTICS SERVICE
-var statistics = function ($resource) {
-	return $resource('/users/:userId/statistics?format=json');
-};
-statistics.$inject = ['$resource'];
-chalkUpServices.factory('statistics', statistics);
+User.$inject = ['$resource'];
+chalkUpServices.factory('User', User);
 
 
 // BOULDERING SESSION SERVICE
-var boulderingSession = function ($resource) {
+var BoulderingSession = function ($resource) {
 	return $resource('/sessions/:sessionId?format=json');
 };
-boulderingSession.$inject = ['$resource'];
-chalkUpServices.factory('boulderingSession', boulderingSession);
+BoulderingSession.$inject = ['$resource'];
+chalkUpServices.factory('BoulderingSession', BoulderingSession);
 
 
 // GRADES SERVICE
-var grade = function ($resource) {
+var Grades = function ($resource) {
 	return $resource('/grades?format=json');
 };
-grade.$inject = ['$resource'];
-chalkUpServices.factory('grade', grade);
+Grades.$inject = ['$resource'];
+chalkUpServices.factory('Grades', Grades);

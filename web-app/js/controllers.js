@@ -1,15 +1,15 @@
 var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices']);
 
-var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, user, boulderingSession) {
+var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, BoulderingSession) {
 
 	$scope.session = {};
 	$scope.session.date = moment().format('YYYY-MM-DD');
 	// TODO: get it differently, somehow
-	$scope.user = user.get({userId: parseInt($('input[name="boulderer.id"]').val())}, function (user) {
+	$scope.user = User.get({userId: parseInt($('input[name="boulderer.id"]').val())}, function (user) {
 		$scope.session.boulderer = user;
 	});
 
-	$scope.gyms = gym.query(function (gyms) {
+	$scope.gyms = Gym.query(function (gyms) {
 		$scope.session.gym = gyms[0];
 	});
 
@@ -26,7 +26,7 @@ var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, use
 
 		if (gym.floorPlans.length > 1)
 			throw new Error("gym has more than one floor plan, make it selectable");
-		var fp = floorPlan.init(gym.floorPlans[0], $('div.map'));
+		var fp = FloorPlan.init(gym.floorPlans[0], $('div.map'));
 
 		function setAscentStyle(boulder, style) {
 			var ascent = _.find($scope.session.ascents, function (ascent) {
@@ -57,7 +57,7 @@ var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, use
 				return undefined;
 		}
 
-		$scope.boulders = boulder.query({gymId: gym.id}, function (boulders) {
+		$scope.boulders = Gym.boulders({gymId: gym.id}, function (boulders) {
 			var markers = [];
 			$.each(boulders, function (index, boulder) {
 				var marker = fp.mark(boulder);
@@ -76,7 +76,7 @@ var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, use
 
 
 	$scope.logSession = function () {
-		boulderingSession.save($scope.session, function () {
+		BoulderingSession.save($scope.session, function () {
 				$window.location.href = '/boulderer/' + $scope.user.username + '/statistics';
 			},
 			function (httpResponse) {
@@ -85,11 +85,11 @@ var sessionCtrl = function ($scope, $http, $window, gym, boulder, floorPlan, use
 	}
 
 };
-sessionCtrl.$inject = ['$scope', '$http', '$window', 'gym', 'boulder', 'floorPlan', 'user', 'boulderingSession'];
+sessionCtrl.$inject = ['$scope', '$http', '$window', 'Gym', 'FloorPlan', 'User', 'BoulderingSession'];
 chalkUpControllers.controller('SessionCtrl', sessionCtrl);
 
 
-var boulderCtrl = function ($scope, $window, gym, grade, floorPlan, boulders) {
+var boulderCtrl = function ($scope, $window, Gym, Grades, FloorPlan, Boulder) {
 
 	function findColor(name) {
 		return _.find($scope.boulders.gym.colors, function (color) {
@@ -97,12 +97,12 @@ var boulderCtrl = function ($scope, $window, gym, grade, floorPlan, boulders) {
 		});
 	}
 
-	$scope.gyms = gym.query(function (gyms) {
+	$scope.gyms = Gym.query(function (gyms) {
 		$scope.boulders.gym = gyms[0];
 	});
 
-	$scope.$watch('boulders.gym', function(newValue, oldValue) {
-		if(newValue === oldValue)
+	$scope.$watch('boulders.gym', function (newValue, oldValue) {
+		if (newValue === oldValue)
 			return;
 
 		var gym = newValue;
@@ -114,7 +114,7 @@ var boulderCtrl = function ($scope, $window, gym, grade, floorPlan, boulders) {
 		$scope.boulders.color = gym.colors[0].name;
 		$scope.boulders.coordinates = [];
 
-		var fp = floorPlan.init(gym.floorPlans[0], $('div.map'));
+		var fp = FloorPlan.init(gym.floorPlans[0], $('div.map'));
 		fp.cursor('crossHair');
 
 		$scope.markers = [];
@@ -158,16 +158,16 @@ var boulderCtrl = function ($scope, $window, gym, grade, floorPlan, boulders) {
 	$scope.boulders = {};
 	$scope.boulders.gradeCertainty = 'UNKNOWN';
 
-	$scope.grades = grade.query();
+	$scope.grades = Grades.query();
 
 	$scope.registerBoulders = function () {
-		if($scope.boulders.coordinates.length === 0) {
+		if ($scope.boulders.coordinates.length === 0) {
 			// TODO: proper error handling
 			$scope.errors = { message: "must at least set one boulder" };
 			return;
 		}
 
-		boulders.save($scope.boulders, function () {
+		Boulder.save($scope.boulders, function () {
 				$window.location.href = '/home';
 			},
 			function (httpResponse) {
@@ -175,11 +175,11 @@ var boulderCtrl = function ($scope, $window, gym, grade, floorPlan, boulders) {
 			});
 	}
 }
-boulderCtrl.$inject = ['$scope', '$window', 'gym', 'grade', 'floorPlan', 'boulders'];
+boulderCtrl.$inject = ['$scope', '$window', 'Gym', 'Grades', 'FloorPlan', 'Boulder'];
 chalkUpControllers.controller('BoulderCtrl', boulderCtrl);
 
 
-var statisticsCtrl = function ($scope, grade, user, statistics) {
+var statisticsCtrl = function ($scope, Grades, User) {
 	$scope.chart = {};
 
 	var gradeColor = 'rgb(203,75,75)';
@@ -208,7 +208,7 @@ var statisticsCtrl = function ($scope, grade, user, statistics) {
 		}
 	};
 
-	grade.query(function (grades) {
+	Grades.query(function (grades) {
 		var gradeTicks = _.map(grades, function (grade) {
 			return [grade.value, grade.font];
 		});
@@ -218,13 +218,13 @@ var statisticsCtrl = function ($scope, grade, user, statistics) {
 	$scope.chart.data = [];
 
 	// TODO: get user ID differently, somehow
-	$scope.user = user.get({ userId: $('input[name="boulderer.id"]').val()}, function (user) {
+	$scope.user = User.get({ userId: $('input[name="boulderer.id"]').val()}, function (user) {
 		var currentGradeData = [];
 		currentGradeData.push([moment(user.registrationDate).toDate(), user.initialGrade.value]);
 
 		var ascentCountData = [];
 
-		$scope.statistics = statistics.query({userId: user.id}, function (statistics) {
+		$scope.statistics = User.statistics({userId: user.id}, function (statistics) {
 			_.each(statistics, function (stat) {
 				var date = moment(stat.session.date).toDate();
 				var grade = stat.grade.mean.value;
@@ -242,5 +242,5 @@ var statisticsCtrl = function ($scope, grade, user, statistics) {
 	});
 
 };
-statisticsCtrl.$inject = ['$scope', 'grade', 'user', 'statistics'];
+statisticsCtrl.$inject = ['$scope', 'Grades', 'User'];
 chalkUpControllers.controller('StatisticsCtrl', statisticsCtrl);
