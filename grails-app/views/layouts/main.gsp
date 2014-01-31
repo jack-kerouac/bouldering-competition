@@ -54,12 +54,7 @@
                     <li class="has-dropdown">
                         <a href="#"><sec:loggedInUserInfo field="username"/></a>
                         <ul class="dropdown">
-                            <li><g:link controller='boulderer' action='listAscents' params="[username:
-                                    sec.loggedInUserInfo(field: 'username')]">
-                                <g:message code="bcomp.ascents.label"/>
-                            </g:link></li>
-                            <li><a href="/statistics"><g:message code="bcomp.statistics.label"/></a>
-                            </li>
+                            <li><a href="/statistics"><g:message code="bcomp.statistics.label"/></a></li>
                             <li><g:link plugin="spring-security-core" controller='logout'><g:message
                                     code="default.button.logout.label"/></g:link></li>
                         </ul>
