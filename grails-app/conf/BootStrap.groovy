@@ -11,6 +11,8 @@ class BootStrap {
 
     def grailsApplication
 
+    def grailsLinkGenerator
+
     def messageSource
 
     def bouldererService
@@ -106,8 +108,8 @@ class BootStrap {
             map['img'] = [:]
             map['img']['widthInPx'] = floorPlan.widthInPx
             map['img']['heightInPx'] = floorPlan.heightInPx
-            // TODO: how to externalize this?
-            map['img']['url'] = "/gyms/$floorPlan.gym.id/floorPlans/$floorPlan.id"
+            map['img']['url'] = grailsLinkGenerator.link(['controller': 'gym', 'action': 'floorPlanImage',
+                    'params': ['gymId': floorPlan.gym.id, 'floorPlanId': floorPlan.id]])
             return map
         }
 
