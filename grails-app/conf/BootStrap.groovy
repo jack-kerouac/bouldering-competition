@@ -44,8 +44,8 @@ class BootStrap {
     }
 
     private void createGyms() {
-        SampleData.createBoulderwelt(grailsApplication).save(true);
-        SampleData.createHeavensGate(grailsApplication).save(true);
+        SampleData.createBoulderwelt(grailsApplication).save(flush: true);
+        SampleData.createHeavensGate(grailsApplication).save(flush: true);
     }
 
     private void createBoulderer(String username, Grade initialGrade) {

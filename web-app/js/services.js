@@ -62,7 +62,6 @@ var FloorPlan = function () {
 		map.fitBounds(imageBounds);
 
 		L.imageOverlay(src, imageBounds, {
-			attribution: 'Boulderwelt',
 			minZoom: map.getZoom()
 		}).addTo(map);
 
@@ -177,7 +176,7 @@ var FloorPlan = function () {
 		};
 
 
-		function layerControlByColor(markers) {
+		function groupByColor(markers) {
 			var layerGroups = {};
 
 			$.each(markers, function (index, marker) {
@@ -187,16 +186,17 @@ var FloorPlan = function () {
 					layerGroups[colorName] = L.layerGroup();
 				}
 				layerGroups[ colorName].addLayer(marker);
-				markers.push(marker);
 			});
-
-			L.control.layers({}, layerGroups).addTo(map);
 
 			return layerGroups;
 		}
 
 		function cursor(cursor) {
 			$mapDiv.css({cursor: cursor});
+		}
+
+		function destroy() {
+			map.remove();
 		}
 
 		return {
@@ -206,8 +206,9 @@ var FloorPlan = function () {
 			addMarker: addMarker,
 			mark: mark,
 			markerAscentPopup: markerAscentPopup,
-			layerControlByColor: layerControlByColor,
-			cursor: cursor
+			groupByColor: groupByColor,
+			cursor: cursor,
+			destroy: destroy
 		};
 	};
 

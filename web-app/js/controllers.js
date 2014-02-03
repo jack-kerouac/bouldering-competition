@@ -26,62 +26,62 @@ var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, Boulde
 		// we cannot use an object which would be much easier, but Grails databinding requires a stupid set
 		$scope.session.ascents = [];
 
+
+		if($scope.floorPlan)
+			$scope.floorPlan.destroy();
 		if (gym.floorPlans.length > 1)
 			throw new Error("gym has more than one floor plan, make it selectable");
-		var fp = FloorPlan.init(gym.floorPlans[0], $('div.map'));
+		$scope.floorPlan = FloorPlan.init(gym.floorPlans[0], $('div.map'));
 
-		function setAscentStyle(boulder, style) {
-			var ascent = _.find($scope.session.ascents, function (ascent) {
-				return ascent.boulder === boulder
-			});
-			if (ascent && style === "none") {
-				var index = $scope.session.ascents.indexOf(ascent);
-				$scope.session.ascents.splice(index, 1);
+		$scope.boulders = Gym.boulders({gymId: gym.id}, function(boulders) {
+			function setAscentStyle(boulder, style) {
+				var ascent = _.find($scope.session.ascents, function (ascent) {
+					return ascent.boulder === boulder
+				});
+				if (ascent && style === "none") {
+					var index = $scope.session.ascents.indexOf(ascent);
+					$scope.session.ascents.splice(index, 1);
+				}
+				else if (ascent) {
+					ascent.style = style;
+				}
+				else {
+					ascent = {boulder: boulder, style: style};
+					$scope.session.ascents.push(ascent);
+				}
+
+				$scope.$apply();
 			}
-			else if (ascent) {
-				ascent.style = style;
+
+			function getAscentStyle(boulder) {
+				var ascent = _.find($scope.session.ascents, function (ascent) {
+					return ascent.boulder === boulder
+				});
+				if (ascent)
+					return ascent.style;
+				else
+					return undefined;
 			}
-			else {
-				ascent = {boulder: boulder, style: style};
-				$scope.session.ascents.push(ascent);
-			}
 
-			$scope.$apply();
-		}
 
-		function getAscentStyle(boulder) {
-			var ascent = _.find($scope.session.ascents, function (ascent) {
-				return ascent.boulder === boulder
-			});
-			if (ascent)
-				return ascent.style;
-			else
-				return undefined;
-		}
-
-		$scope.boulders = Gym.boulders({gymId: gym.id});
-
-		$scope.$watch('boulders', function (newValue, oldValue) {
-			if (newValue === oldValue)
-				return;
-			var boulders = newValue;
-
-			var markers = [];
+			$scope.markers = [];
 			$.each(boulders, function (index, boulder) {
-				var marker = fp.mark(boulder);
-				fp.markerAscentPopup(marker, boulder, getAscentStyle, setAscentStyle);
-				markers.push(marker);
+				var marker = $scope.floorPlan.mark(boulder);
+				$scope.floorPlan.markerAscentPopup(marker, boulder, getAscentStyle, setAscentStyle);
+				$scope.markers.push(marker);
 			});
 
 
-			var layerGroups = fp.layerControlByColor(markers);
+			$scope.layerGroups = $scope.floorPlan.groupByColor($scope.markers);
 			// show all layers
-			for (var layerGroup in layerGroups) {
-				layerGroups[layerGroup].addTo(fp.map);
+			for (var layerGroup in $scope.layerGroups) {
+				$scope.layerGroups[layerGroup].addTo($scope.floorPlan.map);
 			}
-		}, true);
+			// add control
+			$scope.layerControl = L.control.layers({}, $scope.layerGroups);
+			$scope.layerControl.addTo($scope.floorPlan.map);
+		});
 	});
-
 
 	$scope.logSession = function () {
 		BoulderingSession.save($scope.session, function () {
@@ -129,31 +129,34 @@ var boulderCtrl = function ($scope, $window, Gym, Grades, FloorPlan, Boulder) {
 		$scope.boulders.color = gym.colors[0].name;
 		$scope.boulders.coordinates = [];
 
-		var fp = FloorPlan.init(gym.floorPlans[0], $('div.map'));
-		fp.cursor('crossHair');
+		if($scope.floorPlan)
+			$scope.floorPlan.destroy();
+
+		$scope.floorPlan = FloorPlan.init(gym.floorPlans[0], $('div.map'));
+		$scope.floorPlan.cursor('crossHair');
 
 		$scope.markers = [];
 
-		fp.map.on('click', function (e) {
+		$scope.floorPlan.map.on('click', function (e) {
 			var markerNumber = $scope.markers.length;
 
-			var marker = fp.addMarker(e, {draggable: true});
+			var marker = $scope.floorPlan.addMarker(e, {draggable: true});
 			var color = findColor($scope.boulders.color);
 			marker.setColor(color);
 
 			$scope.markers.push(marker);
 			var p = marker.getPoint();
 			$scope.boulders.coordinates.push({
-				x: p.x / fp.width,
-				y: p.y / fp.height
+				x: p.x / $scope.floorPlan.width,
+				y: p.y / $scope.floorPlan.height
 			});
 
 			marker.on('dragend', function (e) {
 				var marker = e.target;
 				var p = marker.getPoint();
 				$scope.boulders.coordinates[markerNumber] = {
-					x: p.x / fp.width,
-					y: p.y / fp.height
+					x: p.x / $scope.floorPlan.width,
+					y: p.y / $scope.floorPlan.height
 				};
 			});
 		});

@@ -18,9 +18,9 @@ class SampleData {
         Gym gym = new Gym("Heavens Gate")
 
         def linkGenerator = grailsApplication.mainContext.getBean("grailsLinkGenerator")
-        def imageUrl = linkGenerator.resource(dir: 'images', file: 'floorPlans/boulderwelt-muenchen.jpg')
+        def imageUrl = linkGenerator.resource(dir: 'images', file: 'floorPlans/heavens-gate.png')
 
-        FloorPlan fp = new FloorPlan(widthInPx: 2000, heightInPx: 1393, imageUrl: imageUrl)
+        FloorPlan fp = new FloorPlan(widthInPx: 1304, heightInPx: 1393, imageUrl: imageUrl)
         gym.addToFloorPlans(fp)
     }
 
