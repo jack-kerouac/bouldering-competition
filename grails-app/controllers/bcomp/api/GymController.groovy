@@ -22,17 +22,6 @@ class GymController extends RestfulController {
         respond boulders
     }
 
-    def floorPlanImage(Long gymId, Long floorPlanId) {
-        cache shared: true, validFor: 3600  // 1hr on content
-
-        Gym gym = Gym.findById(gymId)
-        assert gym.floorPlans.any { it.id == floorPlanId}
-        FloorPlan fp = FloorPlan.findById(floorPlanId)
-
-        response.setContentType("image/png")
-        response.outputStream << fp.getImageAsInputStream()
-    }
-
     @Override
     @Secured(['ROLE_BOULDERER'])
     def delete() {

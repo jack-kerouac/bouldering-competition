@@ -23,7 +23,7 @@ class LeaderboardServiceTest extends GroovyTestCase {
 
 
     void createFixture() {
-        hg = SampleData.createGym("ABC", grailsApplication)
+        hg = SampleData.createBoulderwelt(grailsApplication)
         FloorPlan fp = hg.floorPlans.first()
         hg.save()
 

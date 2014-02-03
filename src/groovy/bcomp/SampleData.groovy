@@ -2,16 +2,25 @@ package bcomp
 
 import bcomp.gym.*
 
-import javax.imageio.ImageIO
-
 class SampleData {
 
-    public static Gym createGym(String name, def grailsApplication) {
-        Gym gym = new Gym(name)
+    public static Gym createBoulderwelt(def grailsApplication) {
+        Gym gym = new Gym("Boulderwelt München")
 
-        def filePath = 'resources/halle_big.jpg'
-        def imageFile = grailsApplication.getParentContext().getResource("classpath:$filePath").getFile()
-        FloorPlan fp = new FloorPlan(ImageIO.read(imageFile))
+        def linkGenerator = grailsApplication.mainContext.getBean("grailsLinkGenerator")
+        def imageUrl = linkGenerator.resource(dir: 'images', file: 'floorPlans/boulderwelt-muenchen.jpg')
+
+        FloorPlan fp = new FloorPlan(widthInPx: 2000, heightInPx: 1393, imageUrl: imageUrl)
+        gym.addToFloorPlans(fp)
+    }
+
+    public static Gym createHeavensGate(def grailsApplication) {
+        Gym gym = new Gym("Heavens Gate")
+
+        def linkGenerator = grailsApplication.mainContext.getBean("grailsLinkGenerator")
+        def imageUrl = linkGenerator.resource(dir: 'images', file: 'floorPlans/boulderwelt-muenchen.jpg')
+
+        FloorPlan fp = new FloorPlan(widthInPx: 2000, heightInPx: 1393, imageUrl: imageUrl)
         gym.addToFloorPlans(fp)
     }
 

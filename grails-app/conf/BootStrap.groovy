@@ -11,8 +11,6 @@ class BootStrap {
 
     def grailsApplication
 
-    def grailsLinkGenerator
-
     def messageSource
 
     def bouldererService
@@ -45,10 +43,9 @@ class BootStrap {
         gym.save(flush: true)
     }
 
-    private void createGym() {
-        Gym gym = SampleData.createGym('Boulderwelt München', grailsApplication);
-
-        gym.save(flush: true)
+    private void createGyms() {
+        SampleData.createBoulderwelt(grailsApplication).save(true);
+        SampleData.createHeavensGate(grailsApplication).save(true);
     }
 
     private void createBoulderer(String username, Grade initialGrade) {
@@ -108,8 +105,7 @@ class BootStrap {
             map['img'] = [:]
             map['img']['widthInPx'] = floorPlan.widthInPx
             map['img']['heightInPx'] = floorPlan.heightInPx
-            map['img']['url'] = grailsLinkGenerator.link(['controller': 'gym', 'action': 'floorPlanImage',
-                    'params': ['gymId': floorPlan.gym.id, 'floorPlanId': floorPlan.id]])
+            map['img']['url'] = floorPlan.imageUrl
             return map
         }
 
@@ -197,7 +193,7 @@ class BootStrap {
             }
             development {
                 createSecurityData()
-                createGym()
+                createGyms()
                 createBoulders()
             }
             test {
