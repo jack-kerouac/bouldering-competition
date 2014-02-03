@@ -21,6 +21,12 @@ class BoulderController extends RestfulController {
         if (!cmd.hasErrors()) {
             List<Boulder> boulders = [] as List;
 
+            // DO NOT UPDATE ASSOCIATIONS
+            // TODO: how to prevent that gym attributes are changed when creating a boulder. The following does not
+            // work: org.hibernate.HibernateException: reassociated object has dirty collection
+            //cmd.gym.discard()
+            cmd.floorPlan.discard()
+
             cmd.coordinates.each { coordinates ->
                 Boulder b = new Boulder()
                 b.gym = cmd.gym

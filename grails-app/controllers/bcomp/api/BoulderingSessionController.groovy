@@ -22,12 +22,18 @@ class BoulderingSessionController extends RestfulController {
 
     def save(BoulderingSessionCommand cmd) {
         if (!cmd.hasErrors()) {
+            // DO NOT UPDATE ASSOCIATIONS
+            cmd.boulderer.discard()
+            cmd.gym.discard()
+
             BoulderingSession s = new BoulderingSession()
             s.date = cmd.date
             s.boulderer = cmd.boulderer
             s.gym = cmd.gym
 
             for (AscentCommand aCmd : cmd.ascents) {
+                aCmd.boulder.discard()
+
                 aCmd.validate()
                 Ascent a = new Ascent(boulder: aCmd.boulder, style: aCmd.style)
                 s.addToAscents(a)
