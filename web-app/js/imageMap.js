@@ -1,19 +1,12 @@
-var floorPlanModule = angular.module('floorPlan', ['leaflet-directive']);
+var imageMapModule = angular.module('imageMap', ['leaflet-directive']);
 
-var floorPlanDirective = function () {
+var imageMapDirective = function () {
 
-	var icon = {
-		type: 'div',
-		iconSize: undefined,     // set in CSS
-		//popupAnchor:  [0, 0],
-		className: 'boulder-marker',
-		html: '&#xf172;'
-	};
-
-	function createMarkerForBoulder(boulder, latlng) {
+	function createMarker(imageMarker, pointToLatLng) {
 		var marker = {};
-		marker.name = boulder.id;
-		marker.icon = icon;
+		marker.name = imageMarker.name;
+		marker.icon = imageMarker.icon;
+		var latlng = pointToLatLng([imageMarker.x, imageMarker.y]);
 		marker.lat = latlng.lat;
 		marker.lng = latlng.lng;
 		return marker;
@@ -21,12 +14,13 @@ var floorPlanDirective = function () {
 
 	return {
 		restrict: 'E',
-		template: '<leaflet center="center" defaults="defaults" height="600" markers="markers"></leaflet>',
-		priority: 20,
+		template: '<leaflet center="center" defaults="defaults" height="{{height}}" markers="markers"></leaflet>',
 		scope: {
-			floorPlan: '=plan',
-			clickHandler: '&click',
-			boulders: '='
+			image: '=',
+			mapClickHandler: '&mapClick',
+			markerClickHandler: '&markerClick',
+			imageMarkers: '=imageMarkers',
+			height: '='
 		},
 		controller: ['$scope', '$element', '$attrs', '$q', 'leafletData', function ($scope, $element, $attrs, $q, leafletData) {
 			// +++++++++
@@ -41,11 +35,11 @@ var floorPlanDirective = function () {
 				lng: 0,
 				zoom: 0
 			};
+
 			// this is required for the leaflet directive to display markers at all
 			$scope.markers = {};
 
 			var calcDefer = $q.defer();
-
 			$scope.mapCalc = calcDefer.promise;
 
 			leafletData.getMap().then(function (map) {
@@ -58,20 +52,20 @@ var floorPlanDirective = function () {
 				var containerHeight = map.getSize().y;
 				var containerAspectRatio = containerHeight / containerWidth;
 
-				var floorPlanWidth = $scope.floorPlan.img.widthInPx;
-				var floorPlanHeight = $scope.floorPlan.img.heightInPx;
-				var floorPlanAspectRatio = floorPlanHeight / floorPlanWidth;
+				var imageWidth = $scope.image.widthInPx;
+				var imageHeight = $scope.image.heightInPx;
+				var imageAspectRatio = imageHeight / imageWidth;
 
-				if (containerAspectRatio >= floorPlanAspectRatio) {
-					// floor plan is wider, => fit to containerWidth
+				if (containerAspectRatio >= imageAspectRatio) {
+					// image plan is wider, => fit to containerWidth
 					var resultingWidth = containerWidth;
-					var resultingHeight = floorPlanHeight * containerWidth / floorPlanWidth;
+					var resultingHeight = imageHeight * containerWidth / imageWidth;
 					var xOffset = 0;
 					var yOffset = (containerHeight - resultingHeight) / 2;
 				}
 				else {
-					// floor plan is higher, => fit to containerHeight
-					var resultingWidth = floorPlanWidth * containerHeight / floorPlanHeight;
+					// image plan is higher, => fit to containerHeight
+					var resultingWidth = imageWidth * containerHeight / imageHeight;
 					var resultingHeight = containerHeight;
 					var xOffset = (containerWidth - resultingWidth) / 2;
 					var yOffset = 0;
@@ -83,19 +77,19 @@ var floorPlanDirective = function () {
 
 				var bounds = L.latLngBounds(southWestCorner, northEastCorner);
 
-				L.imageOverlay($scope.floorPlan.img.url, bounds, {
+				L.imageOverlay($scope.image.url, bounds, {
 						noWrap: true
 					}
 				).addTo(map);
 				map.setMaxBounds(bounds);
 
 
-				var scaleFactor = floorPlanWidth / resultingWidth;
+				var scaleFactor = imageWidth / resultingWidth;
 				calcDefer.resolve({
-					latLngToFloorPlanAbs: function (latLng) {
+					latLngToImagePoint: function (latLng) {
 						return map.project(L.latLng(latLng), 0).add([resultingWidth / 2, resultingHeight / 2]).multiplyBy(scaleFactor);
 					},
-					floorPlanAbsToLatLng: function (point) {
+					imagePointToLatLng: function (point) {
 						return map.unproject(L.point(point).divideBy(scaleFactor).subtract([resultingWidth / 2, resultingHeight / 2]));
 					}
 				});
@@ -107,25 +101,22 @@ var floorPlanDirective = function () {
 			// +++++++++++++
 			$scope.$on('leafletDirectiveMap.click', function (event, attr) {
 				$scope.mapCalc.then(function (mapCalc) {
-					var point = mapCalc.latLngToFloorPlanAbs(attr.leafletEvent.latlng);
-					$scope.clickHandler({point: point});
+					var point = mapCalc.latLngToImagePoint(attr.leafletEvent.latlng);
+					$scope.mapClickHandler({point: point});
 				});
 			});
 
 
-			// ++++++++
-			// BOULDERS
-			// ++++++++
-			$scope.$watch('boulders', function (boulders) {
-				if (boulders === undefined)
+			// +++++++
+			// MARKERS
+			// +++++++
+			$scope.$watch('imageMarkers', function (imageMarkers) {
+				if (imageMarkers === undefined)
 					return;
 
 				$scope.mapCalc.then(function (mapCalc) {
-					var markersArray = _.map(boulders, function (boulder) {
-						var latlng = mapCalc.floorPlanAbsToLatLng([
-							boulder.location.x * $scope.floorPlan.img.widthInPx,
-							boulder.location.y * $scope.floorPlan.img.heightInPx]);
-						return createMarkerForBoulder(boulder, latlng);
+					var markersArray = _.map(imageMarkers, function (imageMarker) {
+						return createMarker(imageMarker, mapCalc.imagePointToLatLng);
 					});
 					$scope.markers = _.indexBy(markersArray, 'name');
 				});
@@ -134,4 +125,4 @@ var floorPlanDirective = function () {
 		}]
 	};
 };
-floorPlanModule.directive('floorPlan', floorPlanDirective);
+imageMapModule.directive('imageMap', imageMapDirective);

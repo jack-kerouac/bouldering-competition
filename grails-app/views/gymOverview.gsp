@@ -8,7 +8,7 @@
 
 <div ng-controller="GymOverviewCtrl" class="row content">
     <div class="medium-8 column">
-        <floor-plan plan="fp" click="c(point)" boulders="bs"></floor-plan>
+        <image-map image="fp.img" map-click="c(point)" image-markers="ms" height="floorPlanHeight"></image-map>
     </div>
     <div class="medium-4 column">
         <p>test</p>

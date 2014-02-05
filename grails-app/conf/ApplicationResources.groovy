@@ -42,7 +42,7 @@ modules = {
         resource url: 'js/services.js'
         resource url: 'js/controllers.js'
         resource url: 'js/directives.js'
-        resource url: 'js/floorPlan.js'
+        resource url: 'js/imageMap.js'
 
         resource url: 'css/application.css'
     }

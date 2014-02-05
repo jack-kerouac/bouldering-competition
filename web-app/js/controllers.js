@@ -1,4 +1,4 @@
-var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices', 'floorPlan']);
+var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices', 'imageMap']);
 
 var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, BoulderingSession) {
 
@@ -294,7 +294,7 @@ var gymOverviewCtrl = function ($scope) {
 		}
 	};
 
-	$scope.c = function(point) {
+	$scope.c = function (point) {
 		console.log(point);
 	}
 
@@ -388,6 +388,29 @@ var gymOverviewCtrl = function ($scope) {
 			"gym": 1
 		}
 	];
+
+
+	var icon = {
+		type: 'div',
+		iconSize: undefined,     // set in CSS
+		//popupAnchor:  [0, 0],
+		className: 'boulder-marker',
+		html: '&#xf172;'
+	};
+
+
+	$scope.ms = _.map($scope.bs, function (boulder) {
+		return {
+			name: boulder.id,
+			color: boulder.color,
+			icon: icon,
+			x: boulder.location.x * boulder.location.floorPlan.img.widthInPx,
+			y: boulder.location.y * boulder.location.floorPlan.img.heightInPx
+		}
+	});
+
+
+	$scope.floorPlanHeight = 600;
 };
 gymOverviewCtrl.$inject = ['$scope'];
 chalkUpControllers.controller('GymOverviewCtrl', gymOverviewCtrl);
