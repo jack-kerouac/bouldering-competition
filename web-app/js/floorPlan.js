@@ -7,10 +7,13 @@ var floorPlanDirective = function () {
 		priority: 20,
 		scope: {
 			floorPlan: '=plan',
-			click: '&',
+			clickHandler: '&click',
 			boulders: '='
 		},
 		controller: ['$scope', '$element', '$attrs', '$q', 'leafletData', function ($scope, $element, $attrs, $q, leafletData) {
+			// +++++++++
+			// SETUP MAP
+			// +++++++++
 			$scope.defaults = {
 				crs: 'Simple',
 				maxZoom: 3
@@ -24,7 +27,8 @@ var floorPlanDirective = function () {
 			$scope.markers = {};
 
 			var calcDefer = $q.defer();
-			$scope.calc = calcDefer.promise;
+
+			$scope.mapCalc = calcDefer.promise;
 
 			leafletData.getMap().then(function (map) {
 				L.control.fullscreen({
@@ -79,50 +83,44 @@ var floorPlanDirective = function () {
 				});
 			});
 
+
+			// +++++++++++++
+			// CLICK HANDLER
+			// +++++++++++++
 			$scope.$on('leafletDirectiveMap.click', function (event, attr) {
-				var point = $scope.latLngToFloorPlanAbs(attr.leafletEvent.latlng);
-				$scope.click({point: point});
+				$scope.mapCalc.then(function (mapCalc) {
+					var point = mapCalc.latLngToFloorPlanAbs(attr.leafletEvent.latlng);
+					$scope.clickHandler({point: point});
+				});
 			});
 
-			this.getScope = function() {
-				return $scope;
-			};
-		}]
-	};
-};
-floorPlanModule.directive('floorPlan', floorPlanDirective);
 
-
-var boulders = function () {
-	return {
-		restrict: 'A',
-		require: 'floorPlan',
-		priority: 10,
-		scope: false,
-		link: function($scope, element, attrs, floorPlanCtrl) {
-			var floorPlanScope = floorPlanCtrl.getScope();
-
-			// TODO: move this out of this watch (make it similar to leaflet.getMap(), using promises...?)
+			// ++++++++
+			// BOULDERS
+			// ++++++++
 			$scope.$watch('boulders', function (boulders) {
 				if (boulders === undefined)
 					return;
 
-				floorPlanScope.calc.then(function(calc) {
+				$scope.mapCalc.then(function (mapCalc) {
 					var markersArray = _.map(boulders, function (boulder) {
 						var marker = {};
-						var latlng = calc.floorPlanAbsToLatLng([boulder.location.x * $scope.floorPlan.img.widthInPx, boulder.location.y * $scope.floorPlan.img.heightInPx]);
+						var latlng = mapCalc.floorPlanAbsToLatLng([
+							boulder.location.x * $scope.floorPlan.img.widthInPx,
+							boulder.location.y * $scope.floorPlan.img.heightInPx]);
 						marker.name = boulder.id;
 						marker.lat = latlng.lat;
 						marker.lng = latlng.lng;
 						return marker;
 					});
-					floorPlanScope.markers = _.indexBy(markersArray, 'name');
+					$scope.markers = _.indexBy(markersArray, 'name');
 				});
 			}, true);
 
-			$scope.where = "boulders attribute";
 
-		}
+			
+
+		}]
 	};
 };
-floorPlanModule.directive('boulders', boulders);
+floorPlanModule.directive('floorPlan', floorPlanDirective);
