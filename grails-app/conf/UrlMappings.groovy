@@ -19,6 +19,7 @@ class UrlMappings {
         "/home"(view: '/home')
         "/createBoulders"(view: '/createBoulders')
         "/createSession"(view: '/createSession')
+        "/gymOverview"(view: '/gymOverview')
 
         "/status"(view: '/grailsStatus')
         "/statistics"(view: '/statistics')

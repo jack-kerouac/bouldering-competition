@@ -1,4 +1,4 @@
-var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices']);
+var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices', 'floorPlan']);
 
 var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, BoulderingSession) {
 
@@ -284,3 +284,111 @@ var startCtrl = function ($scope, Gym) {
 startCtrl.$inject = ['$scope', 'Gym'];
 chalkUpControllers.controller('StartCtrl', startCtrl);
 
+
+var gymOverviewCtrl = function ($scope) {
+	$scope.floorPlan = {
+		"id": 1,
+		"img": {
+			"widthInPx": 2000,
+			"heightInPx": 1393,
+			"url": "http://localhost:8080/images/floorPlans/boulderwelt-muenchen.jpg"
+		}
+	};
+
+	$scope.click = function(point) {
+		console.log(point);
+	}
+
+	$scope.boulders = [
+		{
+			"id": 1,
+			"color": {
+				"name": "RED",
+				"germanName": "rot",
+				"englishName": "red",
+				"primary": "rgb(217, 0, 0)"
+			},
+			"grade": {
+				"mean": {
+					"value": 0.4242424242,
+					"font": "5C"
+				},
+				"variance": 0.07134709913526724,
+				"sigma": 0.2671087777203648
+			},
+			"description": null,
+			"end": null,
+			"initialGrade": {
+				"certainty": "RANGE",
+				"readable": "1A – 8A",
+				"gradeLow": {
+					"value": 0.01515151515,
+					"font": "1A"
+				},
+				"gradeHigh": {
+					"value": 0.83333333325,
+					"font": "8A"
+				}
+			},
+			"location": {
+				"floorPlan": {
+					"id": 1,
+					"img": {
+						"widthInPx": 2000,
+						"heightInPx": 1393,
+						"url": "http://localhost:8080/images/floorPlans/boulderwelt-muenchen.jpg"
+					}
+				},
+				"x": 0.267,
+				"y": 0.2139267767
+			},
+			"gym": 1
+		},
+		{
+			"id": 2,
+			"color": {
+				"name": "RED",
+				"germanName": "rot",
+				"englishName": "red",
+				"primary": "rgb(217, 0, 0)"
+			},
+			"grade": {
+				"mean": {
+					"value": 0.4242424242,
+					"font": "5C"
+				},
+				"variance": 0.07134709913526724,
+				"sigma": 0.2671087777203648
+			},
+			"description": null,
+			"end": null,
+			"initialGrade": {
+				"certainty": "RANGE",
+				"readable": "1A – 8A",
+				"gradeLow": {
+					"value": 0.01515151515,
+					"font": "1A"
+				},
+				"gradeHigh": {
+					"value": 0.83333333325,
+					"font": "8A"
+				}
+			},
+			"location": {
+				"floorPlan": {
+					"id": 1,
+					"img": {
+						"widthInPx": 2000,
+						"heightInPx": 1393,
+						"url": "http://localhost:8080/images/floorPlans/boulderwelt-muenchen.jpg"
+					}
+				},
+				"x": 0.3715,
+				"y": 0.2462311558
+			},
+			"gym": 1
+		}
+	];
+};
+gymOverviewCtrl.$inject = ['$scope'];
+chalkUpControllers.controller('GymOverviewCtrl', gymOverviewCtrl);
