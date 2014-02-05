@@ -1,6 +1,24 @@
 var floorPlanModule = angular.module('floorPlan', ['leaflet-directive']);
 
 var floorPlanDirective = function () {
+
+	var icon = {
+		type: 'div',
+		iconSize: undefined,     // set in CSS
+		//popupAnchor:  [0, 0],
+		className: 'boulder-marker',
+		html: '&#xf172;'
+	};
+
+	function createMarkerForBoulder(boulder, latlng) {
+		var marker = {};
+		marker.name = boulder.id;
+		marker.icon = icon;
+		marker.lat = latlng.lat;
+		marker.lng = latlng.lng;
+		return marker;
+	}
+
 	return {
 		restrict: 'E',
 		template: '<leaflet center="center" defaults="defaults" height="600" markers="markers"></leaflet>',
@@ -104,21 +122,14 @@ var floorPlanDirective = function () {
 
 				$scope.mapCalc.then(function (mapCalc) {
 					var markersArray = _.map(boulders, function (boulder) {
-						var marker = {};
 						var latlng = mapCalc.floorPlanAbsToLatLng([
 							boulder.location.x * $scope.floorPlan.img.widthInPx,
 							boulder.location.y * $scope.floorPlan.img.heightInPx]);
-						marker.name = boulder.id;
-						marker.lat = latlng.lat;
-						marker.lng = latlng.lng;
-						return marker;
+						return createMarkerForBoulder(boulder, latlng);
 					});
 					$scope.markers = _.indexBy(markersArray, 'name');
 				});
 			}, true);
-
-
-			
 
 		}]
 	};
