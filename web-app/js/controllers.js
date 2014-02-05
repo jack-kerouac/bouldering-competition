@@ -27,13 +27,13 @@ var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, Boulde
 		$scope.session.ascents = [];
 
 
-		if($scope.floorPlan)
+		if ($scope.floorPlan)
 			$scope.floorPlan.destroy();
 		if (gym.floorPlans.length > 1)
 			throw new Error("gym has more than one floor plan, make it selectable");
 		$scope.floorPlan = FloorPlan.init(gym.floorPlans[0], $('div.map'));
 
-		$scope.boulders = Gym.boulders({gymId: gym.id}, function(boulders) {
+		$scope.boulders = Gym.boulders({gymId: gym.id}, function (boulders) {
 			function setAscentStyle(boulder, style) {
 				var ascent = _.find($scope.session.ascents, function (ascent) {
 					return ascent.boulder === boulder
@@ -129,7 +129,7 @@ var boulderCtrl = function ($scope, $window, Gym, Grades, FloorPlan, Boulder) {
 		$scope.boulders.color = gym.colors[0].name;
 		$scope.boulders.coordinates = [];
 
-		if($scope.floorPlan)
+		if ($scope.floorPlan)
 			$scope.floorPlan.destroy();
 
 		$scope.floorPlan = FloorPlan.init(gym.floorPlans[0], $('div.map'));
@@ -275,7 +275,6 @@ statisticsCtrl.$inject = ['$scope', 'Grades', 'User'];
 chalkUpControllers.controller('StatisticsCtrl', statisticsCtrl);
 
 
-
 var startCtrl = function ($scope, Gym) {
 
 	$scope.gyms = Gym.query();
@@ -286,7 +285,7 @@ chalkUpControllers.controller('StartCtrl', startCtrl);
 
 
 var gymOverviewCtrl = function ($scope) {
-	$scope.floorPlan = {
+	$scope.fp = {
 		"id": 1,
 		"img": {
 			"widthInPx": 2000,
@@ -295,11 +294,11 @@ var gymOverviewCtrl = function ($scope) {
 		}
 	};
 
-	$scope.click = function(point) {
+	$scope.c = function(point) {
 		console.log(point);
 	}
 
-	$scope.boulders = [
+	$scope.bs = [
 		{
 			"id": 1,
 			"color": {
