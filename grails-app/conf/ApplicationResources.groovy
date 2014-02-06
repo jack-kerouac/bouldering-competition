@@ -15,12 +15,10 @@ modules = {
         resource url: 'css/foundation-icons.css'
     }
     angular {
-        dependsOn 'moment', 'leaflet'
+        dependsOn 'moment'
         resource url: 'js/vendor/angular.js'
         resource url: 'js/vendor/angular-resource.js'
         resource url: 'js/vendor/angular-moment.min.js'
-
-        resource url: 'js/vendor/angular-leaflet-directive.js'
     }
     leaflet {
         // LEAFLET AND PLUGINS

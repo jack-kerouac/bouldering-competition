@@ -1,6 +1,15 @@
-var chalkUpApp = angular.module('chalkUpApp', ['chalkUpServices', 'chalkUpControllers', 'chalkUpDirectives', 'angularMoment', 'leaflet-directive']).
+var chalkUpApp = angular.module('chalkUpApp', ['chalkUpServices', 'chalkUpControllers', 'chalkUpDirectives', 'angularMoment']).
 	run(function ($window) {
 		$window.moment.lang(window.locale.language);
+
+		L.Icon.Default.imagePath = '/images/leaflet';
+
+		jQuery.fn.exist = function () {
+			return jQuery(this).length != 0;
+		};
+		jQuery.fn.exists = function () {
+			return jQuery(this).length != 0;
+		};
 	});
 
 
@@ -8,14 +17,6 @@ $(document).foundation();
 
 window.initChalkUp = function () {
 
-	jQuery.fn.exist = function () {
-		return jQuery(this).length != 0;
-	};
-	jQuery.fn.exists = function () {
-		return jQuery(this).length != 0;
-	};
-
-	L.Icon.Default.imagePath = '/images/leaflet';
 
 	function displayChart(mu, sigma) {
 		var dd = [];

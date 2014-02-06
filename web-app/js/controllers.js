@@ -295,7 +295,18 @@ var gymOverviewCtrl = function ($scope) {
 	};
 
 	$scope.c = function (point) {
+		$scope.ms.push({
+			id: 3,
+			leafletIcon: icon,
+			x: point.x,
+			y: point.y,
+			draggable: true
+		});
 		console.log(point);
+	}
+
+	$scope.cl = function (marker) {
+		console.log(marker);
 	}
 
 	$scope.bs = [
@@ -389,28 +400,21 @@ var gymOverviewCtrl = function ($scope) {
 		}
 	];
 
-
-	var icon = {
-		type: 'div',
-		iconSize: undefined,     // set in CSS
-		//popupAnchor:  [0, 0],
+	var icon = L.divIcon({
 		className: 'boulder-marker',
-		html: '&#xf172;'
-	};
-
-
-	$scope.ms = _.map($scope.bs, function (boulder) {
-		return {
-			name: boulder.id,
-			color: boulder.color,
-			icon: icon,
-			x: boulder.location.x * boulder.location.floorPlan.img.widthInPx,
-			y: boulder.location.y * boulder.location.floorPlan.img.heightInPx
-		}
+		html: '&#xf172;',
+		iconSize: undefined // set in CSS
 	});
 
-
-	$scope.floorPlanHeight = 600;
+	$scope.ms = _.map($scope.bs, function (boulder) {
+			return {
+				id: boulder.id,
+				leafletIcon: icon,
+				x: boulder.location.x * boulder.location.floorPlan.img.widthInPx,
+				y: boulder.location.y * boulder.location.floorPlan.img.heightInPx,
+				color: boulder.color
+			}
+		});
 };
 gymOverviewCtrl.$inject = ['$scope'];
 chalkUpControllers.controller('GymOverviewCtrl', gymOverviewCtrl);
