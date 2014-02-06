@@ -1,4 +1,4 @@
-var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices', 'imageMap']);
+var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices', 'gymFloorPlan']);
 
 var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, BoulderingSession) {
 
@@ -294,21 +294,6 @@ var gymOverviewCtrl = function ($scope) {
 		}
 	};
 
-	$scope.c = function (point) {
-		$scope.ms.push({
-			id: 3,
-			leafletIcon: icon,
-			x: point.x,
-			y: point.y,
-			draggable: true
-		});
-		console.log(point);
-	}
-
-	$scope.cl = function (marker) {
-		console.log(marker);
-	}
-
 	$scope.bs = [
 		{
 			"id": 1,
@@ -400,21 +385,24 @@ var gymOverviewCtrl = function ($scope) {
 		}
 	];
 
-	var icon = L.divIcon({
-		className: 'boulder-marker',
-		html: '&#xf172;',
-		iconSize: undefined // set in CSS
-	});
-
-	$scope.ms = _.map($scope.bs, function (boulder) {
-			return {
-				id: boulder.id,
-				leafletIcon: icon,
-				x: boulder.location.x * boulder.location.floorPlan.img.widthInPx,
-				y: boulder.location.y * boulder.location.floorPlan.img.heightInPx,
-				color: boulder.color
+	$scope.fpClick = function(point) {
+		$scope.bs.push({
+			id: $scope.bs.length + 1,
+			color: {
+				primary: 'rgb(255,255,0)'
+			},
+			location: {
+				floorPlan: $scope.fp,
+				x: point.x / $scope.fp.img.widthInPx,
+				y: point.y  / $scope.fp.img.heightInPx
 			}
 		});
+	}
+
+	$scope.bClick = function(boulder) {
+		console.log(boulder);
+	}
+
 };
 gymOverviewCtrl.$inject = ['$scope'];
 chalkUpControllers.controller('GymOverviewCtrl', gymOverviewCtrl);

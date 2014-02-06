@@ -210,7 +210,7 @@ var imageMapDirective = function () {
 						var marker = createMarker(imageMarker, $scope);
 						marker.on('click', function (event) {
 							$scope.$apply(function () {
-								$scope.markerClickHandler({marker: marker});
+								$scope.markerClickHandler({marker: imageMarker});
 							});
 						});
 						return marker;
