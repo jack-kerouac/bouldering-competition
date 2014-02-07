@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <title><g:message code="bcomp.gym.overview.label"/> {{gym.name}}</title>
 </head>
 
 <body>
@@ -46,9 +47,9 @@
                 </tr>
                 <tr>
                     <th><g:message code="bcomp.ascents.label"/></th>
-                    <td><span ng-show="currentBoulderAscents.length > 0">{{currentBoulderAscents.length}} ({{(currentBoulderAscents | filter:{style:
-                    'flash'})
-                    .length}} flash)</span>
+                    <td>
+                        <span ng-show="currentBoulderAscents.length > 0">{{currentBoulderAscents.length}}
+                        ({{(currentBoulderAscents | filter:{style:'flash'}).length}} flash)</span>
                         <ul ng-show="currentBoulderAscents.length > 0">
                             <li ng-repeat="ascent in currentBoulderAscents">
                                 {{ascent.date | amDateFormat: 'LL'}}: {{users[ascent.boulderer].username}}
@@ -56,11 +57,31 @@
                             </li>
                         </ul>
                     </td>
-                </td>
                 </tr>
                 </tbody>
             </table>
 
+        </div>
+    </div>
+
+    <div class="row content">
+        <div class="medium-12 column">
+            <table>
+                <thead>
+                <tr>
+                    <th><g:message code="bcomp.date.label"/></th>
+                    <th><g:message code="bcomp.userRole.boulderer.label"/></th>
+                    <th><g:message code="bcomp.ascents.label"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="session in sessions">
+                    <td>{{session.date | amDateFormat: 'LL'}}</td>
+                    <td>{{users[session.boulderer].username}}</td>
+                    <td>{{session.ascents.length}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

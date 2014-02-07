@@ -1,7 +1,7 @@
 package bcomp.api
 
+import bcomp.BoulderingSession
 import bcomp.gym.Boulder
-import bcomp.gym.FloorPlan
 import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
@@ -20,6 +20,14 @@ class GymController extends RestfulController {
             gym.id == gymId
         }.findAll()
         respond boulders
+    }
+
+    def sessions() {
+        def gymId = params.gymId
+        def sessions = BoulderingSession.where {
+            gym.id == gymId
+        }.findAll()
+        respond sessions
     }
 
     @Override

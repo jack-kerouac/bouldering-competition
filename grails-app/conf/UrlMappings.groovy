@@ -36,6 +36,7 @@ class UrlMappings {
 
         "/gyms"(resources: "gym") {
             "/boulders"(controller: 'gym', action: 'boulders')
+            "/sessions"(controller: 'gym', action: 'sessions')
         }
         "/gyms/$gymId/floorPlans/$floorPlanId"(controller: 'gym', action: 'floorPlanImage')
 

@@ -91,6 +91,7 @@ div[flot-chart] {
 
 .map {
     height: 40em;
+    margin-bottom: 1.25rem;
 }
 
 .leaflet-container form, .leaflet-container input[type=checkbox] {
@@ -123,7 +124,6 @@ div[flot-chart] {
 .boulder-marker:hover, .boulder-marker.chosen {
     opacity: 1.0;
 }
-
 
 table.boulder-meta-data {
     width: 100%;

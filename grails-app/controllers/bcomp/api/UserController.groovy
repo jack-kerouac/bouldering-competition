@@ -5,7 +5,6 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 
-@Secured(['ROLE_BOULDERER'])
 class UserController extends RestfulController {
 
     static responseFormats = ['json']

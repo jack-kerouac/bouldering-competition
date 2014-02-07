@@ -7,7 +7,6 @@ import grails.rest.RestfulController
 import grails.validation.Validateable
 import org.springframework.http.HttpStatus
 
-@Secured(['ROLE_BOULDERER'])
 class BoulderController extends RestfulController {
 
     static responseFormats = ['json']

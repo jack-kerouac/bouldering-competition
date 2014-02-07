@@ -10,7 +10,6 @@ import grails.rest.RestfulController
 import grails.validation.Validateable
 import org.springframework.http.HttpStatus
 
-@Secured(['ROLE_BOULDERER'])
 class BoulderingSessionController extends RestfulController {
 
     static responseFormats = ['json']

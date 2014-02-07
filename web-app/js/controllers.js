@@ -292,13 +292,12 @@ var gymOverviewCtrl = function ($scope, $location, $routeParams, Gym, Boulder, U
 
 
 	var gymId = ($location.search()).gymId;
-	$scope.gym = Gym.get({gymId: gymId}, function (gym) {
-		if (gym === undefined)
-			return;
+	$scope.gym = Gym.get({gymId: gymId});
+	$scope.boulders = Gym.boulders({gymId: gymId});
+	$scope.sessions = Gym.sessions({gymId: gymId});
 
-		$scope.boulders = Gym.boulders({gymId: gym.id});
-		$scope.currentBoulder = undefined;
-	});
+
+	$scope.currentBoulder = undefined;
 
 	$scope.$watch('currentBoulder', function (boulder) {
 		if (boulder === undefined)

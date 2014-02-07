@@ -7,8 +7,10 @@ var Gym = function ($resource) {
 			gymId: '@id'
 		},
 		{
-			boulders: { method: 'GET', url: '/gyms/:gymId/boulders', isArray: true }
-		});
+			boulders: { method: 'GET', url: '/gyms/:gymId/boulders', isArray: true },
+			sessions: { method: 'GET', url: '/gyms/:gymId/sessions', isArray: true }
+		}
+	);
 };
 Gym.$inject = ['$resource'];
 chalkUpServices.factory('Gym', Gym);
