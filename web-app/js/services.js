@@ -16,7 +16,13 @@ chalkUpServices.factory('Gym', Gym);
 
 // BOULDER SERVICE
 var Boulder = function ($resource) {
-	return $resource('/boulders/:boulderId');
+	return $resource('/boulders/:boulderId',
+		{
+			boulderId: '@id'
+		},
+		{
+			ascents: { method: 'GET', url: '/boulders/:boulderId/ascents', isArray: true }
+		});
 };
 Boulder.$inject = ['$resource'];
 chalkUpServices.factory('Boulder', Boulder);

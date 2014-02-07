@@ -284,7 +284,11 @@ startCtrl.$inject = ['$scope', 'Gym'];
 chalkUpControllers.controller('StartCtrl', startCtrl);
 
 
-var gymOverviewCtrl = function ($scope, Gym) {
+var gymOverviewCtrl = function ($scope, Gym, Boulder, User) {
+
+	User.query(function(users) {
+		 $scope.users = _.indexBy(users, 'id');
+	});
 
 	$scope.gyms = Gym.query();
 	$scope.$watch('gyms', function (newValue, oldValue) {
@@ -295,35 +299,24 @@ var gymOverviewCtrl = function ($scope, Gym) {
 	}, true);
 
 	$scope.$watch('gym', function (gym) {
-		if(gym === undefined)
+		if (gym === undefined)
 			return;
 
 		$scope.boulders = Gym.boulders({gymId: gym.id});
 		$scope.currentBoulder = undefined;
 	});
 
-	$scope.fpClick = function (point) {
-		$scope.boulders.push({
-			id: $scope.boulders.length + 1,
-			color: {
-				primary: 'rgb(255,255,0)'
-			},
-			location: {
-				floorPlan: $scope.fp,
-				x: point.x / $scope.fp.img.widthInPx,
-				y: point.y / $scope.fp.img.heightInPx
-			}
-		});
-	}
+	$scope.$watch('currentBoulder', function (boulder) {
+		if (boulder === undefined)
+			return;
 
-	$scope.bClick = function (boulder) {
-		$scope.setCurrentBoulder(boulder);
-	}
+		$scope.currentBoulderAscents = Boulder.ascents({boulderId: boulder.id});
+	})
 
-	$scope.setCurrentBoulder = function (boulder) {
+	$scope.select = function (boulder) {
 		$scope.currentBoulder = boulder;
 	};
 
 };
-gymOverviewCtrl.$inject = ['$scope', 'Gym'];
+gymOverviewCtrl.$inject = ['$scope', 'Gym', 'Boulder', 'User'];
 chalkUpControllers.controller('GymOverviewCtrl', gymOverviewCtrl);

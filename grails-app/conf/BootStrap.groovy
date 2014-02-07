@@ -182,6 +182,8 @@ class BootStrap {
             map['id'] = ascent.id
             map['style'] = ascent.style.toString()
             map['boulder'] = ascent.boulder.id
+            map['boulderer'] = ascent.session.boulderer.id
+            map['date'] = ascent.session.date
             return map
         }
 

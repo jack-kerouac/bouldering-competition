@@ -39,7 +39,9 @@ class UrlMappings {
         }
         "/gyms/$gymId/floorPlans/$floorPlanId"(controller: 'gym', action: 'floorPlanImage')
 
-        "/boulders"(resources: "boulder")
+        "/boulders"(resources: "boulder") {
+            "/ascents"(controller: 'boulder', action: 'ascents')
+        }
 
         "/users"(resources: "user") {
             "/statistics"(controller: 'user', action: 'statistics')

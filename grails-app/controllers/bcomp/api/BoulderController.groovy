@@ -1,5 +1,6 @@
 package bcomp.api
 
+import bcomp.Ascent
 import bcomp.gym.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
@@ -56,6 +57,14 @@ class BoulderController extends RestfulController {
         } else {
             respond cmd.errors, view: '/createBoulders'
         }
+    }
+
+    def ascents() {
+        def boulderId = params.boulderId
+        def ascents = Ascent.where {
+            boulder.id == boulderId
+        }.findAll()
+        respond(ascents)
     }
 
 }

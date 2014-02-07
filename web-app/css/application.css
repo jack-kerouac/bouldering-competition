@@ -123,3 +123,25 @@ div[flot-chart] {
 .boulder-marker:hover, .boulder-marker.chosen {
     opacity: 1.0;
 }
+
+
+table.boulder-meta-data {
+    width: 100%;
+}
+
+table.boulder-meta-data th {
+    width: 8em;
+}
+
+table.boulder-meta-data.inactive th, table.boulder-meta-data.inactive td {
+    color: gray;
+}
+
+table.boulder-meta-data ul {
+    margin: 0.5em 0 0 0;
+}
+
+table.boulder-meta-data li {
+    font-size: 0.65em;
+    list-style: none;
+}

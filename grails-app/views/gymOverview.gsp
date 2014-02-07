@@ -34,13 +34,13 @@
     <div class="row content">
 
         <div class="medium-8 column">
-            <gym-floor-plan floor-plan="gym.floorPlans[0]" floor-plan-click="fpClick(point)" boulders="boulders"
-                            boulder-click="bClick(boulder)"
+            <gym-floor-plan floor-plan="gym.floorPlans[0]" boulders="boulders"
+                            boulder-click="select(boulder)"
                             boulders-draggable="true"></gym-floor-plan>
         </div>
 
         <div class="medium-4 column">
-            <table>
+            <table class="boulder-meta-data" ng-class="{inactive: !currentBoulder}">
                 <tbody>
                 <tr>
                     <th>ID</th>
@@ -58,21 +58,23 @@
                     <th><g:message code="bcomp.boulder.currentGrade.label"/></th>
                     <td>{{currentBoulder.grade.mean.font}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="currentBoulder.end">
                     <th><g:message code="bcomp.boulder.end.label"/></th>
                     <td>{{currentBoulder.end | amDateFormat: 'LL'}}</td>
                 </tr>
                 <tr>
                     <th><g:message code="bcomp.ascents.label"/></th>
-                    <td>TODO</td>
-                </tr>
-                <tr>
-                    <th><g:message code="bcomp.userRole.boulderer.label"/></th>
-                    <td>
-                        <ul>
-                            <li>TODO</li>
+                    <td><span ng-show="currentBoulderAscents.length > 0">{{currentBoulderAscents.length}} ({{(currentBoulderAscents | filter:{style:
+                    'flash'})
+                    .length}} flash)</span>
+                        <ul ng-show="currentBoulderAscents.length > 0">
+                            <li ng-repeat="ascent in currentBoulderAscents">
+                                {{ascent.date | amDateFormat: 'LL'}}: {{users[ascent.boulderer].username}}
+                                ({{users[ascent.boulderer].grade.mean.font}})
+                            </li>
                         </ul>
                     </td>
+                </td>
                 </tr>
                 </tbody>
             </table>
@@ -91,7 +93,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="boulder in boulders" ng-class="{active: boulder === currentBoulder}"
-                    ng-click="setCurrentBoulder(boulder)">
+                    ng-click="select(boulder)">
                     <td>{{boulder.id}}</td>
                     <td>{{boulder.color.germanName}}</td>
                 </tr>
