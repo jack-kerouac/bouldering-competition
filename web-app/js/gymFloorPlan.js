@@ -13,8 +13,6 @@ var gymFloorPlanDirective = function () {
 			bouldersDraggable: '@'
 		},
 		controller: ['$scope', '$element', '$attrs', '$q', function ($scope, $element, $attrs, $q) {
-			$scope.image = $scope.floorPlan.img;
-
 			var icon = L.divIcon({
 				className: 'boulder-marker',
 				html: '&#xf172;',
@@ -27,19 +25,31 @@ var gymFloorPlanDirective = function () {
 				});
 			}
 
-			$scope.$watch('boulders', function (boulders) {
-				$scope.markers = _.map(boulders, function (boulder) {
-					if (!boulder.location.floorPlan.id === $scope.floorPlan.id)
-						throw new Error('boulder ' + boulder.id + ' is not on floor plan ' + $scope.floorPlan.id);
+			var floorPlanReady = $q.defer();
+			$scope.$watch('floorPlan', function (floorPlan, oldFloorPlan) {
+				if (floorPlan === undefined)
+					return;
 
-					return {
-						id: boulder.id,
-						leafletIcon: icon,
-						x: boulder.location.x * $scope.floorPlan.img.widthInPx,
-						y: boulder.location.y * $scope.floorPlan.img.heightInPx,
-						color: boulder.color,
-						draggable: $scope.bouldersDraggable
-					}
+				floorPlanReady.resolve(floorPlan);
+
+				$scope.image = floorPlan.img;
+			});
+
+			$scope.$watch('boulders', function (boulders) {
+				floorPlanReady.promise.then(function () {
+					$scope.markers = _.map(boulders, function (boulder) {
+						if (!boulder.location.floorPlan.id === $scope.floorPlan.id)
+							throw new Error('boulder ' + boulder.id + ' is not on floor plan ' + $scope.floorPlan.id);
+
+						return {
+							id: boulder.id,
+							leafletIcon: icon,
+							x: boulder.location.x * $scope.floorPlan.img.widthInPx,
+							y: boulder.location.y * $scope.floorPlan.img.heightInPx,
+							color: boulder.color,
+							draggable: $scope.bouldersDraggable
+						}
+					});
 				});
 			}, true);
 

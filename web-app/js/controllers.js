@@ -284,125 +284,46 @@ startCtrl.$inject = ['$scope', 'Gym'];
 chalkUpControllers.controller('StartCtrl', startCtrl);
 
 
-var gymOverviewCtrl = function ($scope) {
-	$scope.fp = {
-		"id": 1,
-		"img": {
-			"widthInPx": 2000,
-			"heightInPx": 1393,
-			"url": "http://localhost:8080/images/floorPlans/boulderwelt-muenchen.jpg"
-		}
-	};
+var gymOverviewCtrl = function ($scope, Gym) {
 
-	$scope.bs = [
-		{
-			"id": 1,
-			"color": {
-				"name": "RED",
-				"germanName": "rot",
-				"englishName": "red",
-				"primary": "rgb(217, 0, 0)"
-			},
-			"grade": {
-				"mean": {
-					"value": 0.4242424242,
-					"font": "5C"
-				},
-				"variance": 0.07134709913526724,
-				"sigma": 0.2671087777203648
-			},
-			"description": null,
-			"end": null,
-			"initialGrade": {
-				"certainty": "RANGE",
-				"readable": "1A – 8A",
-				"gradeLow": {
-					"value": 0.01515151515,
-					"font": "1A"
-				},
-				"gradeHigh": {
-					"value": 0.83333333325,
-					"font": "8A"
-				}
-			},
-			"location": {
-				"floorPlan": {
-					"id": 1,
-					"img": {
-						"widthInPx": 2000,
-						"heightInPx": 1393,
-						"url": "http://localhost:8080/images/floorPlans/boulderwelt-muenchen.jpg"
-					}
-				},
-				"x": 0.267,
-				"y": 0.2139267767
-			},
-			"gym": 1
-		},
-		{
-			"id": 2,
-			"color": {
-				"name": "RED",
-				"germanName": "rot",
-				"englishName": "red",
-				"primary": "rgb(217, 0, 0)"
-			},
-			"grade": {
-				"mean": {
-					"value": 0.4242424242,
-					"font": "5C"
-				},
-				"variance": 0.07134709913526724,
-				"sigma": 0.2671087777203648
-			},
-			"description": null,
-			"end": null,
-			"initialGrade": {
-				"certainty": "RANGE",
-				"readable": "1A – 8A",
-				"gradeLow": {
-					"value": 0.01515151515,
-					"font": "1A"
-				},
-				"gradeHigh": {
-					"value": 0.83333333325,
-					"font": "8A"
-				}
-			},
-			"location": {
-				"floorPlan": {
-					"id": 1,
-					"img": {
-						"widthInPx": 2000,
-						"heightInPx": 1393,
-						"url": "http://localhost:8080/images/floorPlans/boulderwelt-muenchen.jpg"
-					}
-				},
-				"x": 0.3715,
-				"y": 0.2462311558
-			},
-			"gym": 1
-		}
-	];
+	$scope.gyms = Gym.query();
+	$scope.$watch('gyms', function (newValue, oldValue) {
+		if (newValue === oldValue)
+			return;
 
-	$scope.fpClick = function(point) {
-		$scope.bs.push({
-			id: $scope.bs.length + 1,
+		$scope.gym = $scope.gyms[0];
+	}, true);
+
+	$scope.$watch('gym', function (gym) {
+		if(gym === undefined)
+			return;
+
+		$scope.boulders = Gym.boulders({gymId: gym.id});
+		$scope.currentBoulder = undefined;
+	});
+
+	$scope.fpClick = function (point) {
+		$scope.boulders.push({
+			id: $scope.boulders.length + 1,
 			color: {
 				primary: 'rgb(255,255,0)'
 			},
 			location: {
 				floorPlan: $scope.fp,
 				x: point.x / $scope.fp.img.widthInPx,
-				y: point.y  / $scope.fp.img.heightInPx
+				y: point.y / $scope.fp.img.heightInPx
 			}
 		});
 	}
 
-	$scope.bClick = function(boulder) {
-		console.log(boulder);
+	$scope.bClick = function (boulder) {
+		$scope.setCurrentBoulder(boulder);
 	}
 
+	$scope.setCurrentBoulder = function (boulder) {
+		$scope.currentBoulder = boulder;
+	};
+
 };
-gymOverviewCtrl.$inject = ['$scope'];
+gymOverviewCtrl.$inject = ['$scope', 'Gym'];
 chalkUpControllers.controller('GymOverviewCtrl', gymOverviewCtrl);

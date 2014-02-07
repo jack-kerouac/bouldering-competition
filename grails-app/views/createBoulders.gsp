@@ -46,7 +46,7 @@
 
     <div class="row grades">
         <div class="small-3 column">
-            <label class="right inline"><g:message code="bcomp.boulder.grade.label"/></label>
+            <label class="right inline"><g:message code="bcomp.boulder.initialGrade.label"/></label>
         </div>
 
         <div class="small-9 column">
