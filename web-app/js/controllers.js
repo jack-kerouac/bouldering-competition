@@ -1,4 +1,4 @@
-var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices', 'gymFloorPlan']);
+var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices', 'gymFloorPlan', 'ngRoute']);
 
 var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, BoulderingSession) {
 
@@ -284,21 +284,15 @@ startCtrl.$inject = ['$scope', 'Gym'];
 chalkUpControllers.controller('StartCtrl', startCtrl);
 
 
-var gymOverviewCtrl = function ($scope, Gym, Boulder, User) {
+var gymOverviewCtrl = function ($scope, $location, $routeParams, Gym, Boulder, User) {
 
-	User.query(function(users) {
-		 $scope.users = _.indexBy(users, 'id');
+	User.query(function (users) {
+		$scope.users = _.indexBy(users, 'id');
 	});
 
-	$scope.gyms = Gym.query();
-	$scope.$watch('gyms', function (newValue, oldValue) {
-		if (newValue === oldValue)
-			return;
 
-		$scope.gym = $scope.gyms[0];
-	}, true);
-
-	$scope.$watch('gym', function (gym) {
+	var gymId = ($location.search()).gymId;
+	$scope.gym = Gym.get({gymId: gymId}, function (gym) {
 		if (gym === undefined)
 			return;
 
@@ -318,5 +312,5 @@ var gymOverviewCtrl = function ($scope, Gym, Boulder, User) {
 	};
 
 };
-gymOverviewCtrl.$inject = ['$scope', 'Gym', 'Boulder', 'User'];
+gymOverviewCtrl.$inject = ['$scope', '$location', '$routeParams', 'Gym', 'Boulder', 'User'];
 chalkUpControllers.controller('GymOverviewCtrl', gymOverviewCtrl);

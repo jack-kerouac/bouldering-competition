@@ -18,6 +18,8 @@ modules = {
         dependsOn 'moment'
         resource url: 'js/vendor/angular.js'
         resource url: 'js/vendor/angular-resource.js'
+        resource url: 'js/vendor/angular-route.js'
+
         resource url: 'js/vendor/angular-moment.min.js'
     }
     leaflet {

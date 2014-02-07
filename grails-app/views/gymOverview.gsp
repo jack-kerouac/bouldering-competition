@@ -2,13 +2,6 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-
-    <style type="text/css">
-    table.boulders tr.active {
-        font-weight: bold;
-        background-color: red;
-    }
-    </style>
 </head>
 
 <body>
@@ -17,19 +10,8 @@
 <div ng-controller="GymOverviewCtrl">
 
     <div class="row">
-        <div class="medium-12 column"><h1><g:message code="bcomp.gym.overview.label"/></h1></div>
+        <div class="medium-12 column"><h1><g:message code="bcomp.gym.overview.label"/> {{gym.name}}</h1></div>
     </div>
-
-    <div class="row">
-        <div class="small-3 column">
-            <label class="right inline"><g:message code="bcomp.gym.label"/></label>
-        </div>
-
-        <div class="small-9 column">
-            <select ng-model="gym" ng-options="gym.name for gym in gyms" required></select>
-        </div>
-    </div>
-
 
     <div class="row content">
 
@@ -81,27 +63,6 @@
 
         </div>
     </div>
-
-    <div class="row">
-        <div class="medium-12 column">
-            <table class="boulders">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>color</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="boulder in boulders" ng-class="{active: boulder === currentBoulder}"
-                    ng-click="select(boulder)">
-                    <td>{{boulder.id}}</td>
-                    <td>{{boulder.color.germanName}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
 </div>
 
 </body>

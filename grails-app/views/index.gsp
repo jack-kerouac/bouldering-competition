@@ -31,7 +31,7 @@
 
                 <p><g:message code="bcomp.title"/> ist bereits in folgenden Hallen verfügbar:</p>
                 <ul><li ng-repeat="gym in gyms">
-                    <span ng-bind="gym.name"></span>
+                    <a ng-href="/gymOverview#?gymId={{gym.id}}" ng-bind="gym.name"></a>
                 </li></ul>
             </div>
         </div>
