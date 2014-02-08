@@ -145,3 +145,7 @@ table.boulder-meta-data li {
     font-size: 0.65em;
     list-style: none;
 }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}

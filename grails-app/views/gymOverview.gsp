@@ -8,7 +8,7 @@
 <body>
 
 <!-- TODO: move ng-controller to body -->
-<div ng-controller="GymOverviewCtrl">
+<div ng-controller="GymOverviewCtrl" ng-cloak>
 
     <div class="row">
         <div class="medium-12 column"><h1><g:message code="bcomp.gym.overview.label"/> {{gym.name}}</h1></div>
