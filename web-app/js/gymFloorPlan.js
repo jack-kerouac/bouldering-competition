@@ -10,7 +10,8 @@ var gymFloorPlanDirective = function () {
 			floorPlanClickHandler: '&floorPlanClick',
 			boulderClickHandler: '&boulderClick',
 			boulders: '=',
-			bouldersDraggable: '@'
+			bouldersDraggable: '@',
+			selected: '='
 		},
 		controller: ['$scope', '$element', '$attrs', '$q', function ($scope, $element, $attrs, $q) {
 			var icon = L.divIcon({
@@ -25,6 +26,12 @@ var gymFloorPlanDirective = function () {
 			function boulderForMarker(marker) {
 				return _.find($scope.boulders, function (boulder) {
 					return boulder.id === marker.id;
+				});
+			}
+
+			function markerForBoulder(boulder) {
+				return _.find($scope.markers, function (marker) {
+					return marker.id === boulder.id;
 				});
 			}
 
@@ -64,13 +71,20 @@ var gymFloorPlanDirective = function () {
 				});
 			}, true);
 
+			$scope.$watch('selected', function(selectedBoulder, previouslySelectedBoulder) {
+				if(previouslySelectedBoulder !== undefined)
+					markerForBoulder(previouslySelectedBoulder).selected = false;
+
+				if(selectedBoulder !== undefined)
+					markerForBoulder(selectedBoulder).selected = true;
+			});
+
 			$scope.mapClickHandler = function (point) {
 				$scope.floorPlanClickHandler({point: point});
 			}
 
 			$scope.markerClickHandler = function (marker) {
 				var boulder = boulderForMarker(marker);
-
 				$scope.boulderClickHandler({boulder: boulder});
 			}
 		}]

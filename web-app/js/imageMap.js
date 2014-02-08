@@ -22,6 +22,7 @@
  * - color (optional): Object with properties primary (and maybe secondary), defining the color of the marker. The properties are CSS color strings.
  * - leafletIcon (optional): An instance of L.icon defining the icon of the marker
  * - draggable (optional): whether the marker can be dragged on the map. If so, its x/y coordinates are updated upon dragend.
+ * - selected (optional): whether the marker should be displayed as selected (class 'selected' is added to the icon div)
  */
 var imageMapModule = angular.module('imageMap', []);
 
@@ -67,68 +68,52 @@ var imageMapDirective = function () {
 		}
 	}
 
-	function colorIcon(marker, color) {
-		var $icon = $(marker._icon);
+	var ColorableSelectableMarker = L.Marker.extend({
+		_initIcon: function () {
+			L.Marker.prototype._initIcon.call(this);
+			this.colorIcon(this.options.color);
+			this.select(this.options.selected);
+		},
+		colorIcon: function (color) {
+			var $icon = $(this._icon);
 
-		if (color === undefined) {
-			$icon.css({
-				color: 'black',
-				background: '',
-				'-webkit-background-clip': '',
-				'-webkit-text-fill-color': ''
-			});
-			return;
+			if (color === undefined) {
+				$icon.css({
+					color: 'black',
+					background: '',
+					'-webkit-background-clip': '',
+					'-webkit-text-fill-color': ''
+				});
+				return;
+			}
+
+			if (!color.hasOwnProperty('secondary')) {
+				$icon.css({
+					color: color.primary,
+					background: '',
+					'-webkit-background-clip': '',
+					'-webkit-text-fill-color': ''
+				});
+			}
+			else {
+				// use text gradient for two colored boulders
+				$icon.css({
+					color: 'black',
+					background: 'linear-gradient(' + color.primary + ', ' + color.secondary + ')',
+					'-webkit-background-clip': 'text',
+					'-webkit-text-fill-color': 'transparent'
+				});
+			}
+		},
+		select: function (selected) {
+			if (typeof(selected) === 'undefined')
+				return;
+			else if (selected)
+				$(this._icon).addClass('selected');
+			else
+				$(this._icon).removeClass('selected');
 		}
-
-		if (!color.hasOwnProperty('secondary')) {
-			$icon.css({
-				color: color.primary,
-				background: '',
-				'-webkit-background-clip': '',
-				'-webkit-text-fill-color': ''
-			});
-		}
-		else {
-			// use text gradient for two colored boulders
-			$icon.css({
-				color: 'black',
-				background: 'linear-gradient(' + color.primary + ', ' + color.secondary + ')',
-				'-webkit-background-clip': 'text',
-				'-webkit-text-fill-color': 'transparent'
-			});
-		}
-	};
-
-
-	function createMarker(imageMarker, $scope) {
-		var latLng = $scope.projection.imagePointToLatLng([imageMarker.x, imageMarker.y]);
-		var options = {
-			id: imageMarker.id,
-			riseOnHover: true,
-			draggable: imageMarker.draggable
-		};
-		if (imageMarker.leafletIcon)
-			options.icon = imageMarker.leafletIcon;
-
-		var marker = L.marker(latLng, options);
-
-		$scope.$watch(function () {
-			return imageMarker.color;
-		}, function (color) {
-			colorIcon(marker, color);
-		});
-
-		marker.on('dragend', function (e) {
-			$scope.$apply(function () {
-				var marker = e.target;
-				var p = $scope.projection.latLngToImagePoint(marker.getLatLng());
-				imageMarker.x = p.x;
-				imageMarker.y = p.y;
-			});
-		});
-
-		return marker;
-	}
+	});
 
 	return {
 		restrict: 'E',
@@ -215,12 +200,35 @@ var imageMapDirective = function () {
 					}
 				}
 
-
 				// CREATE NEW MARKERS
 				imageReady.promise.then(function () {
 					function toMarkers(imageMarkers) {
 						return _.map(imageMarkers, function (imageMarker) {
-							var marker = createMarker(imageMarker, $scope);
+							var latLng = $scope.projection.imagePointToLatLng([imageMarker.x, imageMarker.y]);
+							var options = {
+								id: imageMarker.id,
+								riseOnHover: true,
+								draggable: imageMarker.draggable
+							};
+							if (imageMarker.leafletIcon)
+								options.icon = imageMarker.leafletIcon;
+							if (imageMarker.color)
+								options.color = imageMarker.color;
+							if (imageMarker.selected)
+								options.selected = imageMarker.selected;
+
+							var marker = new ColorableSelectableMarker(latLng, options);
+
+
+							marker.on('dragend', function (e) {
+								$scope.$apply(function () {
+									var marker = e.target;
+									var p = $scope.projection.latLngToImagePoint(marker.getLatLng());
+									imageMarker.x = p.x;
+									imageMarker.y = p.y;
+								});
+							});
+
 							marker.on('click', function (event) {
 								$scope.$apply(function () {
 									$scope.markerClickHandler({marker: imageMarker});
@@ -266,9 +274,9 @@ var imageMapDirective = function () {
 
 						$scope.leafletMarkerLayers = markerLayers;
 					}
-				}, true);
+				});
 
-			});
+			}, true);
 		}]
 	};
 };

@@ -116,8 +116,18 @@ div[flot-chart] {
     opacity: 0.8;
 }
 
-.boulder-marker:hover, .boulder-marker.chosen {
+.boulder-marker:hover {
     opacity: 1.0;
+}
+
+
+.boulder-marker.selected {
+    text-shadow:
+        rgb(255, 255, 255) 0px 0px 10px,
+        rgb(0, 200, 0) 5px 5px 15px,
+        rgb(50, 50, 255) -5px 5px 15px,
+        rgb(255, 0, 0) -5px -5px 15px,
+        rgb(200, 200, 0) 5px -5px 15px;
 }
 
 table.boulder-meta-data {
