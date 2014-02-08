@@ -138,7 +138,7 @@ table.boulder-meta-data th {
     width: 8em;
 }
 
-table.boulder-meta-data.inactive th, table.boulder-meta-data.inactive td {
+table.boulder-meta-data.inactive th, table.boulder-meta-data.inactive td, label.inactive {
     color: gray;
 }
 
@@ -153,4 +153,13 @@ table.boulder-meta-data li {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
+}
+
+tr[ng-click] {
+    cursor: pointer;
+}
+
+tr[ng-click]:hover {
+    background-color: #008cba;
+    color: white !important;
 }

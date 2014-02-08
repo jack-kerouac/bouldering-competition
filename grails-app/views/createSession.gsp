@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<form ng-controller="SessionCtrl" ng-submit="logSession()">
+<form ng-controller="SessionCtrl" ng-submit="logSession()" ng-cloak>
     <input type="hidden" name="boulderer.id" value="${sec.loggedInUserInfo(field: 'id')}"/>
 
     <div class="row">
@@ -40,10 +40,23 @@
 
 
     <div class="row">
-        <div class="medium-12 small-11 column">
-            <div class="boulder-location-map">
-                <div class="map"></div>
-            </div>
+        <div class="medium-8 column">
+            <gym-floor-plan floor-plan="session.gym.floorPlans[0]" boulders="boulders"
+                            boulder-click="select(boulder)"
+                            selected="currentBoulder"></gym-floor-plan>
+        </div>
+
+        <div class="medium-4 column">
+            <boulder-meta boulder="currentBoulder"></boulder-meta>
+
+            <input id="flash" type="checkbox" ng-model="ascents[currentBoulder.id]" ng-true-value="flash"
+                   ng-false-value="none" ng-change="removeAscentIfStyleNone(currentBoulder.id)"
+                   ng-disabled="!currentBoulder">
+            <label for="flash" ng-class="{inactive: !currentBoulder}">flash</label>
+            <input id="top" type="checkbox" ng-model="ascents[currentBoulder.id]" ng-true-value="top"
+                   ng-false-value="none" ng-change="removeAscentIfStyleNone(currentBoulder.id)"
+                   ng-disabled="!currentBoulder">
+            <label for="top" ng-class="{inactive: !currentBoulder}">top</label>
         </div>
     </div>
 
@@ -57,10 +70,30 @@
         </div>
     </div>
 
-
     <div class="row">
-        <div class="small-9 small-offset-3">
+        <div class="medium-6 column">
             <g:submitButton name="submit" class="button" value="${message(code: 'default.button.log.label')}"/>
+        </div>
+
+        <div class="medium-6 column">
+            <table>
+                <thead>
+                <tr>
+                    <th>Boulder ID</th>
+                    <th><g:message code="bcomp.boulder.color.label"/></th>
+                    <th><g:message code="bcomp.boulder.currentGrade.label"/></th>
+                    <th><g:message code="bcomp.ascent.style.label"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="(boulderId, style) in ascents" ng-click="select(boulder(boulderId))">
+                    <td>{{boulderId}}</td>
+                    <td>{{boulder(boulderId).color.germanName}}</td>
+                    <td>{{boulder(boulderId).grade.mean.font}}</td>
+                    <td>{{style}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </form>

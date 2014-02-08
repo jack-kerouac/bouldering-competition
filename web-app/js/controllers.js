@@ -16,74 +16,40 @@ var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, Boulde
 		$scope.session.gym = $scope.gyms[0];
 	}, true);
 
-	$scope.boulderOrderProp = 'id';
 	$scope.$watch('session.gym', function (newValue, oldValue) {
 		if (newValue === oldValue)
 			return;
 		var gym = newValue;
 
 		// reset ascents
-		// we cannot use an object which would be much easier, but Grails databinding requires a stupid set
-		$scope.session.ascents = [];
+		$scope.ascents = {};
 
-
-		if ($scope.floorPlan)
-			$scope.floorPlan.destroy();
-		if (gym.floorPlans.length > 1)
-			throw new Error("gym has more than one floor plan, make it selectable");
-		$scope.floorPlan = FloorPlan.init(gym.floorPlans[0], $('div.map'));
-
-		$scope.boulders = Gym.boulders({gymId: gym.id}, function (boulders) {
-			function setAscentStyle(boulder, style) {
-				var ascent = _.find($scope.session.ascents, function (ascent) {
-					return ascent.boulder === boulder
-				});
-				if (ascent && style === "none") {
-					var index = $scope.session.ascents.indexOf(ascent);
-					$scope.session.ascents.splice(index, 1);
-				}
-				else if (ascent) {
-					ascent.style = style;
-				}
-				else {
-					ascent = {boulder: boulder, style: style};
-					$scope.session.ascents.push(ascent);
-				}
-
-				$scope.$apply();
-			}
-
-			function getAscentStyle(boulder) {
-				var ascent = _.find($scope.session.ascents, function (ascent) {
-					return ascent.boulder === boulder
-				});
-				if (ascent)
-					return ascent.style;
-				else
-					return undefined;
-			}
-
-
-			$scope.markers = [];
-			$.each(boulders, function (index, boulder) {
-				var marker = $scope.floorPlan.mark(boulder);
-				$scope.floorPlan.markerAscentPopup(marker, boulder, getAscentStyle, setAscentStyle);
-				$scope.markers.push(marker);
-			});
-
-
-			$scope.layerGroups = $scope.floorPlan.groupByColor($scope.markers);
-			// show all layers
-			for (var layerGroup in $scope.layerGroups) {
-				$scope.layerGroups[layerGroup].addTo($scope.floorPlan.map);
-			}
-			// add control
-			$scope.layerControl = L.control.layers({}, $scope.layerGroups);
-			$scope.layerControl.addTo($scope.floorPlan.map);
-		});
+		$scope.boulders = Gym.boulders({gymId: gym.id});
 	});
 
+	$scope.select = function (boulder) {
+		$scope.currentBoulder = boulder;
+	};
+
+	$scope.removeAscentIfStyleNone = function(boulderId) {
+		if($scope.ascents[boulderId] === 'none')
+			delete $scope.ascents[boulderId];
+	}
+
+
+	$scope.boulder = function(id) {
+		return _.find($scope.boulders, function(boulder) {
+			return boulder.id == id;
+		});
+	}
+
+
 	$scope.logSession = function () {
+		// transform object since Grails databinding requires a stupid set
+		$scope.session.ascents = _.map($scope.ascents, function (style, boulderId) {
+			return {boulder: { id: boulderId }, style: style};
+		})
+
 		BoulderingSession.save($scope.session, function () {
 				$window.location.href = '/statistics';
 			},
