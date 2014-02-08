@@ -23,44 +23,7 @@
         </div>
 
         <div class="medium-4 column">
-            <table class="boulder-meta-data" ng-class="{inactive: !currentBoulder}">
-                <tbody>
-                <tr>
-                    <th>ID</th>
-                    <td>{{currentBoulder.id}}</td>
-                </tr>
-                <tr>
-                    <th><g:message code="bcomp.boulder.color.label"/></th>
-                    <td>{{currentBoulder.color.germanName}}</td>
-                </tr>
-                <tr>
-                    <th><g:message code="bcomp.boulder.initialGrade.label"/></th>
-                    <td>{{currentBoulder.initialGrade.readable}}</td>
-                </tr>
-                <tr>
-                    <th><g:message code="bcomp.boulder.currentGrade.label"/></th>
-                    <td>{{currentBoulder.grade.mean.font}}</td>
-                </tr>
-                <tr ng-if="currentBoulder.end">
-                    <th><g:message code="bcomp.boulder.end.label"/></th>
-                    <td>{{currentBoulder.end | amDateFormat: 'LL'}}</td>
-                </tr>
-                <tr>
-                    <th><g:message code="bcomp.ascents.label"/></th>
-                    <td>
-                        <span>{{currentBoulderAscents.length}}</span>
-                        <span ng-show="currentBoulderAscents.length > 0">({{(currentBoulderAscents | filter:{style:'flash'}).length}} flash)</span>
-                        <ul ng-show="currentBoulderAscents.length > 0">
-                            <li ng-repeat="ascent in currentBoulderAscents | orderBy:'-date'">
-                                {{ascent.date | amDateFormat: 'LL'}}: {{users[ascent.boulderer].username}}
-                                ({{users[ascent.boulderer].grade.mean.font}})
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
+            <boulder-meta boulder="currentBoulder" ascents="currentBoulderAscents" users="users"></boulder-meta>
         </div>
     </div>
 

@@ -29,6 +29,8 @@ class UrlMappings {
 
         "500"(view: '/error')
 
+        "/templates/boulderMeta.html"(view: '/templates/boulderMeta')
+
 
         // API
 

@@ -1,4 +1,4 @@
-var chalkUpApp = angular.module('chalkUpApp', ['chalkUpServices', 'chalkUpControllers', 'chalkUpDirectives', 'angularMoment']).
+var chalkUpApp = angular.module('chalkUpApp', ['chalkUpServices', 'chalkUpControllers', 'chalkUpDirectives', 'angularMoment', 'boulderMeta']).
 	run(function ($window) {
 		$window.moment.lang(window.locale.language);
 

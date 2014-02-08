@@ -44,6 +44,7 @@ modules = {
         resource url: 'js/directives.js'
         resource url: 'js/imageMap.js'
         resource url: 'js/gymFloorPlan.js'
+        resource url: 'js/boulderMeta.js'
 
         resource url: 'css/application.css'
     }
