@@ -99,12 +99,7 @@ div[flot-chart] {
 }
 
 .boulder-marker {
-    width: 28px;
-    height: 48px;
-    margin-top: -46px;
-    margin-left: -14px;
-
-    font-size: 50px;
+    font-size: 25px;
 
     font-family: "foundation-icons";
     font-style: normal;

@@ -15,8 +15,11 @@ var gymFloorPlanDirective = function () {
 		controller: ['$scope', '$element', '$attrs', '$q', function ($scope, $element, $attrs, $q) {
 			var icon = L.divIcon({
 				className: 'boulder-marker',
-				html: '&#xf172;',
-				iconSize: undefined // set in CSS
+//				html: '&#xf172;', // location marker
+				html: '&#xf1a4;', // record
+//				html: '&#xf1f6;', // target
+				iconSize: [20, 23],
+				iconAnchor: [9, 12]
 			});
 
 			function boulderForMarker(marker) {
