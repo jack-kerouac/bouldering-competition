@@ -60,9 +60,9 @@ class BoulderController extends RestfulController {
 
     def ascents() {
         def boulderId = params.boulderId
-        def ascents = Ascent.where {
+        def ascents = Ascent.findAll {
             boulder.id == boulderId
-        }.findAll()
+        }
         respond(ascents)
     }
 

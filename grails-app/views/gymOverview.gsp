@@ -18,8 +18,7 @@
 
         <div class="medium-8 column">
             <gym-floor-plan floor-plan="gym.floorPlans[0]" boulders="boulders"
-                            boulder-click="select(boulder)"
-                            boulders-draggable="true"></gym-floor-plan>
+                            boulder-click="select(boulder)"></gym-floor-plan>
         </div>
 
         <div class="medium-4 column">
@@ -48,10 +47,10 @@
                 <tr>
                     <th><g:message code="bcomp.ascents.label"/></th>
                     <td>
-                        <span ng-show="currentBoulderAscents.length > 0">{{currentBoulderAscents.length}}
-                        ({{(currentBoulderAscents | filter:{style:'flash'}).length}} flash)</span>
+                        <span>{{currentBoulderAscents.length}}</span>
+                        <span ng-show="currentBoulderAscents.length > 0">({{(currentBoulderAscents | filter:{style:'flash'}).length}} flash)</span>
                         <ul ng-show="currentBoulderAscents.length > 0">
-                            <li ng-repeat="ascent in currentBoulderAscents">
+                            <li ng-repeat="ascent in currentBoulderAscents | orderBy:'-date'">
                                 {{ascent.date | amDateFormat: 'LL'}}: {{users[ascent.boulderer].username}}
                                 ({{users[ascent.boulderer].grade.mean.font}})
                             </li>
@@ -75,7 +74,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="session in sessions">
+                <tr ng-repeat="session in sessions | orderBy:'-date'">
                     <td>{{session.date | amDateFormat: 'LL'}}</td>
                     <td>{{users[session.boulderer].username}}</td>
                     <td>{{session.ascents.length}}</td>

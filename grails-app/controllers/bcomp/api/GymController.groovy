@@ -16,9 +16,9 @@ class GymController extends RestfulController {
 
     def boulders() {
         def gymId = params.gymId
-        def boulders = Boulder.where {
+        def boulders = Boulder.findAll {
             gym.id == gymId
-        }.findAll()
+        }
         respond boulders
     }
 
