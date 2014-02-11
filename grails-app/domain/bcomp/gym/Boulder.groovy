@@ -6,6 +6,10 @@ class Boulder {
         UNKNOWN, RANGE, ASSIGNED;
     }
 
+    static mapping = {
+        end column: '"end"'
+    }
+
     static constraints = {
         color nullable: false
         description nullable: true
