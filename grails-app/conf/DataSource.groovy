@@ -27,15 +27,16 @@ environments {
     }
     production {
         dataSource {
-            dialect = 'org.hibernate.dialect.MySQL5InnoDBDialect'
-            pooled = false
-            dbCreate = 'validate' // use 'update', 'validate', 'create' or 'create-drop'
-            // DB is bound as "bcomp" to cloudbees application "bcomp"
-            jndiName = 'java:comp/env/jdbc/bcomp'
-            // use this URL instead of jndiName for schema-export
-            //url = "jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com/bcomp"
-            username = 'bcomp'
-            password = '785rhgoiehjtg03t'
+            dbCreate = 'create' // use 'update', 'validate', 'create' or 'create-drop'
+
+            driverClassName = "org.postgresql.Driver"
+            dialect = org.hibernate.dialect.PostgreSQLDialect
+
+            uri = new URI(System.env.DATABASE_URL ?: "postgres://test:test@localhost/test")
+
+            url = "jdbc:postgresql://" + uri.host + uri.path
+            username = uri.userInfo.split(":")[0]
+            password = uri.userInfo.split(":")[1]
         }
     }
 }
