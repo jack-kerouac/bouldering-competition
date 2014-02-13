@@ -8,7 +8,8 @@ class SampleData {
         Gym gym = new Gym("Boulderwelt München")
 
         def linkGenerator = grailsApplication.mainContext.getBean("grailsLinkGenerator")
-        def imageUrl = linkGenerator.resource(dir: 'images', file: 'floorPlans/boulderwelt-muenchen.jpg')
+        def imageUrl = linkGenerator.resource(dir: 'images', file: 'floorPlans/boulderwelt-muenchen.jpg',
+                absolute: false)
 
         FloorPlan fp = new FloorPlan(widthInPx: 2000, heightInPx: 1393, imageUrl: imageUrl)
         gym.addToFloorPlans(fp)
@@ -18,7 +19,8 @@ class SampleData {
         Gym gym = new Gym("Heavens Gate")
 
         def linkGenerator = grailsApplication.mainContext.getBean("grailsLinkGenerator")
-        def imageUrl = linkGenerator.resource(dir: 'images', file: 'floorPlans/heavens-gate.png')
+        def imageUrl = linkGenerator.resource(dir: 'images', file: 'floorPlans/heavens-gates.png',
+                absolute: false)
 
         FloorPlan fp = new FloorPlan(widthInPx: 1304, heightInPx: 1393, imageUrl: imageUrl)
         gym.addToFloorPlans(fp)
