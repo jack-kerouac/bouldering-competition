@@ -30,6 +30,7 @@ class SampleData {
         Boulder b = new Boulder(color: BoulderColor.RED)
         b.onFloorPlan(fp, 534 / 2000, 298 / 1393)
         b.gradeRange(Grade.fromFontScale('1A'), Grade.fromFontScale('8A'))
+        b.end = new Date(114, 1, 1)
         return b
     }
 

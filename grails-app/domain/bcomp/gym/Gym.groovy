@@ -16,6 +16,13 @@ class Gym {
         this.floorPlans = [] as Set
     }
 
+    public def getBouldersAtDate(Date date) {
+        Gym this_ = this;
+        return Boulder.findAll {
+            gym == this_ && (end == null || end >= date)
+        }
+    }
+
     boolean equals(o) {
         if (this.is(o)) return true
         if (!(o instanceof Gym)) return false

@@ -15,10 +15,8 @@ class GymController extends RestfulController {
     }
 
     def boulders() {
-        def gymId = params.gymId
-        def boulders = Boulder.findAll {
-            gym.id == gymId
-        }
+        Gym gym = Gym.findById(params.gymId)
+        def boulders = gym.getBouldersAtDate(new Date())
         respond boulders
     }
 
