@@ -17,10 +17,10 @@ var gymFloorPlanDirective = function () {
 			var icon = L.divIcon({
 				className: 'boulder-marker',
 //				html: '&#xf172;', // location marker
-				html: '&#xf1a4;', // record
+//				html: '&#xf1a4;', // record
 //				html: '&#xf1f6;', // target
-				iconSize: [20, 23],
-				iconAnchor: [9, 12]
+				iconSize: undefined,    // set with CSS (assignment to undefined is required!)
+				iconAnchor: undefined   // set with CSS (assignment to undefined is required!)
 			});
 
 			function boulderForMarker(marker) {

@@ -79,29 +79,20 @@ var imageMapDirective = function () {
 
 			if (color === undefined) {
 				$icon.css({
-					color: 'black',
-					background: '',
-					'-webkit-background-clip': '',
-					'-webkit-text-fill-color': ''
+					background: 'black'
 				});
 				return;
 			}
 
 			if (!color.hasOwnProperty('secondary')) {
 				$icon.css({
-					color: color.primary,
-					background: '',
-					'-webkit-background-clip': '',
-					'-webkit-text-fill-color': ''
+					background: color.primary
 				});
 			}
 			else {
 				// use text gradient for two colored boulders
 				$icon.css({
-					color: 'black',
-					background: 'linear-gradient(' + color.primary + ', ' + color.secondary + ')',
-					'-webkit-background-clip': 'text',
-					'-webkit-text-fill-color': 'transparent'
+					background: color.primary
 				});
 			}
 		},
