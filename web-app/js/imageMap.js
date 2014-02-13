@@ -68,7 +68,7 @@ var imageMapDirective = function () {
 		}
 	}
 
-	var ColorableSelectableMarker = L.Marker.extend({
+	L.SelectableMarker = L.Marker.extend({
 		_initIcon: function () {
 			L.Marker.prototype._initIcon.call(this);
 			this.select(this.options.selected);
@@ -82,6 +82,11 @@ var imageMapDirective = function () {
 				$(this._icon).removeClass('selected');
 		}
 	});
+
+	L.selectableMarker = function(latLng, options) {
+		return new L.SelectableMarker(latLng, options);
+	}
+
 
 	return {
 		restrict: 'E',
@@ -185,7 +190,7 @@ var imageMapDirective = function () {
 							if (imageMarker.selected)
 								options.selected = imageMarker.selected;
 
-							var marker = new ColorableSelectableMarker(latLng, options);
+							var marker = L.selectableMarker(latLng, options);
 
 
 							marker.on('dragend', function (e) {
