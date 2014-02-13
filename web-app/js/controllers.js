@@ -276,6 +276,10 @@ var gymOverviewCtrl = function ($scope, $location, $routeParams, Gym, Boulder, U
 		$scope.currentBoulder = boulder;
 	};
 
+	$scope.unselect = function() {
+		$scope.currentBoulder = undefined;
+	}
+
 };
 gymOverviewCtrl.$inject = ['$scope', '$location', '$routeParams', 'Gym', 'Boulder', 'User'];
 chalkUpControllers.controller('GymOverviewCtrl', gymOverviewCtrl);

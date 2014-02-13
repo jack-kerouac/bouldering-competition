@@ -19,6 +19,7 @@
         <div class="medium-8 column">
             <gym-floor-plan floor-plan="gym.floorPlans[0]" boulders="boulders"
                             boulder-click="select(boulder)"
+                            floor-plan-click="unselect()"
                             selected="currentBoulder"></gym-floor-plan>
         </div>
 
