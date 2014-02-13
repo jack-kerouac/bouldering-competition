@@ -98,7 +98,7 @@ div[flot-chart] {
     margin: 0;
 }
 
-.boulder-marker {
+.boulder-icon {
     opacity: 0.9;
     border-radius: 100px; /* something large */
 
@@ -108,7 +108,7 @@ div[flot-chart] {
     margin-top: -12px;
 }
 
-.boulder-marker:hover, .boulder-marker.selected {
+.boulder-icon:hover, .boulder-icon.selected {
     width: 30px;
     height: 30px;
     margin-left: -15px;
@@ -118,7 +118,7 @@ div[flot-chart] {
     box-shadow: 0px 0px 30px 0px rgba(50, 50, 50, 1);
 }
 
-.boulder-marker.selected {
+.boulder-icon.selected {
     opacity: 1.0;
     z-index: 1000000 !important;
 }

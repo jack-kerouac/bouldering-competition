@@ -71,30 +71,7 @@ var imageMapDirective = function () {
 	var ColorableSelectableMarker = L.Marker.extend({
 		_initIcon: function () {
 			L.Marker.prototype._initIcon.call(this);
-			this.colorIcon(this.options.color);
 			this.select(this.options.selected);
-		},
-		colorIcon: function (color) {
-			var $icon = $(this._icon);
-
-			if (color === undefined) {
-				$icon.css({
-					background: 'black'
-				});
-				return;
-			}
-
-			if (!color.hasOwnProperty('secondary')) {
-				$icon.css({
-					background: color.primary
-				});
-			}
-			else {
-				// use text gradient for two colored boulders
-				$icon.css({
-					background: color.primary
-				});
-			}
 		},
 		select: function (selected) {
 			if (typeof(selected) === 'undefined')
