@@ -152,7 +152,11 @@ class BootStrap {
 
             map['location'] = location
 
-            // links
+
+            def photo = [:]
+            photo['url'] = "/boulders/$boulder.id/photo"
+            map['photo'] = photo
+
             map['gym'] = boulder.gym.id
             return map
         }

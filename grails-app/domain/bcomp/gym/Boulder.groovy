@@ -1,5 +1,8 @@
 package bcomp.gym
 
+import javax.imageio.ImageIO
+import java.awt.*
+
 class Boulder {
 
     enum GradeCertainty {
@@ -8,12 +11,15 @@ class Boulder {
 
     static mapping = {
         end column: '"end"'
+        photoAsJpg sqlType: 'blob'
     }
 
     static constraints = {
         color nullable: false
         description nullable: true
         end nullable: true
+        // Limit upload file size to 5MB
+        photoAsJpg maxSize: 1024 * 1024 * 5, nullable: true
     }
 
     static belongsTo = [gym: Gym]
@@ -40,7 +46,7 @@ class Boulder {
      */
     double gradeVariance
 
-    static transients = ['grade']
+    static transients = ['grade', 'photo']
 
     public TentativeGrade getGrade() {
         return new TentativeGrade(mean: new Grade(this.gradeMean), variance: gradeVariance)
@@ -56,10 +62,41 @@ class Boulder {
 
     String description
 
+    byte[] photoAsJpg;
+
+
     public Boulder() {
         this.initialGradeRangeLow = Grade.zero();
         this.initialGradeRangeHigh = Grade.zero();
     }
+
+    public void removePhoto() {
+        photoAsJpg = null;
+    }
+
+    public void setPhoto(Image image) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ImageIO.write(image, "JPG", out);
+        photoAsJpg = out.toByteArray();
+    }
+
+    public Image setPhotoFromInputStream(InputStream input) {
+        Image image = ImageIO.read(input)
+        setPhoto(image)
+    }
+
+    public boolean hasPhoto() {
+        return photoAsJpg != null;
+    }
+
+    public Image getPhoto() {
+        return ImageIO.read(getPhotoAsInputStream())
+    }
+
+    public InputStream getPhotoAsInputStream() {
+        return new ByteArrayInputStream(photoAsJpg)
+    }
+
 
     public void onFloorPlan(FloorPlan floorPlan, double x, double y) {
         location = new OnFloorPlan(floorPlan: floorPlan, x: x, y: y)
@@ -110,7 +147,7 @@ class Boulder {
     }
 
     public String getInitialGrade() {
-        switch(initialGradeCertainty) {
+        switch (initialGradeCertainty) {
             case GradeCertainty.ASSIGNED:
                 return getAssignedGrade().toFontScale()
             case GradeCertainty.RANGE:

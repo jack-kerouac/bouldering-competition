@@ -44,6 +44,9 @@ class UrlMappings {
 
         "/boulders"(resources: "boulder") {
             "/ascents"(controller: 'boulder', action: 'ascents')
+            "/photo"(controller: 'boulder') {
+                action = [GET: "showPhoto", PUT: "savePhoto", DELETE: "deletePhoto"]
+            }
         }
 
         "/users"(resources: "user") {

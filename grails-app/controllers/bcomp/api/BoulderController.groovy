@@ -2,7 +2,6 @@ package bcomp.api
 
 import bcomp.Ascent
 import bcomp.gym.*
-import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
 import grails.validation.Validateable
 import org.springframework.http.HttpStatus
@@ -66,6 +65,32 @@ class BoulderController extends RestfulController {
         respond(ascents)
     }
 
+
+    def showPhoto() {
+        cache shared: true, validFor: 3600  // 1hr on content
+
+        Boulder boulder = Boulder.findById(params.boulderId)
+        if(!boulder.hasPhoto()) {
+            render status: 404, text: 'no photo for this boulder available'
+            return
+        }
+
+        response.setContentType("image/jpg")
+        response.outputStream << boulder.getPhotoAsInputStream()
+    }
+
+    def savePhoto() {
+        Boulder boulder = Boulder.findById(params.boulderId)
+
+        boulder.setPhotoFromInputStream(request.getInputStream())
+        render status: 201
+    }
+
+    def deletePhoto() {
+        Boulder boulder = Boulder.findById(params.boulderId)
+        boulder.removePhoto()
+        render status: 200
+    }
 }
 
 
