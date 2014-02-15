@@ -11,7 +11,6 @@ class Boulder {
 
     static mapping = {
         end column: '"end"'
-        photoAsJpg sqlType: 'blob'
     }
 
     static constraints = {
