@@ -31,6 +31,8 @@ class UrlMappings {
 
         "/templates/boulderMeta.html"(view: '/templates/boulderMeta')
 
+        "/notifications"(controller: 'notifications', action: 'requestNotification')
+
 
         // API
 
