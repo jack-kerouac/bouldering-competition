@@ -159,4 +159,4 @@ grails.plugin.springsecurity.rejectIfNoRule = false
 grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 
 
-cors.url.pattern = '/notifications'
+cors.url.pattern = '/*'
