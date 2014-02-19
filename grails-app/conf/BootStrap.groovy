@@ -179,6 +179,7 @@ class BootStrap {
             map['date'] = session.date
             map['ascents'] = session.ascents
             map['boulderer'] = session.boulderer.id
+            map['gym'] = session.gym.id
             return map
         }
 
