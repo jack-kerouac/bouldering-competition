@@ -179,7 +179,11 @@ class BootStrap {
             map['date'] = session.date
             map['ascents'] = session.ascents
             map['boulderer'] = session.boulderer.id
-            map['gym'] = session.gym.id
+
+            def gym = [:]
+            gym['id'] = session.gym.id
+            gym['name'] = session.gym.name
+            map['gym'] = gym
             return map
         }
 
