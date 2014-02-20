@@ -11,6 +11,10 @@ class BoulderingSession {
 
     Date date
 
+    static mapping = {
+        ascents cascade: "all-delete-orphan"
+    }
+
     static constraints = {
         ascents validator: { ascents, session ->
             return ascents.every { it.boulder.gym == session.gym }
