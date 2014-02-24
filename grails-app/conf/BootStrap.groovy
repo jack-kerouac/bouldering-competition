@@ -125,6 +125,7 @@ class BootStrap {
             map['color'] = boulder.color
             map['grade'] = boulder.grade
             map['description'] = boulder.description
+            map['created'] = boulder.dateCreated
             map['end'] = boulder.end
 
             def initialGrade = [:]

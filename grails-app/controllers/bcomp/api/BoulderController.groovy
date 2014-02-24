@@ -16,6 +16,20 @@ class BoulderController extends RestfulController {
         super(Boulder)
     }
 
+    def show() {
+        def id = params.id
+        withCacheHeaders {
+            Boulder boulder = Boulder.findById(id)
+
+            delegate.lastModified {
+                boulder.dateCreated ?: boulder.lastUpdated
+            }
+            generate {
+                super.show()
+            }
+        }
+    }
+
     def save(CreateBouldersCommand cmd) {
         if (!cmd.hasErrors()) {
             List<Boulder> boulders = [] as List;
@@ -67,16 +81,23 @@ class BoulderController extends RestfulController {
 
 
     def showPhoto() {
-        cache shared: true, validFor: 3600  // 1hr on content
+        def id = params.boulderId
+        withCacheHeaders {
+            Boulder boulder = Boulder.findById(id)
 
-        Boulder boulder = Boulder.findById(params.boulderId)
-        if(!boulder.hasPhoto()) {
-            render status: 404, text: 'no photo for this boulder available'
-            return
+            delegate.lastModified {
+                boulder.dateCreated ?: boulder.lastUpdated
+            }
+            generate {
+                if(!boulder.hasPhoto()) {
+                    render status: 404, text: 'no photo for this boulder available'
+                }
+                else  {
+                    response.setContentType("image/jpg")
+                    response.outputStream << boulder.getPhotoAsInputStream()
+                }
+            }
         }
-
-        response.setContentType("image/jpg")
-        response.outputStream << boulder.getPhotoAsInputStream()
     }
 
     def savePhoto() {

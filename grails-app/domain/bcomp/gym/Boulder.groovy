@@ -45,6 +45,9 @@ class Boulder {
      */
     double gradeVariance
 
+    Date dateCreated
+    Date lastUpdated
+
     static transients = ['grade', 'photo']
 
     public TentativeGrade getGrade() {
