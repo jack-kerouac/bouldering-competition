@@ -22,7 +22,7 @@ class BoulderController extends RestfulController {
             Boulder boulder = Boulder.findById(id)
 
             delegate.lastModified {
-                boulder.dateCreated ?: boulder.lastUpdated
+                boulder.lastUpdated ?: boulder.dateCreated
             }
             generate {
                 super.show()
@@ -86,7 +86,7 @@ class BoulderController extends RestfulController {
             Boulder boulder = Boulder.findById(id)
 
             delegate.lastModified {
-                boulder.dateCreated ?: boulder.lastUpdated
+                boulder.lastUpdated ?: boulder.dateCreated
             }
             generate {
                 if(!boulder.hasPhoto()) {
