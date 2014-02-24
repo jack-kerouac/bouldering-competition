@@ -10,6 +10,9 @@ class Gym {
         name blank: false
     }
 
+    Date dateCreated
+    Date lastUpdated
+
     Gym(String name) {
         this.name = name
         this.boulders = [] as Set

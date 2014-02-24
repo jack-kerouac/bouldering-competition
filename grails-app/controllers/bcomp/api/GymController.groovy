@@ -14,10 +14,33 @@ class GymController extends RestfulController {
         super(Gym)
     }
 
+    def show() {
+        def id = params.id
+        withCacheHeaders {
+            Gym gym = Gym.findById(id)
+
+            delegate.lastModified {
+                gym.lastUpdated ?: gym.dateCreated
+            }
+            generate {
+                super.show()
+            }
+        }
+    }
+
     def boulders() {
-        Gym gym = Gym.findById(params.gymId)
-        def boulders = gym.getBouldersAtDate(new Date())
-        respond boulders
+        def id = params.gymId
+        withCacheHeaders {
+            Gym gym = Gym.findById(id)
+
+            delegate.lastModified {
+                gym.lastUpdated ?: gym.dateCreated
+            }
+            generate {
+                def boulders = gym.getBouldersAtDate(new Date())
+                respond boulders
+            }
+        }
     }
 
     def sessions() {

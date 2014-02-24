@@ -113,6 +113,7 @@ class BootStrap {
             def map = [:]
             map['id'] = gym.id
             map['name'] = gym.name
+            map['created'] = gym.dateCreated
             map['floorPlans'] = gym.floorPlans
             map['colors'] = BoulderColor.values()
             return map
