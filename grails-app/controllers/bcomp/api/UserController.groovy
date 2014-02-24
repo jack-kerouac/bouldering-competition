@@ -1,7 +1,6 @@
 package bcomp.api
 
 import bcomp.aaa.User
-import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 
@@ -11,8 +10,20 @@ class UserController extends RestfulController {
 
     def bouldererService
 
+    def daoAuthenticationProvider
+
+    def springSecurityService
+
     UserController() {
         super(User)
+    }
+
+    def index(String email, Integer max) {
+        if (email != null) {
+            respond User.findByUsername(email)
+        } else {
+            super.index(max)
+        }
     }
 
     def statistics(Long userId) {
