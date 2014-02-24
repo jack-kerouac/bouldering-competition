@@ -156,7 +156,7 @@ class BootStrap {
 
             if (boulder.hasPhoto()) {
                 def photo = [:]
-                photo['url'] = "/boulders/$boulder.id/photo"
+                photo['url'] = "/rest/v1/boulders/$boulder.id/photo"
                 map['photo'] = photo
             }
 
