@@ -11,6 +11,8 @@ class BootStrap {
 
     def grailsApplication
 
+    def grailsLinkGenerator
+
     def messageSource
 
     def bouldererService
@@ -156,7 +158,10 @@ class BootStrap {
 
             if (boulder.hasPhoto()) {
                 def photo = [:]
-                photo['url'] = "/rest/v1/boulders/$boulder.id/photo"
+                // creation of link using controller, action, and ID does not work since the mapping involves HTTP
+                // methods to actions
+                photo['url'] = grailsLinkGenerator.link(['uri': "/rest/v1/boulders/$boulder.id/photo",
+                        'absolute': true])
                 map['photo'] = photo
             }
 
