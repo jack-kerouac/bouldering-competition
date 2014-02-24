@@ -36,24 +36,24 @@ class UrlMappings {
 
         // API
 
-        "/grades"(resource: "grade")
+        "/rest/v1/grades"(resource: "grade")
 
-        "/gyms"(resources: "gym") {
+        "/rest/v1/gyms"(resources: "gym") {
             "/boulders"(controller: 'gym', action: 'boulders')
             "/sessions"(controller: 'gym', action: 'sessions')
         }
-        "/gyms/$gymId/floorPlans/$floorPlanId"(controller: 'gym', action: 'floorPlanImage')
+        "/rest/v1/gyms/$gymId/floorPlans/$floorPlanId"(controller: 'gym', action: 'floorPlanImage')
 
-        "/boulders"(resources: "boulder") {
+        "/rest/v1/boulders"(resources: "boulder") {
             "/ascents"(controller: 'boulder', action: 'ascents')
             "/photo"(controller: 'boulder') {
                 action = [GET: "showPhoto", PUT: "savePhoto", DELETE: "deletePhoto"]
             }
         }
 
-        "/users"(resources: "user") {
+        "/rest/v1/users"(resources: "user") {
             "/statistics"(controller: 'user', action: 'statistics')
         }
-        "/sessions"(resources: 'boulderingSession')
+        "/rest/v1/sessions"(resources: 'boulderingSession')
     }
 }

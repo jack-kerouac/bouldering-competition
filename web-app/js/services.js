@@ -2,13 +2,13 @@ var chalkUpServices = angular.module('chalkUpServices', ['ngResource']);
 
 // GYM SERVICE
 var Gym = function ($resource) {
-	return $resource('/gyms/:gymId',
+	return $resource('/rest/v1/gyms/:gymId',
 		{
 			gymId: '@id'
 		},
 		{
-			boulders: { method: 'GET', url: '/gyms/:gymId/boulders', isArray: true },
-			sessions: { method: 'GET', url: '/gyms/:gymId/sessions', isArray: true }
+			boulders: { method: 'GET', url: '/rest/v1/gyms/:gymId/boulders', isArray: true },
+			sessions: { method: 'GET', url: '/rest/v1/gyms/:gymId/sessions', isArray: true }
 		}
 	);
 };
@@ -18,12 +18,12 @@ chalkUpServices.factory('Gym', Gym);
 
 // BOULDER SERVICE
 var Boulder = function ($resource) {
-	return $resource('/boulders/:boulderId',
+	return $resource('/rest/v1/boulders/:boulderId',
 		{
 			boulderId: '@id'
 		},
 		{
-			ascents: { method: 'GET', url: '/boulders/:boulderId/ascents', isArray: true }
+			ascents: { method: 'GET', url: '/rest/v1/boulders/:boulderId/ascents', isArray: true }
 		});
 };
 Boulder.$inject = ['$resource'];
@@ -229,12 +229,12 @@ chalkUpServices.factory('FloorPlan', FloorPlan);
 
 // USER SERVICE
 var User = function ($resource) {
-	return $resource('/users/:userId?format=json',
+	return $resource('/rest/v1/users/:userId?format=json',
 		{
 			userId: '@id'
 		},
 		{
-			statistics: { method: 'GET', url: '/users/:userId/statistics?format=json', isArray: true }
+			statistics: { method: 'GET', url: '/rest/v1/users/:userId/statistics?format=json', isArray: true }
 		}
 	);
 };
@@ -244,7 +244,7 @@ chalkUpServices.factory('User', User);
 
 // BOULDERING SESSION SERVICE
 var BoulderingSession = function ($resource) {
-	return $resource('/sessions/:sessionId?format=json');
+	return $resource('/rest/v1/sessions/:sessionId?format=json');
 };
 BoulderingSession.$inject = ['$resource'];
 chalkUpServices.factory('BoulderingSession', BoulderingSession);
@@ -252,7 +252,7 @@ chalkUpServices.factory('BoulderingSession', BoulderingSession);
 
 // GRADES SERVICE
 var Grades = function ($resource) {
-	return $resource('/grades?format=json');
+	return $resource('/rest/v1/grades?format=json');
 };
 Grades.$inject = ['$resource'];
 chalkUpServices.factory('Grades', Grades);
