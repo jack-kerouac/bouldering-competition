@@ -81,7 +81,7 @@ var FloorPlan = function () {
 		function createMarker(p, options) {
 			var myIcon = L.divIcon({
 				className: 'boulder-marker',
-				html: '&#xf172;',
+//				html: '&#xf172;',
 				iconSize: undefined // set in CSS
 			});
 
@@ -104,27 +104,42 @@ var FloorPlan = function () {
 			var marker = new BoulderMarker(map.toLatLng(p), options);
 
 
+			function getCss(color) {
+				if (_.isUndefined(color)) {
+					return {
+						background: ''
+					};
+				}
+				else if (color.hasOwnProperty('ternary')) {
+					// use text gradient for two colored boulders
+					var gradient = color.primary + " 33%, " +
+						color.secondary + " 33%, " + color.secondary + " 67%, " +
+						color.ternary + " 67%";
+
+					return {
+						background: "linear-gradient(to bottom, " + gradient + ")"
+					};
+				}
+				else if (color.hasOwnProperty('secondary')) {
+					// use text gradient for two colored boulders
+					var gradient = color.primary + " 50%, " + color.secondary + " 50%";
+
+					return {
+						background: "linear-gradient(to bottom, " + gradient + ")"
+					};
+				}
+				else {
+					return {
+						background: color.primary
+					};
+				}
+			}
+
 			function colorIcon() {
 				// color marker according to color option
 				var color = this.options.color;
 				var $icon = _getIcon(this);
-				if (!color.hasOwnProperty('secondary')) {
-					$icon.css({
-						color: color.primary,
-						background: '',
-						'-webkit-background-clip': '',
-						'-webkit-text-fill-color': ''
-					});
-				}
-				else {
-					// use text gradient for two colored boulders
-					$icon.css({
-						color: 'black',
-						background: 'linear-gradient(' + color.primary + ', ' + color.secondary + ')',
-						'-webkit-background-clip': 'text',
-						'-webkit-text-fill-color': 'transparent'
-					});
-				}
+				$icon.css(getCss(color));
 			};
 
 			marker.on('add', colorIcon);

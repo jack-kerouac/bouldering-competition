@@ -98,7 +98,7 @@ div[flot-chart] {
     margin: 0;
 }
 
-.boulder-icon {
+.boulder-icon, .boulder-marker {
     opacity: 0.9;
     border-radius: 100px; /* something large */
 
