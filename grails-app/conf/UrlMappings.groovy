@@ -33,6 +33,8 @@ class UrlMappings {
 
         "/notifications"(controller: 'notifications', action: 'requestNotification')
 
+        "/loginOrRegister"(controller: 'user', action: 'loginOrRegister')
+
 
         // API
 

@@ -1,7 +1,12 @@
 package bcomp.api
 
 import bcomp.aaa.User
+import bcomp.gym.Grade
 import grails.rest.RestfulController
+import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 class UserController extends RestfulController {
@@ -10,9 +15,7 @@ class UserController extends RestfulController {
 
     def bouldererService
 
-    def daoAuthenticationProvider
-
-    def springSecurityService
+    def authenticationManager
 
     UserController() {
         super(User)
@@ -36,4 +39,37 @@ class UserController extends RestfulController {
         respond stats
     }
 
+
+    def loginOrRegister(Credentials c) {
+        User user = User.findByUsername(c.email);
+        if(user != null) {
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(c.email, c.password);
+            token.setDetails(user);
+
+            try {
+                Authentication auth = authenticationManager.authenticate(token);
+                SecurityContextHolder.getContext().setAuthentication(auth);
+                respond new LoginStatus(loggedIn: auth.isAuthenticated(), email: auth.getName(), userId: user.id);
+            } catch (BadCredentialsException e) {
+                respond new LoginStatus(loggedIn: false);
+            }
+        }
+        else {
+            user = new User(username: c.email, password: c.password, initialGrade: Grade.fromFontScale('5a'))
+            bouldererService.registerBoulderer(user)
+            loginOrRegister(c)
+        }
+    }
+
+}
+
+class Credentials {
+    String email
+    String password
+}
+
+class LoginStatus {
+    boolean loggedIn
+    String email
+    Long userId
 }
