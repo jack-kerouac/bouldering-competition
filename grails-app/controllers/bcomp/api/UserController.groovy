@@ -65,8 +65,8 @@ class UserController extends RestfulController {
     // based on http://raibledesigns.com/rd/entry/implementing_ajax_authentication_using_jquery
     def loginStatus() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && !auth.getName().equals("anonymousUser") && auth.isAuthenticated()) {
-            respond new LoginStatus(loggedIn: true, email: auth.getName(), userId: auth.principal.id);
+        if (auth != null && !auth.getName().equals("__grails.anonymous.user__") && auth.isAuthenticated()) {
+            respond new LoginStatus(loggedIn: true, email: auth.getName(), userId: auth.details.id);
         } else {
             respond new LoginStatus(loggedIn: false);
         }
