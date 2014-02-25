@@ -40,6 +40,7 @@ class UserController extends RestfulController {
     }
 
 
+    // based on http://raibledesigns.com/rd/entry/implementing_ajax_authentication_using_jquery
     def loginOrRegister(Credentials c) {
         User user = User.findByUsername(c.email);
         if(user != null) {
@@ -58,6 +59,16 @@ class UserController extends RestfulController {
             user = new User(username: c.email, password: c.password, initialGrade: Grade.fromFontScale('5a'))
             bouldererService.registerBoulderer(user)
             loginOrRegister(c)
+        }
+    }
+
+    // based on http://raibledesigns.com/rd/entry/implementing_ajax_authentication_using_jquery
+    def loginStatus() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && !auth.getName().equals("anonymousUser") && auth.isAuthenticated()) {
+            respond new LoginStatus(loggedIn: true, email: auth.getName(), userId: auth.principal.id);
+        } else {
+            respond new LoginStatus(loggedIn: false);
         }
     }
 
