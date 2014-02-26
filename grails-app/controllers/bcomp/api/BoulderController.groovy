@@ -79,8 +79,12 @@ class BoulderController extends RestfulController {
                     render status: HttpStatus.NOT_FOUND, text: 'no photo for this boulder available'
                 }
                 else  {
-                    response.setContentType("image/jpg")
-                    response.outputStream << boulder.getPhotoAsInputStream()
+                    if(request.method == "HEAD")
+                        render status: HttpStatus.OK
+                    else {
+                        response.setContentType("image/jpg")
+                        response.outputStream << boulder.getPhotoAsInputStream()
+                    }
                 }
             }
         }

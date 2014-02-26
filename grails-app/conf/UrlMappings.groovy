@@ -50,7 +50,7 @@ class UrlMappings {
         "/rest/v1/boulders"(resources: "boulder") {
             "/ascents"(controller: 'boulder', action: 'ascents')
             "/photo"(controller: 'boulder') {
-                action = [GET: "showPhoto", PUT: "savePhoto", DELETE: "deletePhoto"]
+                action = [GET: "showPhoto", HEAD: "showPhoto", PUT: "savePhoto", DELETE: "deletePhoto"]
             }
         }
 
