@@ -22,7 +22,7 @@
         </th>
         <td>{{boulder.grade.mean.font}}</td>
     </tr>
-    <tr ng-if="currentBoulder.end">
+    <tr ng-if="boulder.end">
         <th>
             <g:message code="bcomp.boulder.end.label"/>
         </th>

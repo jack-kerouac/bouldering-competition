@@ -17,16 +17,21 @@ var modifyBoulderCtrl = function ($scope, $http, $window, Gym, Boulder) {
 		$scope.boulders = Gym.boulders({gymId: gym.id});
 	});
 
+	$scope.unsetDate = moment().format('YYYY-MM-DD');
+
 	$scope.select = function (boulder) {
 		$scope.currentBoulder = boulder;
 	};
 
 	$scope.unset = function(boulder) {
 		var id = boulder.id;
-		_.remove($scope.boulders, function(boulder) {
-			return boulder.id == id;
-		});
-		boulder.end = moment().format('YYYY-MM-DD');
+		if (!moment($scope.unsetDate).isAfter(moment())) {
+			$scope.currentBoulder = undefined;
+			_.remove($scope.boulders, function (boulder) {
+				return boulder.id == id;
+			});
+		}
+		boulder.end = moment($scope.unsetDate).format('YYYY-MM-DD');
 		Boulder.update({ id: id, end: boulder.end });
 	}
 

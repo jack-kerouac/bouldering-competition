@@ -35,7 +35,9 @@
         <div class="medium-4 column">
             <boulder-meta boulder="currentBoulder"></boulder-meta>
 
-            <button ng-click="unset(currentBoulder)">Abschrauben!</button>
+            <input type="date" ng-model="unsetDate">
+
+            <button ng-disabled="!currentBoulder" ng-click="unset(currentBoulder)">Abschrauben!</button>
         </div>
     </div>
 
