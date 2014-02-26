@@ -59,14 +59,14 @@ class BootStrap {
     private void createSecurityData() {
         new Role(authority: BouldererService.BOULDERER_AUTHORITY).save(flush: true)
 
-        createBoulderer 'flo', Grade.fromFontScale('7b')
-        createBoulderer 'christoph', Grade.fromFontScale('6c')
-        createBoulderer 'fia', Grade.fromFontScale('6b')
-        createBoulderer 'thomas', Grade.fromFontScale('6a')
-        createBoulderer 'franz', Grade.fromFontScale('6c')
-        createBoulderer 'anja', Grade.fromFontScale('6a')
-        createBoulderer 'chris', Grade.fromFontScale('6a+')
-        createBoulderer 'tony', Grade.fromFontScale('6c')
+        createBoulderer 'florian.rampp@gmail.com', Grade.fromFontScale('7b')
+        createBoulderer 'christoph.rampp@gmail.com', Grade.fromFontScale('6c')
+        createBoulderer 'fia@chalkup.de', Grade.fromFontScale('6b')
+        createBoulderer 'thomas@duddits.de', Grade.fromFontScale('6a')
+        createBoulderer 'franz@chalkup.de', Grade.fromFontScale('6c')
+        createBoulderer 'anja@chalkup.de', Grade.fromFontScale('6a')
+        createBoulderer 'chriswecklich@gmail.com', Grade.fromFontScale('6a+')
+        createBoulderer 'anthony.graglia@gmail.com', Grade.fromFontScale('6c')
     }
 
 
