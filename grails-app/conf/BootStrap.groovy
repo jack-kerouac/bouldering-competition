@@ -76,9 +76,11 @@ class BootStrap {
             map['name'] = color.toString();
             map['germanName'] = messageSource.getMessage("bcomp.boulder.color.$color", null, Locale.GERMAN);
             map['englishName'] = messageSource.getMessage("bcomp.boulder.color.$color", null, Locale.ENGLISH);
-            map['primary'] = "rgb($color.primaryColor.red, $color.primaryColor.green, $color.primaryColor.blue)"
+            map['primary'] = BoulderColor.asRgb(color.primaryColor)
             if (color.secondaryColor)
-                map['secondary'] = "rgb($color.secondaryColor.red, $color.secondaryColor.green, $color.secondaryColor.blue)"
+                map['secondary'] = BoulderColor.asRgb(color.secondaryColor)
+            if (color.ternaryColor)
+                map['ternary'] = BoulderColor.asRgb(color.ternaryColor)
             return map
         }
 
