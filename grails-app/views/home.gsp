@@ -10,7 +10,7 @@
 <div class="row content">
     <h1>Tasks</h1>
 
-    <div class="medium-4 columns">
+    <div class="medium-6 columns">
         <a href="/createBoulders" class="button">
             <i class="fi-plus"></i>
             <g:message code="default.set.label" args="[message(code: 'bcomp.boulder.label')]"/>
@@ -18,17 +18,10 @@
     </div>
 
 
-    <div class="medium-4 columns">
+    <div class="medium-6 columns">
         <a href="/modifyBoulder" class="button">
             <i class="fi-pencil"></i> Boulder ändern
         </a>
-    </div>
-
-    <div class="medium-4 columns">
-        <g:link controller="leaderboard" action="view" class="button">
-            <i class="fi-results"></i>
-            <g:message code="default.show.label" args="[message(code: 'bcomp.leaderboard.label')]"/>
-        </g:link>
     </div>
 </div>
 
