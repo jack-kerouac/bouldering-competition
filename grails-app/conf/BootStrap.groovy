@@ -131,7 +131,8 @@ class BootStrap {
             map['grade'] = boulder.grade
             map['description'] = boulder.description
             map['created'] = boulder.dateCreated
-            map['end'] = boulder.end
+            if(boulder.end)
+                map['end'] = boulder.end.format("yyyy-MM-dd");
 
             def initialGrade = [:]
             initialGrade['certainty'] = boulder.initialGradeCertainty
