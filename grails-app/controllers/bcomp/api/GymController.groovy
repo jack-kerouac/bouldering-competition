@@ -1,7 +1,6 @@
 package bcomp.api
 
 import bcomp.BoulderingSession
-import bcomp.gym.Boulder
 import bcomp.gym.Gym
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
@@ -14,35 +13,11 @@ class GymController extends RestfulController {
         super(Gym)
     }
 
-    def show() {
-        def id = params.id
-        withCacheHeaders {
-            Gym gym = Gym.findById(id)
-
-            delegate.lastModified {
-                gym.lastUpdated ?: gym.dateCreated
-            }
-            generate {
-                super.show()
-            }
-        }
-    }
-
     def boulders() {
         def id = params.gymId
-        withCacheHeaders {
-            Gym gym = Gym.findById(id)
-
-            if (!gym.boulders.isEmpty()) {
-                delegate.lastModified {
-                    gym.lastModifiedBoulderDate()
-                }
-            }
-            generate {
-                def boulders = gym.getBouldersAtDate(new Date())
-                respond boulders
-            }
-        }
+        Gym gym = Gym.findById(id)
+        def boulders = gym.getBouldersAtDate(new Date())
+        respond boulders
     }
 
     def sessions() {

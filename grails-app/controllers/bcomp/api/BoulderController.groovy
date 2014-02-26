@@ -16,20 +16,6 @@ class BoulderController extends RestfulController {
         super(Boulder)
     }
 
-    def show() {
-        def id = params.id
-        withCacheHeaders {
-            Boulder boulder = Boulder.findById(id)
-
-            delegate.lastModified {
-                boulder.lastUpdated ?: boulder.dateCreated
-            }
-            generate {
-                super.show()
-            }
-        }
-    }
-
     def save(CreateBouldersCommand cmd) {
         if (!cmd.hasErrors()) {
             List<Boulder> boulders = [] as List;
@@ -86,11 +72,11 @@ class BoulderController extends RestfulController {
             Boulder boulder = Boulder.findById(id)
 
             delegate.lastModified {
-                boulder.lastUpdated ?: boulder.dateCreated
+                boulder.lastUpdated
             }
             generate {
                 if(!boulder.hasPhoto()) {
-                    render status: 404, text: 'no photo for this boulder available'
+                    render status: HttpStatus.NOT_FOUND, text: 'no photo for this boulder available'
                 }
                 else  {
                     response.setContentType("image/jpg")
