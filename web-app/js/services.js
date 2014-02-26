@@ -23,7 +23,8 @@ var Boulder = function ($resource) {
 			boulderId: '@id'
 		},
 		{
-			ascents: { method: 'GET', url: '/rest/v1/boulders/:boulderId/ascents', isArray: true }
+			ascents: { method: 'GET', url: '/rest/v1/boulders/:boulderId/ascents', isArray: true },
+			update: { method: 'PUT' }
 		});
 };
 Boulder.$inject = ['$resource'];

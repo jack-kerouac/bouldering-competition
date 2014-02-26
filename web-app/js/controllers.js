@@ -1,28 +1,18 @@
 var chalkUpControllers = angular.module('chalkUpControllers', ['chalkUpServices', 'gymFloorPlan', 'ngRoute']);
 
-var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, BoulderingSession) {
-
-	$scope.session = {};
-	$scope.session.date = moment().format('YYYY-MM-DD');
-	// TODO: get it differently, somehow
-	$scope.session.boulderer = User.get({userId: parseInt($('input[name="boulderer.id"]').val())});
-
+var modifyBoulderCtrl = function ($scope, $http, $window, Gym, Boulder) {
 	$scope.gyms = Gym.query();
 
 	$scope.$watch('gyms', function (newValue, oldValue) {
 		if (newValue === oldValue)
 			return;
 
-		$scope.session.gym = $scope.gyms[0];
+		$scope.gym = $scope.gyms[0];
 	}, true);
 
-	$scope.$watch('session.gym', function (newValue, oldValue) {
-		if (newValue === oldValue)
+	$scope.$watch('gym', function (gym, oldGym) {
+		if (gym === oldGym)
 			return;
-		var gym = newValue;
-
-		// reset ascents
-		$scope.ascents = {};
 
 		$scope.boulders = Gym.boulders({gymId: gym.id});
 	});
@@ -31,36 +21,18 @@ var sessionCtrl = function ($scope, $http, $window, Gym, FloorPlan, User, Boulde
 		$scope.currentBoulder = boulder;
 	};
 
-	$scope.removeAscentIfStyleNone = function(boulderId) {
-		if($scope.ascents[boulderId] === 'none')
-			delete $scope.ascents[boulderId];
-	}
-
-
-	$scope.boulder = function(id) {
-		return _.find($scope.boulders, function(boulder) {
+	$scope.unset = function(boulder) {
+		var id = boulder.id;
+		_.remove($scope.boulders, function(boulder) {
 			return boulder.id == id;
 		});
-	}
-
-
-	$scope.logSession = function () {
-		// transform object since Grails databinding requires a stupid set
-		$scope.session.ascents = _.map($scope.ascents, function (style, boulderId) {
-			return {boulder: { id: boulderId }, style: style};
-		})
-
-		BoulderingSession.save($scope.session, function () {
-				$window.location.href = '/statistics';
-			},
-			function (httpResponse) {
-				$scope.errors = httpResponse.data.errors;
-			});
+		boulder.end = moment().format('YYYY-MM-DD');
+		Boulder.update({ id: id, end: boulder.end });
 	}
 
 };
-sessionCtrl.$inject = ['$scope', '$http', '$window', 'Gym', 'FloorPlan', 'User', 'BoulderingSession'];
-chalkUpControllers.controller('SessionCtrl', sessionCtrl);
+modifyBoulderCtrl.$inject = ['$scope', '$http', '$window', 'Gym', 'Boulder'];
+chalkUpControllers.controller('ModifyBoulderCtrl', modifyBoulderCtrl);
 
 
 var boulderCtrl = function ($scope, $window, Gym, Grades, FloorPlan, Boulder) {

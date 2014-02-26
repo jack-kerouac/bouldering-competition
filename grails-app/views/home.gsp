@@ -19,10 +19,8 @@
 
 
     <div class="medium-4 columns">
-        <a href="/createSession" class="button">
-
-            <i class="fi-pencil"></i>
-            <g:message code="default.log.label" args="[message(code: 'bcomp.boulderingSession.label')]"/>
+        <a href="/modifyBoulder" class="button">
+            <i class="fi-pencil"></i> Boulder ändern
         </a>
     </div>
 

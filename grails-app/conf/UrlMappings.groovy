@@ -18,7 +18,7 @@ class UrlMappings {
         "/"(view: '/index')
         "/home"(view: '/home')
         "/createBoulders"(view: '/createBoulders')
-        "/createSession"(view: '/createSession')
+        "/modifyBoulder"(view: '/modifyBoulder')
         "/gymOverview"(view: '/gymOverview')
 
         "/status"(view: '/grailsStatus')
