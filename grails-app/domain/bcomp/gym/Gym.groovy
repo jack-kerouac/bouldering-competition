@@ -19,6 +19,10 @@ class Gym {
         this.floorPlans = [] as Set
     }
 
+    void setUpdated() {
+        lastUpdated = new Date()
+    }
+
     public def getBouldersAtDate(Date date) {
         Gym this_ = this;
         return Boulder.findAll {
