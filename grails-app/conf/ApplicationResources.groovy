@@ -33,11 +33,11 @@ modules = {
     moment {
         resource url: 'js/vendor/moment-with-langs.js'
     }
-    underscore {
-        resource url: 'js/vendor/underscore.js'
+    lodash {
+        resource url: 'js/vendor/lodash.js'
     }
     application {
-        dependsOn 'jquery', 'foundation', 'angular', 'leaflet', 'flot', 'moment', 'underscore'
+        dependsOn 'jquery', 'foundation', 'angular', 'leaflet', 'flot', 'moment', 'lodash'
         resource url: 'js/application.js'
         resource url: 'js/services.js'
         resource url: 'js/controllers.js'
