@@ -102,11 +102,7 @@ class BoulderController extends RestfulController {
 
     def savePhoto() {
         Boulder boulder = Boulder.findById(params.boulderId)
-
         boulder.setPhotoFromInputStream(request.getInputStream())
-
-        // update gym last modified date!
-        boulder.gym.setUpdated()
 
         render status: 201
     }
@@ -114,9 +110,6 @@ class BoulderController extends RestfulController {
     def deletePhoto() {
         Boulder boulder = Boulder.findById(params.boulderId)
         boulder.removePhoto()
-
-        // update gym last modified date!
-        boulder.gym.setUpdated()
 
         render status: 200
     }

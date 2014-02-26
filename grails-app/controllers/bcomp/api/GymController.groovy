@@ -33,8 +33,10 @@ class GymController extends RestfulController {
         withCacheHeaders {
             Gym gym = Gym.findById(id)
 
-            delegate.lastModified {
-                gym.lastUpdated ?: gym.dateCreated
+            if (!gym.boulders.isEmpty()) {
+                delegate.lastModified {
+                    gym.lastModifiedBoulderDate()
+                }
             }
             generate {
                 def boulders = gym.getBouldersAtDate(new Date())

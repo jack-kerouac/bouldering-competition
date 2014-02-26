@@ -19,8 +19,9 @@ class Gym {
         this.floorPlans = [] as Set
     }
 
-    void setUpdated() {
-        lastUpdated = new Date()
+    public Date lastModifiedBoulderDate() {
+        def lastModified = Boulder.findAllByGym(this, [max: 1, sort: 'lastUpdated', order: 'desc'])
+        return lastModified[0].lastUpdated
     }
 
     public def getBouldersAtDate(Date date) {
