@@ -13,9 +13,9 @@ BASE_URL = 'http://boulderwelt.tcwebworks.de/dev'
 IGNORED_PARCOURS = ['TOP 20', 'TOP 20-50', 'NEU']
 
 # CHALKUP BOULDERWELT GYM ID
-GYM_ID = 2
+GYM_ID = 1
 # CHALKUP BOULDERWELT FLOORPLAN ID
-FLOORPLAN_ID = 2
+FLOORPLAN_ID = 1
 FLOORPLAN_SIZE = [2000, 1393]
 
 # http://boulderwelt.tcwebworks.de/dev/img/colors/XX.jpg
@@ -24,13 +24,13 @@ COLOR_MAP = {
     '29.jpg': 'PINK',
     '26.jpg': 'WHITE',
     '24.jpg': 'BLACK',
-    '27.jpg': 'BLUE/WHITE/RED',
+    '27.jpg': 'BLUE_WHITE_RED',
     '1.jpg': 'RED',
     '23.jpg': 'PURPLE',
     '21.jpg': 'ORANGE',
     '22.jpg': 'YELLOW',
     '3.jpg': 'BLUE',
-    '31.jpg': 'BLACK/BLUE',
+    '31.jpg': 'BLUE_BLACK',
 }
 
 
@@ -69,11 +69,11 @@ def scrape_parcour(parcour):
 
     for link in links.items():
         boulder = {}
-        boulder['id'] = int(re.compile("boulder=(.*)").search(link.attr.href).groups()[0])
+        boulder['foreignId'] = int(re.compile("boulder=(.*)").search(link.attr.href).groups()[0])
         style = re.compile("left:(.*)px;top:(.*)px;").search(link.attr.style)
         boulder['location'] = {'floorPlan': {'id': FLOORPLAN_ID},
-                               'x': int(style.groups()[0]) / FLOORPLAN_SIZE[0],
-                               'y': int(style.groups()[1]) / FLOORPLAN_SIZE[1]}
+                               'x': (int(style.groups()[0]) + 10) / FLOORPLAN_SIZE[0],
+                               'y': (int(style.groups()[1]) + 40) / FLOORPLAN_SIZE[1]}
 
         if 'grade' in parcour and len(parcour['grade']) == 2:
             boulder['initialGrade'] = {'certainty': 'RANGE',
@@ -89,7 +89,7 @@ def scrape_parcour(parcour):
         bg_image = re.compile("background:url\('img/colors/(.*)'\);").search(dot_div_style).groups()[0]
         boulder['color'] = {'name': COLOR_MAP[bg_image]}
 
-        boulder['gym'] = GYM_ID
+        boulder['gym'] = {'id': GYM_ID}
 
         boulders.append(boulder)
 
@@ -108,5 +108,25 @@ def scrape_boulders():
     return boulders
 
 
+def upload_boulders(boulders, filter):
+    failedIds = set()
+    for i, boulder in enumerate(boulders):
+        if filter and boulder['foreignId'] not in filter:
+            continue
+
+        headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+        r = requests.post('http://demo.chalkup.de/rest/v1/boulders/saveOne', data=json.dumps(boulder), headers=headers)
+
+        if r.status_code == 201:
+            print("{}: uploaded boulder {} as {}".format(i, boulder['foreignId'], r.json()['id']))
+        else:
+            print("{}: could not upload boulder {} (status: {})".format(i, boulder['foreignId'], r.status_code))
+            failedIds.add(boulder['foreignId'])
+
+    return failedIds
+
+
 boulders = scrape_boulders()
 print(json.dumps(boulders))
+failedIds = upload_boulders(boulders)
+print("failed boulders: {}".format(failedIds))
