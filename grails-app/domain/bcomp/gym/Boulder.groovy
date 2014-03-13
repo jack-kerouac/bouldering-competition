@@ -14,6 +14,8 @@ class Boulder {
     }
 
     static constraints = {
+        foreignId nullable: true, unique: 'gym'
+
         color nullable: false
         description nullable: true
         end nullable: true
@@ -24,6 +26,9 @@ class Boulder {
     static belongsTo = [gym: Gym]
 
     static hasOne = [location: Location]
+
+
+    Long foreignId
 
     /**
      * Either the color of the holds and feet of the boulder or any other marks to distinguish this boulder from

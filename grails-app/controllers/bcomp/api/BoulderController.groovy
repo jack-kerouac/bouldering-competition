@@ -3,7 +3,9 @@ package bcomp.api
 import bcomp.Ascent
 import bcomp.gym.*
 import grails.rest.RestfulController
+import grails.transaction.Transactional
 import grails.validation.Validateable
+import org.grails.databinding.BindUsing
 import org.springframework.http.HttpStatus
 
 class BoulderController extends RestfulController {
@@ -57,6 +59,42 @@ class BoulderController extends RestfulController {
         }
     }
 
+    def saveOneBoulder(CreateOneBoulderCommand cmd) {
+        if (!cmd.hasErrors()) {
+            Boulder b = new Boulder()
+
+            cmd.gym.discard()
+            b.gym = cmd.gym
+
+            b.foreignId = cmd.foreignId
+
+            b.color = cmd.color
+
+            b.onFloorPlan(cmd.location.floorPlan, cmd.location.x, cmd.location.y)
+
+            // TODO: validation of entered grades
+            switch (cmd.initialGrade.certainty) {
+                case Boulder.GradeCertainty.ASSIGNED:
+                    b.assignedGrade(Grade.fromFontScale(cmd.initialGrade.grade));
+                    break;
+                case Boulder.GradeCertainty.RANGE:
+                    b.gradeRange(Grade.fromFontScale(cmd.initialGrade.gradeLow),
+                            Grade.fromFontScale(cmd.initialGrade.gradeHigh));
+                    break;
+                case Boulder.GradeCertainty.UNKNOWN:
+                    b.unknownGrade();
+                    break;
+            }
+
+            boulderService.setBoulder(b.gym, b)
+
+            // TODO: what to return?
+            render(contentType: "application/json", status: HttpStatus.CREATED) { b }
+        } else {
+            respond cmd.errors
+        }
+    }
+
     def ascents() {
         def boulderId = params.boulderId
         def ascents = Ascent.findAll {
@@ -75,11 +113,10 @@ class BoulderController extends RestfulController {
                 boulder.lastUpdated
             }
             generate {
-                if(!boulder.hasPhoto()) {
+                if (!boulder.hasPhoto()) {
                     render status: HttpStatus.NOT_FOUND, text: 'no photo for this boulder available'
-                }
-                else  {
-                    if(request.method == "HEAD")
+                } else {
+                    if (request.method == "HEAD")
                         render status: HttpStatus.OK
                     else {
                         response.setContentType("image/jpg")
@@ -104,6 +141,73 @@ class BoulderController extends RestfulController {
         render status: 200
     }
 }
+
+@Validateable
+class CreateOneBoulderCommand {
+    static constraints = {
+        foreignId nullable: true
+    }
+
+    Long foreignId
+
+    Gym gym
+
+    Location location
+
+    @BindUsing({
+        obj, source -> BoulderColor.valueOf(source['color']['name'])
+    })
+    BoulderColor color
+
+    InitialGrade initialGrade
+}
+
+@Validateable
+class Location {
+    FloorPlan floorPlan
+    double x, y
+
+    static constraints = {
+        x min: 0.0d, max: 1.0d
+        y min: 0.0d, max: 1.0d
+    }
+}
+
+@Validateable
+class InitialGrade {
+    Boulder.GradeCertainty certainty
+
+    @BindUsing({
+        obj, source -> source['grade']['font']
+    })
+    String grade
+
+    @BindUsing({
+        obj, source -> source['gradeLow']['font']
+    })
+    String gradeLow
+
+    @BindUsing({
+        obj, source -> source['gradeHigh']['font']
+    })
+    String gradeHigh
+
+    static constraints = {
+        grade nullable: true, validator: { grade, cmd ->
+            return cmd.certainty == Boulder.GradeCertainty.ASSIGNED ? grade != null : true
+        }
+        gradeLow nullable: true, validator: { gradeLow, cmd ->
+            return cmd.certainty == Boulder.GradeCertainty.RANGE ? gradeLow != null : true
+        }
+        gradeHigh nullable: true, validator: { gradeHigh, cmd ->
+            return cmd.certainty == Boulder.GradeCertainty.RANGE ? gradeHigh != null : true
+        }
+    }
+}
+
+
+
+
 
 
 @Validateable

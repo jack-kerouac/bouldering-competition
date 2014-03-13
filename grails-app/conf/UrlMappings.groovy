@@ -47,6 +47,9 @@ class UrlMappings {
         }
         "/rest/v1/gyms/$gymId/floorPlans/$floorPlanId"(controller: 'gym', action: 'floorPlanImage')
 
+
+        "/rest/v1/boulders/saveOne"(controller: 'boulder', action: 'saveOneBoulder')
+
         "/rest/v1/boulders"(resources: "boulder") {
             "/ascents"(controller: 'boulder', action: 'ascents')
             "/photo"(controller: 'boulder') {
