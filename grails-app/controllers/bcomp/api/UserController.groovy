@@ -42,6 +42,7 @@ class UserController extends RestfulController {
 
     // based on http://raibledesigns.com/rd/entry/implementing_ajax_authentication_using_jquery
     def loginOrRegister(Credentials c) {
+        c.email = c.email.toLowerCase()
         User user = User.findByUsername(c.email);
         if(user != null) {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(c.email, c.password);
