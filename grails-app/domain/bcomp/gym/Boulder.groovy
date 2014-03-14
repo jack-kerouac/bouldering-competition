@@ -160,7 +160,7 @@ class Boulder {
             case GradeCertainty.RANGE:
                 return getGradeRangeLow().toFontScale() + " – " + getGradeRangeHigh().toFontScale()
             case GradeCertainty.UNKNOWN:
-                return "?"
+                return "unbekannt"
         }
     }
 
