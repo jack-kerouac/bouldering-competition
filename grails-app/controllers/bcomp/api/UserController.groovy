@@ -25,8 +25,22 @@ class UserController extends RestfulController {
         if (email != null) {
             respond User.findByUsername(email)
         } else {
-            super.index(max)
+            // TODO: reenable this
+            //super.index(max)
+            render status: 404
         }
+    }
+
+    @Override
+    def delete() {
+        // TODO: reenable this
+        render status: 404
+    }
+
+    @Override
+    def update() {
+        // TODO: reenable this
+        render status: 404
     }
 
     def statistics(Long userId) {
