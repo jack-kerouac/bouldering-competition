@@ -129,6 +129,8 @@ class BootStrap {
             map['id'] = boulder.id
             map['color'] = boulder.color
             map['grade'] = boulder.grade
+            if(boulder.name)
+                map['name'] = boulder.name
             map['description'] = boulder.description
             map['created'] = boulder.dateCreated
             if(boulder.end)
