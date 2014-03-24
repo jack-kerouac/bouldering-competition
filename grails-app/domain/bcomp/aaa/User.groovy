@@ -5,14 +5,15 @@ import bcomp.gym.TentativeGrade
 
 class User {
 
-	transient springSecurityService
+    transient springSecurityService
 
-	String email
-	String password
-	boolean enabled = true
-	boolean accountExpired
-	boolean accountLocked
-	boolean passwordExpired
+    String email
+    String password
+    String nickname
+    boolean enabled = true
+    boolean accountExpired
+    boolean accountLocked
+    boolean passwordExpired
 
     static embedded = ['initialGrade']
 
@@ -40,32 +41,33 @@ class User {
         this.gradeVariance = grade.variance
     }
 
-	static constraints = {
-		email blank: false, unique: true
-		password blank: false
+    static constraints = {
+        email blank: false, unique: true
+        password blank: false
+        nickname nullable: true
         initialGrade nullable: true
-	}
+    }
 
-	static mapping = {
+    static mapping = {
         table '"user"'
-		password column: '"password"'
-	}
+        password column: '"password"'
+    }
 
     Set<Role> getAuthorities() {
-		UserRole.findAllByUser(this).collect { it.role } as Set
-	}
+        UserRole.findAllByUser(this).collect { it.role } as Set
+    }
 
-	def beforeInsert() {
-		encodePassword()
-	}
+    def beforeInsert() {
+        encodePassword()
+    }
 
-	def beforeUpdate() {
-		if (isDirty('password')) {
-			encodePassword()
-		}
-	}
+    def beforeUpdate() {
+        if (isDirty('password')) {
+            encodePassword()
+        }
+    }
 
-	protected void encodePassword() {
-		password = springSecurityService.encodePassword(password)
-	}
+    protected void encodePassword() {
+        password = springSecurityService.encodePassword(password)
+    }
 }

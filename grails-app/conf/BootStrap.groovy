@@ -50,7 +50,7 @@ class BootStrap {
         SampleData.createHeavensGate(grailsApplication).save(flush: true);
     }
 
-    private void createBoulderer(String username, BoulderGrade initialGrade) {
+    private void createBoulderer(String username, String nickname, BoulderGrade initialGrade) {
         def user = new User(email: username, password: 'p', initialGrade: initialGrade)
 
         bouldererService.registerBoulderer(user)
@@ -59,14 +59,14 @@ class BootStrap {
     private void createSecurityData() {
         new Role(authority: BouldererService.BOULDERER_AUTHORITY).save(flush: true)
 
-        createBoulderer 'florian.rampp@gmail.com', BoulderGrade.fromFontScale('7b')
-        createBoulderer 'christoph.rampp@gmail.com', BoulderGrade.fromFontScale('6c')
-        createBoulderer 'fia@chalkup.de', BoulderGrade.fromFontScale('6b')
-        createBoulderer 'thomas@duddits.de', BoulderGrade.fromFontScale('6a')
-        createBoulderer 'franz@chalkup.de', BoulderGrade.fromFontScale('6c')
-        createBoulderer 'anja@chalkup.de', BoulderGrade.fromFontScale('6a')
-        createBoulderer 'chriswecklich@gmail.com', BoulderGrade.fromFontScale('6a+')
-        createBoulderer 'anthony.graglia@gmail.com', BoulderGrade.fromFontScale('6c')
+        createBoulderer 'florian.rampp@gmail.com', 'flo', BoulderGrade.fromFontScale('7b')
+        createBoulderer 'christoph.rampp@gmail.com', 'christoph', BoulderGrade.fromFontScale('6c')
+        createBoulderer 'fia@chalkup.de', 'fia', BoulderGrade.fromFontScale('6b')
+        createBoulderer 'thomas@duddits.de', 'thomas', BoulderGrade.fromFontScale('6a')
+        createBoulderer 'franz@chalkup.de', 'franz', BoulderGrade.fromFontScale('6c')
+        createBoulderer 'anja@chalkup.de', 'anja', BoulderGrade.fromFontScale('6a')
+        createBoulderer 'chriswecklich@gmail.com', 'chris', BoulderGrade.fromFontScale('6a+')
+        createBoulderer 'anthony.graglia@gmail.com', 'tony', BoulderGrade.fromFontScale('6c')
     }
 
 
@@ -139,6 +139,7 @@ class BootStrap {
             if(boulder.setter) {
                 def setter = [:]
                 setter['id'] = boulder.setter.id
+                setter['nickname'] = boulder.setter.nickname
                 map['setter'] = setter
             }
 
@@ -187,6 +188,9 @@ class BootStrap {
             map['email'] = user.email
             // TODO: remove (it is for backwards compatibility)
             map['username'] = user.email
+
+            if(user.nickname)
+                map['nickname'] = user.nickname
 
             map['registrationDate'] = user.registrationDate
             map['grade'] = user.grade
