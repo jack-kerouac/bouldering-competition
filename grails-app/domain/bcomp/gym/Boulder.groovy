@@ -17,7 +17,7 @@ class Boulder extends Route {
     static embedded = ['initialGradeRangeLow', 'initialGradeRangeHigh']
 
     GradeCertainty initialGradeCertainty;
-    Grade initialGradeRangeLow, initialGradeRangeHigh;
+    BoulderGrade initialGradeRangeLow, initialGradeRangeHigh;
 
     /**
      * cannot make these fields private, otherwise ignored by GORM. Use grade property instead!
@@ -34,12 +34,12 @@ class Boulder extends Route {
     static transients = ['grade', 'photo']
 
     public Boulder() {
-        this.initialGradeRangeLow = Grade.zero();
-        this.initialGradeRangeHigh = Grade.zero();
+        this.initialGradeRangeLow = BoulderGrade.zero();
+        this.initialGradeRangeHigh = BoulderGrade.zero();
     }
 
     public TentativeGrade getGrade() {
-        return new TentativeGrade(mean: new Grade(this.gradeMean), variance: gradeVariance)
+        return new TentativeGrade(mean: new BoulderGrade(this.gradeMean), variance: gradeVariance)
     }
 
     public void setGrade(TentativeGrade grade) {
@@ -75,10 +75,10 @@ class Boulder extends Route {
         return new ByteArrayInputStream(photoAsJpg)
     }
 
-    public void assignedGrade(Grade grade) {
+    public void assignedGrade(BoulderGrade grade) {
         initialGradeCertainty = GradeCertainty.ASSIGNED;
         initialGradeRangeLow = grade;
-        initialGradeRangeHigh = Grade.zero();
+        initialGradeRangeHigh = BoulderGrade.zero();
     }
 
     public boolean hasAssignedGrade() {
@@ -86,12 +86,12 @@ class Boulder extends Route {
 
     }
 
-    public Grade getAssignedGrade() {
+    public BoulderGrade getAssignedGrade() {
         assert hasAssignedGrade();
         return initialGradeRangeLow;
     }
 
-    public void gradeRange(Grade rangeLow, Grade rangeHigh) {
+    public void gradeRange(BoulderGrade rangeLow, BoulderGrade rangeHigh) {
         initialGradeCertainty = GradeCertainty.RANGE;
         initialGradeRangeLow = rangeLow;
         initialGradeRangeHigh = rangeHigh;
@@ -101,20 +101,20 @@ class Boulder extends Route {
         return initialGradeCertainty == GradeCertainty.RANGE;
     }
 
-    public Grade getGradeRangeLow() {
+    public BoulderGrade getGradeRangeLow() {
         assert hasGradeRange()
         return initialGradeRangeLow;
     }
 
-    public Grade getGradeRangeHigh() {
+    public BoulderGrade getGradeRangeHigh() {
         assert hasGradeRange()
         return initialGradeRangeHigh;
     }
 
     public void unknownGrade() {
         initialGradeCertainty = GradeCertainty.UNKNOWN;
-        initialGradeRangeLow = Grade.lowest()
-        initialGradeRangeHigh = Grade.highest()
+        initialGradeRangeLow = BoulderGrade.lowest()
+        initialGradeRangeHigh = BoulderGrade.highest()
     }
 
     public String getInitialGrade() {

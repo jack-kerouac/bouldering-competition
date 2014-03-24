@@ -2,6 +2,7 @@ package bcomp
 
 import bcomp.aaa.User
 import bcomp.gym.Boulder
+import bcomp.gym.BoulderGrade
 import bcomp.gym.FloorPlan
 import bcomp.gym.Grade
 import bcomp.gym.Gym
@@ -38,11 +39,11 @@ class LeaderboardServiceTest extends GroovyTestCase {
 
         hg.save(flush: true)
 
-        flo = new User(username: 'flo', password: 'p', initialGrade: Grade.fromFontScale('6a'))
+        flo = new User(username: 'flo', password: 'p', initialGrade: BoulderGrade.fromFontScale('6a'))
         flo.save()
-        chris = new User(username: 'chris', password: 'p', initialGrade: Grade.fromFontScale('6a'))
+        chris = new User(username: 'chris', password: 'p', initialGrade: BoulderGrade.fromFontScale('6a'))
         chris.save()
-        fia = new User(username: 'fia', password: 'p', initialGrade: Grade.fromFontScale('6a'))
+        fia = new User(username: 'fia', password: 'p', initialGrade: BoulderGrade.fromFontScale('6a'))
         fia.save()
     }
 

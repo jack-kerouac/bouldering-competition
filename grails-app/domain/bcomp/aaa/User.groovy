@@ -1,6 +1,6 @@
 package bcomp.aaa
 
-import bcomp.gym.Grade
+import bcomp.gym.BoulderGrade
 import bcomp.gym.TentativeGrade
 import grails.rest.Resource
 
@@ -19,7 +19,7 @@ class User {
 
     Date registrationDate
 
-    Grade initialGrade
+    BoulderGrade initialGrade
 
     /**
      * cannot make these fields private, otherwise ignored by GORM. Use grade property instead!
@@ -33,7 +33,7 @@ class User {
     static transients = ['grade', 'springSecurityService']
 
     public TentativeGrade getGrade() {
-        return new TentativeGrade(mean: new Grade(this.gradeMean), variance: gradeVariance)
+        return new TentativeGrade(mean: new BoulderGrade(this.gradeMean), variance: gradeVariance)
     }
 
     public void setGrade(TentativeGrade grade) {

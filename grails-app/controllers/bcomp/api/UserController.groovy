@@ -1,7 +1,7 @@
 package bcomp.api
 
 import bcomp.aaa.User
-import bcomp.gym.Grade
+import bcomp.gym.BoulderGrade
 import grails.rest.RestfulController
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -71,7 +71,7 @@ class UserController extends RestfulController {
             }
         }
         else {
-            user = new User(username: c.email, password: c.password, initialGrade: Grade.fromFontScale('5a'))
+            user = new User(username: c.email, password: c.password, initialGrade: BoulderGrade.fromFontScale('5a'))
             bouldererService.registerBoulderer(user)
             loginOrRegister(c)
         }

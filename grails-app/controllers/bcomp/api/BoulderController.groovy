@@ -1,6 +1,8 @@
 package bcomp.api
 
 import bcomp.Ascent
+
+import bcomp.api.Location
 import bcomp.gym.*
 import grails.rest.RestfulController
 import grails.validation.Validateable
@@ -35,11 +37,11 @@ class BoulderController extends RestfulController {
                 // TODO: validation of entered grades
                 switch (cmd.gradeCertainty) {
                     case Boulder.GradeCertainty.ASSIGNED:
-                        b.assignedGrade(Grade.fromFontScale(cmd.grade));
+                        b.assignedGrade(BoulderGrade.fromFontScale(cmd.grade));
                         break;
                     case Boulder.GradeCertainty.RANGE:
-                        b.gradeRange(Grade.fromFontScale(cmd.gradeRangeLow),
-                                Grade.fromFontScale(cmd.gradeRangeHigh));
+                        b.gradeRange(BoulderGrade.fromFontScale(cmd.gradeRangeLow),
+                                BoulderGrade.fromFontScale(cmd.gradeRangeHigh));
                         break;
                     case Boulder.GradeCertainty.UNKNOWN:
                         b.unknownGrade();
@@ -74,11 +76,11 @@ class BoulderController extends RestfulController {
             // TODO: validation of entered grades
             switch (cmd.initialGrade.certainty) {
                 case Boulder.GradeCertainty.ASSIGNED:
-                    b.assignedGrade(Grade.fromFontScale(cmd.initialGrade.grade));
+                    b.assignedGrade(BoulderGrade.fromFontScale(cmd.initialGrade.grade));
                     break;
                 case Boulder.GradeCertainty.RANGE:
-                    b.gradeRange(Grade.fromFontScale(cmd.initialGrade.gradeLow),
-                            Grade.fromFontScale(cmd.initialGrade.gradeHigh));
+                    b.gradeRange(BoulderGrade.fromFontScale(cmd.initialGrade.gradeLow),
+                            BoulderGrade.fromFontScale(cmd.initialGrade.gradeHigh));
                     break;
                 case Boulder.GradeCertainty.UNKNOWN:
                     b.unknownGrade();

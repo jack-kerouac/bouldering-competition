@@ -3,7 +3,7 @@ package bcomp
 import bcomp.Ascent.Style
 import bcomp.aaa.User
 import bcomp.gym.Boulder
-import bcomp.gym.Grade
+import bcomp.gym.BoulderGrade
 import bcomp.gym.TentativeGrade
 import grails.transaction.Transactional
 
@@ -55,7 +55,7 @@ class GradeLearningService {
 
     // probability should be 90% that personal level is at most two font grades away from personal level
     // => sigma = 1.645 (see http://de.wikipedia.org/wiki/Normalverteilung)
-    public final static double VARIANCE_OF_INITIAL_GRADE = (2 * Grade.oneFontGradeDifference() / 1.645)**2
+    public final static double VARIANCE_OF_INITIAL_GRADE = (2 * BoulderGrade.oneFontGradeDifference() / 1.645)**2
 
     TentativeGrade calculateInitialGrade(User user) {
         return new TentativeGrade(mean: user.initialGrade, variance: VARIANCE_OF_INITIAL_GRADE)
@@ -97,7 +97,7 @@ class GradeLearningService {
         gradeValue += numberOfAscentsThatInitialGradeCountsFor * user.initialGrade.value * weight
         weights += numberOfAscentsThatInitialGradeCountsFor * weight
 
-        Grade grade = new Grade(gradeValue / weights)
+        BoulderGrade grade = new BoulderGrade(gradeValue / weights)
         // TODO: how to calculate new variance?
         double variance = user.grade.variance
 
@@ -106,26 +106,26 @@ class GradeLearningService {
 
 
     TentativeGrade calculateInitialGrade(Boulder boulder) {
-        Grade grade
+        BoulderGrade grade
         double variance
         if (boulder.hasAssignedGrade()) {
             grade = boulder.getAssignedGrade();
             // probability should 90% that real grade is at most one font grade away from initial grade
             // => sigma = 1.645 (see http://de.wikipedia.org/wiki/Normalverteilung)
-            variance = (1 * Grade.oneFontGradeDifference() / 1.645)**2;
+            variance = (1 * BoulderGrade.oneFontGradeDifference() / 1.645)**2;
         } else if (boulder.hasGradeRange()) {
-            grade = Grade.between(boulder.getGradeRangeLow(), boulder.getGradeRangeHigh());
+            grade = BoulderGrade.between(boulder.getGradeRangeLow(), boulder.getGradeRangeHigh());
             // probability should be 90% that real grade is at most one font grade outside of initial range
             // => sigma = 1.645 (see http://de.wikipedia.org/wiki/Normalverteilung)
-            double diff = (boulder.getGradeRangeHigh() - boulder.getGradeRangeLow()) / 2 + Grade
+            double diff = (boulder.getGradeRangeHigh() - boulder.getGradeRangeLow()) / 2 + BoulderGrade
                     .oneFontGradeDifference()
             variance = (diff / 1.645)**2;
         } else {
-            grade = Grade.between(Grade.lowest(), Grade.highest());
+            grade = BoulderGrade.between(BoulderGrade.lowest(), BoulderGrade.highest());
             // TODO: is this a good initial sigma?
             // almost all values should be within the range of grades
             // => sigma = 3 (see http://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule)
-            double diff = (Grade.highest() - Grade.lowest()) / 2
+            double diff = (BoulderGrade.highest() - BoulderGrade.lowest()) / 2
             variance = (diff / 3)**2;
         }
         return new TentativeGrade(mean: grade, variance: variance)
@@ -149,7 +149,7 @@ class GradeLearningService {
         gradeValue += numberOfAscentsThatCurrentGradeCountsFor * boulder.grade.value * weight
         weights += numberOfAscentsThatCurrentGradeCountsFor * weight
 
-        Grade grade = new Grade(gradeValue / weights)
+        BoulderGrade grade = new BoulderGrade(gradeValue / weights)
         // TODO: how to calculate new variance?
         double variance = boulder.grade.variance
 

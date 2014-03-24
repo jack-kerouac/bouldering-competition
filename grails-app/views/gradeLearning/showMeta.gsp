@@ -1,4 +1,4 @@
-<%@ page import="bcomp.gym.Grade" contentType="text/html;charset=UTF-8" %>
+<%@ page import="bcomp.gym.BoulderGrade; bcomp.gym.Grade" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main"/>
@@ -97,7 +97,7 @@
 <div id="chartModal" class="reveal-modal" data-reveal>
     <a class="close-reveal-modal">&#215;</a>
     <g:set var="ticks"
-           value="${bcomp.gym.Grade.FONT_GRADES.collect {[Grade.fromFontScale(it).value, "\"$it\""]} }"/>
+           value="${BoulderGrade.FONT_GRADES.collect {[Grade.fromFontScale(it).value, "\"$it\""]} }"/>
 
     <div class="chart" style="width:940px; height:400px; margin-bottom: 20px;" data-ticks="${ticks}"></div>
     <p>With a 90% chance, the grade is between the two vertical lines.</p>

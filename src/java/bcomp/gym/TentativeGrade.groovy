@@ -2,11 +2,11 @@ package bcomp.gym
 
 class TentativeGrade {
 
-    Grade mean
+    BoulderGrade mean
     double variance
 
     TentativeGrade() {
-        this.mean = Grade.zero();
+        this.mean = BoulderGrade.zero();
         this.variance = 0
     }
 

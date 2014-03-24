@@ -1,6 +1,6 @@
 package bcomp.api
 
-import bcomp.gym.Grade
+import bcomp.gym.BoulderGrade
 
 
 class GradeController {
@@ -10,7 +10,7 @@ class GradeController {
     def show() {
         cache shared: true, neverExpires: true
 
-        respond Grade.FONT_GRADES.collect { Grade.fromFontScale(it) }
+        respond BoulderGrade.FONT_GRADES.collect { BoulderGrade.fromFontScale(it) }
     }
 
 }

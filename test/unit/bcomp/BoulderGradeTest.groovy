@@ -2,7 +2,7 @@ package bcomp
 
 import bcomp.gym.BoulderGrade
 import grails.test.GrailsUnitTestCase
-import org.junit.Test
+
 
 /**
  * User: florian
