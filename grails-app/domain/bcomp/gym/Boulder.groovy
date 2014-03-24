@@ -3,38 +3,16 @@ package bcomp.gym
 import javax.imageio.ImageIO
 import java.awt.*
 
-class Boulder {
-
-    enum GradeCertainty {
-        UNKNOWN, RANGE, ASSIGNED;
-    }
+class Boulder extends Route {
 
     static mapping = {
-        end column: '"end"'
+        discriminator "boulder"
     }
 
     static constraints = {
-        foreignId nullable: true, unique: 'gym'
-
-        color nullable: false
-        description nullable: true
-        end nullable: true
         // Limit upload file size to 5MB
         photoAsJpg maxSize: 1024 * 1024 * 5, nullable: true
     }
-
-    static belongsTo = [gym: Gym]
-
-    static hasOne = [location: Location]
-
-
-    Long foreignId
-
-    /**
-     * Either the color of the holds and feet of the boulder or any other marks to distinguish this boulder from
-     * others.
-     */
-    BoulderColor color
 
     static embedded = ['initialGradeRangeLow', 'initialGradeRangeHigh']
 
@@ -50,10 +28,15 @@ class Boulder {
      */
     double gradeVariance
 
-    Date dateCreated
-    Date lastUpdated
+    byte[] photoAsJpg;
+
 
     static transients = ['grade', 'photo']
+
+    public Boulder() {
+        this.initialGradeRangeLow = Grade.zero();
+        this.initialGradeRangeHigh = Grade.zero();
+    }
 
     public TentativeGrade getGrade() {
         return new TentativeGrade(mean: new Grade(this.gradeMean), variance: gradeVariance)
@@ -64,18 +47,6 @@ class Boulder {
         this.gradeVariance = grade.variance
     }
 
-
-    Date end
-
-    String description
-
-    byte[] photoAsJpg;
-
-
-    public Boulder() {
-        this.initialGradeRangeLow = Grade.zero();
-        this.initialGradeRangeHigh = Grade.zero();
-    }
 
     public void removePhoto() {
         photoAsJpg = null;
@@ -103,13 +74,6 @@ class Boulder {
     public InputStream getPhotoAsInputStream() {
         return new ByteArrayInputStream(photoAsJpg)
     }
-
-
-    public void onFloorPlan(FloorPlan floorPlan, double x, double y) {
-        location = new OnFloorPlan(floorPlan: floorPlan, x: x, y: y)
-        location.boulder = this
-    }
-
 
     public void assignedGrade(Grade grade) {
         initialGradeCertainty = GradeCertainty.ASSIGNED;

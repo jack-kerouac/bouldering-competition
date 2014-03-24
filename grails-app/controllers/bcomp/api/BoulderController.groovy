@@ -3,7 +3,6 @@ package bcomp.api
 import bcomp.Ascent
 import bcomp.gym.*
 import grails.rest.RestfulController
-import grails.transaction.Transactional
 import grails.validation.Validateable
 import org.grails.databinding.BindUsing
 import org.springframework.http.HttpStatus
@@ -155,9 +154,9 @@ class CreateOneBoulderCommand {
     Location location
 
     @BindUsing({
-        obj, source -> BoulderColor.valueOf(source['color']['name'])
+        obj, source -> RouteColor.valueOf(source['color']['name'])
     })
-    BoulderColor color
+    RouteColor color
 
     InitialGrade initialGrade
 }
@@ -224,7 +223,7 @@ class CreateBouldersCommand {
     String gradeRangeLow
     String gradeRangeHigh
 
-    BoulderColor color
+    RouteColor color
 
 
     static constraints = {

@@ -71,16 +71,16 @@ class BootStrap {
 
 
     def registerObjectMarshallers() {
-        JSON.registerObjectMarshaller(BoulderColor) { BoulderColor color ->
+        JSON.registerObjectMarshaller(RouteColor) { RouteColor color ->
             def map = [:]
             map['name'] = color.toString();
             map['germanName'] = messageSource.getMessage("bcomp.boulder.color.$color", null, Locale.GERMAN);
             map['englishName'] = messageSource.getMessage("bcomp.boulder.color.$color", null, Locale.ENGLISH);
-            map['primary'] = BoulderColor.asRgb(color.primaryColor)
+            map['primary'] = RouteColor.asRgb(color.primaryColor)
             if (color.secondaryColor)
-                map['secondary'] = BoulderColor.asRgb(color.secondaryColor)
+                map['secondary'] = RouteColor.asRgb(color.secondaryColor)
             if (color.ternaryColor)
-                map['ternary'] = BoulderColor.asRgb(color.ternaryColor)
+                map['ternary'] = RouteColor.asRgb(color.ternaryColor)
             return map
         }
 
@@ -119,7 +119,7 @@ class BootStrap {
             map['name'] = gym.name
             map['created'] = gym.dateCreated
             map['floorPlans'] = gym.floorPlans
-            map['colors'] = BoulderColor.values()
+            map['colors'] = RouteColor.values()
             return map
         }
 

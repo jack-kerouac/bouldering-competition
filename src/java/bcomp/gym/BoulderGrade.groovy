@@ -1,19 +1,19 @@
 package bcomp.gym
 
-class Grade implements Comparable<Grade> {
+class BoulderGrade implements Comparable<BoulderGrade> {
 
     double value;
 
     /** required by Hibernate */
-    Grade() {}
+    BoulderGrade() {}
 
-    public Grade(double value) {
+    public BoulderGrade(double value) {
         assert 0.0 <= value && value < 1.0
         this.value = value
     }
 
     @Override
-    int compareTo(Grade o) {
+    int compareTo(BoulderGrade o) {
         return this.value<=>o.value
     }
 
@@ -27,54 +27,54 @@ class Grade implements Comparable<Grade> {
         return FONT_GRADES[(int) Math.floor(value / segment)]
     }
 
-    public static Grade fromFontScale(String font) {
+    public static BoulderGrade fromFontScale(String font) {
         int i = FONT_GRADES.indexOf(font.toUpperCase())
         assert i != -1
         double segment = 1.0 / FONT_GRADES.size()
 
-        return new Grade(i * segment + (segment / 2))
+        return new BoulderGrade(i * segment + (segment / 2))
     }
 
     public static boolean isFrontScaleGrade(String font) {
         return FONT_GRADES.contains(font.toUpperCase())
     }
 
-    public static Grade between(Grade g1, Grade g2) {
+    public static BoulderGrade between(BoulderGrade g1, BoulderGrade g2) {
         assert g1 <= g2
         return g1 + (g2 - g1) / 2
     }
 
     /** Can be used for null values. Lower than regular lowest() */
-    public static Grade zero() {
-        return new Grade(0.0);
+    public static BoulderGrade zero() {
+        return new BoulderGrade(0.0);
     }
 
-    public static Grade lowest() {
+    public static BoulderGrade lowest() {
         return fromFontScale(FONT_GRADES[0])
     }
 
-    public static Grade highest() {
+    public static BoulderGrade highest() {
         return fromFontScale(FONT_GRADES[FONT_GRADES.size() - 1])
     }
 
     public static double oneFontGradeDifference() {
-        return Grade.fromFontScale('7a+').value - Grade.fromFontScale('7a').value;
+        return BoulderGrade.fromFontScale('7a+').value - BoulderGrade.fromFontScale('7a').value;
     }
 
 
-    public Grade plus(double value) {
-        return new Grade(this.value + value)
+    public BoulderGrade plus(double value) {
+        return new BoulderGrade(this.value + value)
     }
 
-    public double minus(Grade g) {
+    public double minus(BoulderGrade g) {
         return this.value - g.value
     }
 
     boolean equals(o) {
         if (this.is(o)) return true
-        if (!(o instanceof Grade)) return false
+        if (!(o instanceof BoulderGrade)) return false
 
-        Grade grade = (Grade) o
+        BoulderGrade grade = (BoulderGrade) o
 
         if (Double.compare(grade.value, value) != 0) return false
 

@@ -2,6 +2,6 @@ package bcomp.gym
 
 abstract class Location {
 
-    static belongsTo = [boulder: Boulder]
+    static belongsTo = [route: Route]
 
 }

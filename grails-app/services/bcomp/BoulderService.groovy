@@ -20,7 +20,7 @@ class BoulderService {
         TentativeGrade initial = gradeLearningService.calculateInitialGrade(boulder)
         boulder.setGrade(initial)
 
-        gym.addToBoulders(boulder);
+        gym.addToRoutes(boulder);
     }
 
 }

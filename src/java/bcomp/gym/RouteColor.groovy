@@ -2,7 +2,7 @@ package bcomp.gym
 
 import java.awt.*
 
-public enum BoulderColor {
+public enum RouteColor {
 
     GREEN("13A300"), YELLOW("DBE300"), RED("D90000"), BLUE("3D3DFF"), BLACK("0A0A0A"), GRAY("696969"),
     WHITE("FCFCFC"), PINK("FF42F9"), ORANGE("E87400"), BROWN("8A4500"), PURPLE("8200ED"), BLUE_BLACK("0068DE",
@@ -12,19 +12,19 @@ public enum BoulderColor {
     public final Color secondaryColor
     public final Color ternaryColor
 
-    BoulderColor(String primaryColor) {
+    RouteColor(String primaryColor) {
         this.primaryColor = c(primaryColor)
         this.secondaryColor = null
         this.ternaryColor = null
     }
 
-    BoulderColor(String primaryColor, String secondaryColor) {
+    RouteColor(String primaryColor, String secondaryColor) {
         this.primaryColor = c(primaryColor)
         this.secondaryColor = c(secondaryColor)
         this.ternaryColor = null
     }
 
-    BoulderColor(String primaryColor, String secondaryColor, String ternaryColor) {
+    RouteColor(String primaryColor, String secondaryColor, String ternaryColor) {
         this.primaryColor = c(primaryColor)
         this.secondaryColor = c(secondaryColor)
         this.ternaryColor = c(ternaryColor)

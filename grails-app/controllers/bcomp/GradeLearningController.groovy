@@ -19,7 +19,7 @@ class GradeLearningController {
             users.put(user, ascents)
         }
 
-        [users: users, boulders: gym.boulders]
+        [users: users, boulders: gym.routes]
     }
 
     def resetCurrentUserGrades() {
