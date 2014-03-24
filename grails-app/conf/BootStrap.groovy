@@ -136,6 +136,13 @@ class BootStrap {
             if(boulder.end)
                 map['end'] = boulder.end.format("yyyy-MM-dd");
 
+            if(boulder.setter) {
+                def setter = [:]
+                setter['id'] = boulder.setter.id
+                map['setter'] = setter
+            }
+
+
             def initialGrade = [:]
             initialGrade['certainty'] = boulder.initialGradeCertainty
             initialGrade['readable'] = boulder.initialGrade

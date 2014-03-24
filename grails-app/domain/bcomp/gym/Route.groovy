@@ -1,5 +1,7 @@
 package bcomp.gym
 
+import bcomp.aaa.User
+
 abstract class Route {
 
     enum GradeCertainty {
@@ -17,6 +19,7 @@ abstract class Route {
         name nullable: true
         description nullable: true
         end nullable: true
+        setter nullable: true
     }
 
     static belongsTo = [gym: Gym]
@@ -39,6 +42,8 @@ abstract class Route {
     Date end
 
     String description
+
+    User setter
 
     public final void onFloorPlan(FloorPlan floorPlan, double x, double y) {
         location = new OnFloorPlan(floorPlan: floorPlan, x: x, y: y)
