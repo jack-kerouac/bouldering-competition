@@ -39,11 +39,11 @@ class LeaderboardServiceTest extends GroovyTestCase {
 
         hg.save(flush: true)
 
-        flo = new User(username: 'flo', password: 'p', initialGrade: BoulderGrade.fromFontScale('6a'))
+        flo = new User(email: 'flo', password: 'p', initialGrade: BoulderGrade.fromFontScale('6a'))
         flo.save()
-        chris = new User(username: 'chris', password: 'p', initialGrade: BoulderGrade.fromFontScale('6a'))
+        chris = new User(email: 'chris', password: 'p', initialGrade: BoulderGrade.fromFontScale('6a'))
         chris.save()
-        fia = new User(username: 'fia', password: 'p', initialGrade: BoulderGrade.fromFontScale('6a'))
+        fia = new User(email: 'fia', password: 'p', initialGrade: BoulderGrade.fromFontScale('6a'))
         fia.save()
     }
 
@@ -59,7 +59,7 @@ class LeaderboardServiceTest extends GroovyTestCase {
         def ranking = leaderboardService.calculateRanking(hg)
         assert ranking.size() == 2
 
-        def rankFlo = ranking.find { rank -> rank.boulderer.username == 'flo' }
+        def rankFlo = ranking.find { rank -> rank.boulderer.email == 'flo' }
         assertNotNull rankFlo
         assert rankFlo.position == 1
         assert rankFlo.lastSession == s1.date
@@ -67,7 +67,7 @@ class LeaderboardServiceTest extends GroovyTestCase {
         assert rankFlo.countTops == 1
         assert rankFlo.score == LeaderboardService.POINTS_FLASH
 
-        def rankChris = ranking.find { it.boulderer.username == 'chris' }
+        def rankChris = ranking.find { it.boulderer.email == 'chris' }
         assertNotNull rankChris
         assert rankChris.position == 2
         assert rankChris.lastSession == s2.date
@@ -89,7 +89,7 @@ class LeaderboardServiceTest extends GroovyTestCase {
 
         def ranking = leaderboardService.calculateRanking(hg)
 
-        assert ranking.find { rank -> rank.boulderer.username == 'flo' }.score == 2 * LeaderboardService.POINTS_FLASH +
+        assert ranking.find { rank -> rank.boulderer.email == 'flo' }.score == 2 * LeaderboardService.POINTS_FLASH +
                 1 * LeaderboardService.POINTS_TOP
     }
 
@@ -104,8 +104,8 @@ class LeaderboardServiceTest extends GroovyTestCase {
 
         def ranking = leaderboardService.calculateRanking(hg)
 
-        assert ranking.find { rank -> rank.boulderer.username == 'flo' }.position ==
-                ranking.find { rank -> rank.boulderer.username == 'chris' }.position
+        assert ranking.find { rank -> rank.boulderer.email == 'flo' }.position ==
+                ranking.find { rank -> rank.boulderer.email == 'chris' }.position
     }
 
 }

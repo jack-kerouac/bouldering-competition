@@ -2,13 +2,12 @@ package bcomp.aaa
 
 import bcomp.gym.BoulderGrade
 import bcomp.gym.TentativeGrade
-import grails.rest.Resource
 
 class User {
 
 	transient springSecurityService
 
-	String username
+	String email
 	String password
 	boolean enabled = true
 	boolean accountExpired
@@ -42,7 +41,7 @@ class User {
     }
 
 	static constraints = {
-		username blank: false, unique: true
+		email blank: false, unique: true
 		password blank: false
         registrationDate nullable: false
 	}

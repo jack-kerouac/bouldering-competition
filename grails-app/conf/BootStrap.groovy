@@ -51,7 +51,7 @@ class BootStrap {
     }
 
     private void createBoulderer(String username, BoulderGrade initialGrade) {
-        def user = new User(username: username, password: 'p', initialGrade: initialGrade)
+        def user = new User(email: username, password: 'p', initialGrade: initialGrade)
 
         bouldererService.registerBoulderer(user)
     }
@@ -184,7 +184,10 @@ class BootStrap {
         JSON.registerObjectMarshaller(User) { User user ->
             def map = [:]
             map['id'] = user.id
-            map['username'] = user.username
+            map['email'] = user.email
+            // TODO: remove (it is for backwards compatibility)
+            map['username'] = user.email
+
             map['registrationDate'] = user.registrationDate
             map['grade'] = user.grade
             map['initialGrade'] = user.initialGrade

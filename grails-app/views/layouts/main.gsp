@@ -122,7 +122,7 @@
     // To enable, replace sample data with actual user traits and uncomment the line
     UserVoice.push(['identify', {
         <sec:ifLoggedIn>
-    name: '${sec.loggedInUserInfo(field: 'username')}',
+    name: '${sec.loggedInUserInfo(field: 'email')}',
             id: '${sec.loggedInUserInfo(field: 'id')}'
 </sec:ifLoggedIn>
 

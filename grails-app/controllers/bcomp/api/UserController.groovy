@@ -23,7 +23,7 @@ class UserController extends RestfulController {
 
     def index(String email, Integer max) {
         if (email != null) {
-            respond User.findByUsername(email)
+            respond User.findByEmail(email)
         } else {
             // TODO: reenable this
             //super.index(max)
@@ -57,7 +57,7 @@ class UserController extends RestfulController {
     // based on http://raibledesigns.com/rd/entry/implementing_ajax_authentication_using_jquery
     def loginOrRegister(Credentials c) {
         c.email = c.email.toLowerCase()
-        User user = User.findByUsername(c.email);
+        User user = User.findByEmail(c.email);
         if(user != null) {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(c.email, c.password);
             token.setDetails(user);
@@ -71,7 +71,7 @@ class UserController extends RestfulController {
             }
         }
         else {
-            user = new User(username: c.email, password: c.password, initialGrade: BoulderGrade.fromFontScale('5a'))
+            user = new User(email: c.email, password: c.password, initialGrade: BoulderGrade.fromFontScale('5a'))
             bouldererService.registerBoulderer(user)
             loginOrRegister(c)
         }

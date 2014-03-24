@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>${sec.loggedInUserInfo(field: 'username')}'s <g:message code="bcomp.statistics.label"/></title>
+    <title>${sec.loggedInUserInfo(field: 'email')}'s <g:message code="bcomp.statistics.label"/></title>
 </head>
 
 <body id="list-sessions-page">
 
 <div class="row">
     <div class="medium-12 columns">
-        <h1>${sec.loggedInUserInfo(field: 'username')}'s <g:message code="bcomp.statistics.label"/></h1>
+        <h1>${sec.loggedInUserInfo(field: 'email')}'s <g:message code="bcomp.statistics.label"/></h1>
     </div>
 </div>
 
